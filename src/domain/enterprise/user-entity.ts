@@ -2,7 +2,7 @@ import { Entity } from "@/core/entities/entity";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import type { UserTypeProps } from "@/core/types/type-user";
 
-interface UserProps {
+export interface UserProps {
   name: string;
   userName: string;
   typeUser: UserTypeProps;
@@ -28,18 +28,22 @@ export class User extends Entity<UserProps> {
   }
 
   set name(name: string) {
+    if (!name.trim()) throw new Error("field empty not allowed");
     this.props.name = name;
   }
 
   set userName(userName: string) {
+    if (!userName.trim()) throw new Error("field empty not allowed");
     this.props.userName = userName;
   }
 
   set email(email: string) {
+    if (!email.trim()) throw new Error("field empty not allowed");
     this.props.email = email;
   }
 
   set password(password: string) {
+    if (!password.trim()) throw new Error("field empty not allowed");
     this.props.password = password;
   }
 
