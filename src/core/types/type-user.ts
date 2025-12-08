@@ -1,0 +1,1 @@
+export type UserTypeProps = "creatorStore" | "user" | "employeeStore"
