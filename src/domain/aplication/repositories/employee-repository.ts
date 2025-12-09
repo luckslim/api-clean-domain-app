@@ -4,5 +4,6 @@ export interface employeeRepository {
   create(employee: Employee): Promise<Employee>;
   findById(id: string): Promise<Employee | null>;
   findByUserId(id: string): Promise<Employee | null>;
+  findByStoreId(id: string | undefined): Promise<Employee[] | null>;
   delete(id: string): Promise<void>;
 }

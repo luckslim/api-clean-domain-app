@@ -24,6 +24,14 @@ export class InMemoryEmployeeRepository implements employeeRepository {
     return employee;
   }
 
+  async findByStoreId(id: string): Promise<Employee[] | null> {
+    const employee = this.items.filter((items) => items.storeId === id);
+    if (!employee) {
+      return null;
+    }
+    return employee;
+  }
+
   async delete(id: string): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === id);
     this.items.splice(itemIndex, 1);

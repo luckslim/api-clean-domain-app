@@ -23,8 +23,16 @@ export class Employee extends Entity<EmployProps> {
     return this.props.typeUser;
   }
 
+  get status() {
+    return this.props.status;
+  }
+
   get createdAt() {
     return this.props.createdAt;
+  }
+
+  set status(status: StatusTypeProps) {
+    this.props.status = status;
   }
 
   static create(props: EmployProps, id?: UniqueEntityId) {
