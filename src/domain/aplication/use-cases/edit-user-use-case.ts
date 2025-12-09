@@ -4,11 +4,13 @@ import type { userRepository } from "../repositories/user-repository";
 import type { HashGenerator } from "../cryptography/hash-generator";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
+import type { UserTypeProps } from "@/core/types/type-user";
 
 interface EditUserRequest {
-  id: UniqueEntityId;
+  id: string;
   name: string;
   userName: string;
+  typeUser: UserTypeProps;
   email: string;
   password: string;
 }
@@ -24,6 +26,7 @@ export class EditUserUseCase {
     id,
     name,
     userName,
+    typeUser,
     email,
     password,
   }: EditUserRequest): Promise<EditUserResponse> {
@@ -39,6 +42,7 @@ export class EditUserUseCase {
       user.name = name;
       user.userName = userName;
       user.email = email;
+      user.typeUser = typeUser;
       user.password = passwordHashed;
 
       return right({ user });

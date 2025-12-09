@@ -17,7 +17,7 @@ describe("delete user", () => {
     const user = MakeUser({});
     inMemoryUserRepository.create(user);
     const result = await sut.execute({
-      id: user.id,
+      id: user.id.toString(),
     });
     expect(result.isRight).toBeTruthy();
     expect(inMemoryUserRepository.items).toHaveLength(0);
@@ -26,7 +26,7 @@ describe("delete user", () => {
     const user = MakeUser({});
     inMemoryUserRepository.create(user);
     const result = await sut.execute({
-      id: new UniqueEntityId(),
+      id: new UniqueEntityId().toString(),
     });
     expect(result.isLeft()).toBeTruthy();
     expect(result.value).toBeInstanceOf(NotAllowedError)

@@ -5,7 +5,7 @@ import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
 
 interface DeleteUserRequest {
-  id: UniqueEntityId;
+  id: string;
 }
 
 type DeleteUserResponse = Either<NotAllowedError, { user: User }>;

@@ -19,6 +19,10 @@ export class User extends Entity<UserProps> {
     return this.props.userName;
   }
 
+  get typeUser() {
+    return this.props.typeUser;
+  }
+
   get email() {
     return this.props.email;
   }
@@ -35,6 +39,10 @@ export class User extends Entity<UserProps> {
   set userName(userName: string) {
     if (!userName.trim()) throw new Error("field empty not allowed");
     this.props.userName = userName;
+  }
+
+  set typeUser(typeUser: UserTypeProps) {
+    this.props.typeUser = typeUser;
   }
 
   set email(email: string) {

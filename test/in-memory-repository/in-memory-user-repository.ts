@@ -26,8 +26,8 @@ export class InMemoryUserRepository implements userRepository {
     return user;
   }
 
-  async findById(id: UniqueEntityId): Promise<User | null> {
-    const user = this.items.find((item) => item.id === id);
+  async findById(id: string): Promise<User | null> {
+    const user = this.items.find((item) => item.id.toString() === id);
     if (!user) {
       return null;
     }
@@ -40,8 +40,8 @@ export class InMemoryUserRepository implements userRepository {
     return user;
   }
 
-  async delete(id: UniqueEntityId): Promise<void> {
-    const itemIndex = this.items.findIndex((item) => item.id === id);
+  async delete(id: string): Promise<void> {
+    const itemIndex = this.items.findIndex((item) => item.id.toString() === id);
     this.items.splice(itemIndex, 1);
   }
 }

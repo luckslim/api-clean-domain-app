@@ -1,4 +1,3 @@
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { MakeUser } from "../../../../test/factories/make-user";
 import { InMemoryUserRepository } from "../../../../test/in-memory-repository/in-memory-user-repository";
 import { FakeHash } from "../../../../test/cryptography/fake-hash";
@@ -23,7 +22,8 @@ describe("Edit user", () => {
     inMemoryUserRepository.create(user);
 
     const result = await sut.execute({
-      id: user.id,
+      id: user.id.toString(),
+      typeUser: 'user',
       name: "john Snow",
       userName: "john_sn",
       password: "123123",
@@ -39,9 +39,10 @@ describe("Edit user", () => {
     inMemoryUserRepository.create(user);
 
     const result = await sut.execute({
-      id: user.id,
+      id: user.id.toString(),
       name: "",
       userName: "",
+      typeUser:"user",
       password: "",
       email: "",
     });
@@ -55,9 +56,10 @@ describe("Edit user", () => {
     inMemoryUserRepository.create(user);
 
     const result = await sut.execute({
-      id: new UniqueEntityId(),
+      id: new UniqueEntityId().toString(),
       name: "john Snow",
       userName: "john_sn",
+      typeUser:'user',
       password: "123123",
       email: "johnsnow@gmail.com",
     });
