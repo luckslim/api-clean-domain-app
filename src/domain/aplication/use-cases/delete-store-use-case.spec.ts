@@ -1,5 +1,5 @@
 import { MakeStore } from "../../../../test/factories/make-store";
-import { InMemoryStoreRepository } from "../../../../test/in-memory-repository/in-memory-store.repository";
+import { InMemoryStoreRepository } from "../../../../test/in-memory-repository/in-memory-store-repository";
 import { MakeUser } from "../../../../test/factories/make-user";
 import { DeleteStoreUseCase } from "./delete-store-use-case";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
@@ -33,7 +33,7 @@ describe("delete store", () => {
 
     expect(result.isRight()).toBe(true);
   });
-  
+
   it("should not be able delete a store whith another creatorId", async () => {
     const user = MakeUser({
       typeUser: "creatorStore",

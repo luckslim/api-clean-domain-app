@@ -42,6 +42,7 @@ export class User extends Entity<UserProps> {
   }
 
   set typeUser(typeUser: UserTypeProps) {
+    if (!typeUser.trim()) throw new Error("field empty not allowed");
     this.props.typeUser = typeUser;
   }
 

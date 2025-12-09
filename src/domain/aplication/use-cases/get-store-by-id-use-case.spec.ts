@@ -1,5 +1,5 @@
 import { MakeStore } from "../../../../test/factories/make-store";
-import { InMemoryStoreRepository } from "../../../../test/in-memory-repository/in-memory-store.repository";
+import { InMemoryStoreRepository } from "../../../../test/in-memory-repository/in-memory-store-repository";
 import { MakeUser } from "../../../../test/factories/make-user";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { GetStoreUseCase } from "./get-store-by-id-use-case";

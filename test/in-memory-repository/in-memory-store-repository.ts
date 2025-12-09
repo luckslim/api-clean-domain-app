@@ -25,6 +25,14 @@ export class InMemoryStoreRepository implements storeRepository {
     return store;
   }
 
+  async findByUserId(id: string): Promise<Store | null> {
+    const store = this.items.find((item) => item.creatorId === id);
+    if (!store) {
+      return null;
+    }
+    return store;
+  }
+
   async save(store: Store): Promise<Store> {
     const itemIndex = this.items.findIndex((item) => item.id === store.id);
     this.items[itemIndex] = store;
