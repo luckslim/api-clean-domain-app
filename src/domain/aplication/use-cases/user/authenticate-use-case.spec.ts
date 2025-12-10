@@ -1,8 +1,8 @@
-import { MakeUser } from "../../../../test/factories/make-user";
-import { InMemoryUserRepository } from "../../../../test/in-memory-repository/in-memory-user-repository";
-import { FakeHash } from "../../../../test/cryptography/fake-hash";
+import { MakeUser } from "../../../../../test/factories/make-user";
+import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
+import { FakeHash } from "../../../../../test/cryptography/fake-hash";
 import { AuthenticateUserUseCase } from "./authenticate-use-case";
-import { FakeEncrypter } from "../../../../test/cryptography/fake-encrypter";
+import { FakeEncrypter } from "../../../../../test/cryptography/fake-encrypter";
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let hashGenerator: FakeHash;
@@ -23,14 +23,14 @@ describe("Register user", () => {
 
   it("should be able register a user", async () => {
     const user = MakeUser({
-        password: await hashGenerator.hash('123123')
+      password: await hashGenerator.hash("123123"),
     });
 
     inMemoryUserRepository.create(user);
 
     const result = await sut.execute({
       email: user.email,
-      password: '123123',
+      password: "123123",
     });
 
     expect(result.isRight()).toBe(true);

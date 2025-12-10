@@ -1,10 +1,10 @@
 import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { CreateStoreUseCase } from "./create-store-use-case";
-import { FakeHash } from "../../../../test/cryptography/fake-hash";
-import { MakeStore } from "../../../../test/factories/make-store";
-import { InMemoryStoreRepository } from "../../../../test/in-memory-repository/in-memory-store-repository";
-import { InMemoryUserRepository } from "../../../../test/in-memory-repository/in-memory-user-repository";
-import { MakeUser } from "../../../../test/factories/make-user";
+import { FakeHash } from "../../../../../test/cryptography/fake-hash";
+import { MakeStore } from "../../../../../test/factories/make-store";
+import { InMemoryStoreRepository } from "../../../../../test/in-memory-repository/in-memory-store-repository";
+import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
+import { MakeUser } from "../../../../../test/factories/make-user";
 
 let inMemoryStoreRepository: InMemoryStoreRepository;
 

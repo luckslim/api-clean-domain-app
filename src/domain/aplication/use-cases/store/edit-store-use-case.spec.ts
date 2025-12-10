@@ -1,6 +1,6 @@
-import { MakeStore } from "../../../../test/factories/make-store";
-import { InMemoryStoreRepository } from "../../../../test/in-memory-repository/in-memory-store-repository";
-import { MakeUser } from "../../../../test/factories/make-user";
+import { MakeStore } from "../../../../../test/factories/make-store";
+import { InMemoryStoreRepository } from "../../../../../test/in-memory-repository/in-memory-store-repository";
+import { MakeUser } from "../../../../../test/factories/make-user";
 import { EditStoreUseCase } from "./edit-store-use-case";
 
 let inMemoryStoreRepository: InMemoryStoreRepository;

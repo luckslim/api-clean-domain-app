@@ -1,15 +1,18 @@
 import { left, right, type Either } from "@/core/either";
 import { WrongCredentialError } from "@/core/errors/wrong-credentials-error";
-import type { userRepository } from "../repositories/user-repository";
-import type { HashComparer } from "../cryptography/hash-comparer";
-import type { Encrypter } from "../cryptography/encryter";
+import type { userRepository } from "../../repositories/user-repository";
+import type { HashComparer } from "../../cryptography/hash-comparer";
+import type { Encrypter } from "../../cryptography/encryter";
 
 interface AuthenticateUserRequest {
   email: string;
   password: string;
 }
 
-type AuthenticateUserResponse = Either<WrongCredentialError, { access_token: string }>;
+type AuthenticateUserResponse = Either<
+  WrongCredentialError,
+  { access_token: string }
+>;
 
 export class AuthenticateUserUseCase {
   constructor(

@@ -1,6 +1,6 @@
 import { left, right, type Either } from "@/core/either";
 import type { Employee } from "@/domain/enterprise/employee-store-entity";
-import type { employeeRepository } from "../repositories/employee-repository";
+import type { employeeRepository } from "../../repositories/employee-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 import type { StatusTypeProps } from "@/core/types/type-status";
 
@@ -27,7 +27,7 @@ export class DefineTypeStatusEmployUseCase {
     }
 
     employ.status = status;
-    
+
     return right({ employ });
   }
 }

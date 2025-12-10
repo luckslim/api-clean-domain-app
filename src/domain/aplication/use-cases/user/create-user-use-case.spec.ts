@@ -1,8 +1,8 @@
 import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
-import { MakeUser } from "../../../../test/factories/make-user";
-import { InMemoryUserRepository } from "../../../../test/in-memory-repository/in-memory-user-repository";
+import { MakeUser } from "../../../../../test/factories/make-user";
+import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
 import { CreateUserUseCase } from "./create-user-use-case";
-import { FakeHash } from "../../../../test/cryptography/fake-hash";
+import { FakeHash } from "../../../../../test/cryptography/fake-hash";
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let hashGenerator: FakeHash;

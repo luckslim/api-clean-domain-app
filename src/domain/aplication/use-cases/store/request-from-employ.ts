@@ -1,7 +1,7 @@
 import { left, right, type Either } from "@/core/either";
 import type { Employee } from "@/domain/enterprise/employee-store-entity";
-import type { employeeRepository } from "../repositories/employee-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
+import type { employeeRepository } from "../../repositories/employee-repository";
 
 interface RequestFromEmployRequest {
   id: string; // id from store

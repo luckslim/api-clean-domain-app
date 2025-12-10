@@ -1,14 +1,14 @@
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import { MakeStore } from "../../../../test/factories/make-store";
-import { MakeUser } from "../../../../test/factories/make-user";
-import { InMemoryEmployeeRepository } from "../../../../test/in-memory-repository/in-memory-employ-repository";
-import { InMemoryStoreRepository } from "../../../../test/in-memory-repository/in-memory-store-repository";
-import { InMemoryUserRepository } from "../../../../test/in-memory-repository/in-memory-user-repository";
+import { MakeStore } from "../../../../../test/factories/make-store";
+import { MakeUser } from "../../../../../test/factories/make-user";
+import { InMemoryEmployeeRepository } from "../../../../../test/in-memory-repository/in-memory-employ-repository";
+import { InMemoryStoreRepository } from "../../../../../test/in-memory-repository/in-memory-store-repository";
+import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
 import { ChangeTypeUserUseCase } from "./change-type-user-use-case";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import { MakeEmploy } from "../../../../test/factories/make-employ";
-import { InMemoryNotificationRepository } from "../../../../test/in-memory-repository/in-memory-notification-repository";
+import { MakeEmploy } from "../../../../../test/factories/make-employ";
+import { InMemoryNotificationRepository } from "../../../../../test/in-memory-repository/in-memory-notification-repository";
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let inMemoryStoreRepository: InMemoryStoreRepository;
@@ -48,8 +48,8 @@ describe("Edit user", () => {
       typeUser: "employeeStore",
       storeName: store.storeName,
     });
-    
-    expect(inMemoryStoreRepository.items).toHaveLength(1)
+
+    expect(inMemoryStoreRepository.items).toHaveLength(1);
     expect(inMemoryEmployeeRepository.items).toHaveLength(1);
     expect(notificationRepository.items).toHaveLength(1);
     expect(result.isRight()).toBe(true);

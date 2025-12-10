@@ -1,14 +1,14 @@
 import { left, right, type Either } from "@/core/either";
 import { User } from "@/domain/enterprise/user-entity";
-import type { userRepository } from "../repositories/user-repository";
+import type { userRepository } from "../../repositories/user-repository";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
 import type { UserTypeProps } from "@/core/types/type-user";
-import type { employeeRepository } from "../repositories/employee-repository";
+import type { employeeRepository } from "../../repositories/employee-repository";
 import { Employee } from "@/domain/enterprise/employee-store-entity";
-import type { storeRepository } from "../repositories/store-repository";
+import type { storeRepository } from "../../repositories/store-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import type { CreateNotificationUseCase } from "./notification/create-notification-use-case";
-import type { NotificationRepository } from "../repositories/notification-repository";
+import type { CreateNotificationUseCase } from "../notification/create-notification-use-case";
+import type { NotificationRepository } from "../../repositories/notification-repository";
 import { Notification } from "@/domain/enterprise/notification-entity";
 
 interface ChangeTypeUserRequest {

@@ -1,6 +1,6 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { MakeUser } from "../../../../test/factories/make-user";
-import { InMemoryUserRepository } from "../../../../test/in-memory-repository/in-memory-user-repository";
+import { MakeUser } from "../../../../../test/factories/make-user";
+import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
 import { DeleteUserUseCase } from "./delete-user-use-case";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
 

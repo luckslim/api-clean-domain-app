@@ -1,6 +1,6 @@
 import { left, right, type Either } from "@/core/either";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import type { storeRepository } from "../repositories/store-repository";
+import type { storeRepository } from "../../repositories/store-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 import type { Store } from "@/domain/enterprise/store-entity";
 
@@ -24,7 +24,7 @@ export class GetStoreUseCase {
     if (store.creatorId !== creatorId) {
       return left(new NotAllowedError());
     }
-    
+
     return right({ store: store });
   }
 }

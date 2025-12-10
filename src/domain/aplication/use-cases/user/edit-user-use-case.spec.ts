@@ -1,6 +1,6 @@
-import { MakeUser } from "../../../../test/factories/make-user";
-import { InMemoryUserRepository } from "../../../../test/in-memory-repository/in-memory-user-repository";
-import { FakeHash } from "../../../../test/cryptography/fake-hash";
+import { MakeUser } from "../../../../../test/factories/make-user";
+import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
+import { FakeHash } from "../../../../../test/cryptography/fake-hash";
 import { EditUserUseCase } from "./edit-user-use-case";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";

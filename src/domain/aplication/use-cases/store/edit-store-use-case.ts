@@ -1,8 +1,8 @@
 import { left, right, type Either } from "@/core/either";
-import type { userRepository } from "../repositories/user-repository";
+import type { userRepository } from "../../repositories/user-repository";
 import { Store } from "@/domain/enterprise/store-entity";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import type { storeRepository } from "../repositories/store-repository";
+import type { storeRepository } from "../../repositories/store-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 
 interface EditStoreRequest {
@@ -20,9 +20,7 @@ type EditStoreResponse = Either<
 >;
 
 export class EditStoreUseCase {
-  constructor(
-    private storeRepository: storeRepository
-  ) {}
+  constructor(private storeRepository: storeRepository) {}
   async execute({
     id,
     creatorId,
