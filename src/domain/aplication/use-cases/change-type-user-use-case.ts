@@ -7,6 +7,9 @@ import type { employeeRepository } from "../repositories/employee-repository";
 import { Employee } from "@/domain/enterprise/employee-store-entity";
 import type { storeRepository } from "../repositories/store-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
+import type { CreateNotificationUseCase } from "./notification/create-notification-use-case";
+import type { NotificationRepository } from "../repositories/notification-repository";
+import { Notification } from "@/domain/enterprise/notification-entity";
 
 interface ChangeTypeUserRequest {
   id: string; //id from user
@@ -20,7 +23,8 @@ export class ChangeTypeUserUseCase {
   constructor(
     private userRepository: userRepository,
     private employeeRepository: employeeRepository,
-    private storeRepository: storeRepository
+    private storeRepository: storeRepository,
+    private notifyRepository: NotificationRepository
   ) {}
   async execute({
     id,
@@ -33,50 +37,63 @@ export class ChangeTypeUserUseCase {
       return left(new NotAllowedError());
     }
 
-    try {
-      user.typeUser = typeUser;
-      if (user.typeUser === "employeeStore") {
-        const store = await this.storeRepository.findByStoreName(storeName);
+    user.typeUser = typeUser;
 
-        if (!store) {
-          return left(new ResourceNotFoundError());
-        }
+    if (user.typeUser === "employeeStore") {
+      const store = await this.storeRepository.findByStoreName(storeName);
 
-        const employ = await this.employeeRepository.findById(
-          user.id.toString()
-        );
-
-        if (!employ) {
-          const employee = Employee.create({
-            employeeId: user.id.toString(),
-            storeId: store?.id.toString(),
-            typeUser: "employeeStore",
-            status: "pending",
-            createdAt: new Date(),
-          });
-
-          this.employeeRepository.create(employee);
-        } else {
-          return left(new Error("please, wait a response from store."));
-        }
+      if (!store) {
+        return left(new ResourceNotFoundError());
       }
 
-      if (user.typeUser === "user") {
-        const store = await this.storeRepository.findByUserId(id);
+      const storeExisting = await this.storeRepository.findByUserId(
+        user.id.toString()
+      );
 
-        if (store) {
-          await this.storeRepository.delete(store.id.toString());
-        }
-
-        const employee = await this.employeeRepository.findByUserId(id);
-
-        if (employee) {
-          await this.employeeRepository.delete(employee.id.toString());
-        }
+      if (storeExisting) {
+        await this.storeRepository.delete(storeExisting.id.toString());
       }
-      return right({ user });
-    } catch (error) {
-      return left(error as Error);
+
+      const employ = await this.employeeRepository.findById(user.id.toString());
+
+      if (!employ) {
+        const employee = Employee.create({
+          employeeId: user.id.toString(),
+          storeId: store?.id.toString(),
+          typeUser: "employeeStore",
+          status: "pending",
+          createdAt: new Date(),
+        });
+
+        await this.employeeRepository.create(employee);
+
+        const notification = Notification.create({
+          userId: store.creatorId,
+          title: "New notification",
+          content: "An person would like work with you",
+          status: "unviewed",
+          createdAt: new Date(),
+        });
+
+        await this.notifyRepository.create(notification);
+      } else {
+        return left(new Error("please, wait a response from store."));
+      }
     }
+
+    if (user.typeUser === "user") {
+      const store = await this.storeRepository.findByUserId(id);
+
+      if (store) {
+        await this.storeRepository.delete(store.id.toString());
+      }
+
+      const employee = await this.employeeRepository.findByUserId(id);
+
+      if (employee) {
+        await this.employeeRepository.delete(employee.id.toString());
+      }
+    }
+    return right({ user });
   }
 }

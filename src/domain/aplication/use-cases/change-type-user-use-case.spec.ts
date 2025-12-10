@@ -8,11 +8,12 @@ import { ChangeTypeUserUseCase } from "./change-type-user-use-case";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
 import { MakeEmploy } from "../../../../test/factories/make-employ";
+import { InMemoryNotificationRepository } from "../../../../test/in-memory-repository/in-memory-notification-repository";
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let inMemoryStoreRepository: InMemoryStoreRepository;
 let inMemoryEmployeeRepository: InMemoryEmployeeRepository;
-
+let notificationRepository: InMemoryNotificationRepository;
 let sut: ChangeTypeUserUseCase;
 
 describe("Edit user", () => {
@@ -20,17 +21,24 @@ describe("Edit user", () => {
     inMemoryUserRepository = new InMemoryUserRepository();
     inMemoryStoreRepository = new InMemoryStoreRepository();
     inMemoryEmployeeRepository = new InMemoryEmployeeRepository();
+    notificationRepository = new InMemoryNotificationRepository();
 
     sut = new ChangeTypeUserUseCase(
       inMemoryUserRepository,
       inMemoryEmployeeRepository,
-      inMemoryStoreRepository
+      inMemoryStoreRepository,
+      notificationRepository
     );
   });
 
   it("should be able edit type a user to employeeStore and create automaticly employee", async () => {
     const user = MakeUser({});
     inMemoryUserRepository.create(user);
+
+    const storeFromUser = MakeStore({
+      creatorId: user.id.toString(),
+    });
+    inMemoryStoreRepository.create(storeFromUser);
 
     const store = MakeStore({});
     inMemoryStoreRepository.create(store);
@@ -40,8 +48,10 @@ describe("Edit user", () => {
       typeUser: "employeeStore",
       storeName: store.storeName,
     });
-
+    
+    expect(inMemoryStoreRepository.items).toHaveLength(1)
     expect(inMemoryEmployeeRepository.items).toHaveLength(1);
+    expect(notificationRepository.items).toHaveLength(1);
     expect(result.isRight()).toBe(true);
   });
 
