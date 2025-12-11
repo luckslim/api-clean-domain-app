@@ -7,10 +7,9 @@ import type { employeeRepository } from "../../repositories/employee-repository"
 import { Employee } from "@/domain/enterprise/employee-store-entity";
 import type { storeRepository } from "../../repositories/store-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import { CreateNotificationUseCase } from "../notification/create-notification-use-case";
+import { ResponseStoreError } from "@/core/errors/response-store-error";
 import type { NotificationRepository } from "../../repositories/notification-repository";
 import { Notification } from "@/domain/enterprise/notification-entity";
-import { ResponseStoreError } from "@/core/errors/response-store-error";
 
 interface ChangeTypeUserRequest {
   id: string; //id from user
@@ -25,7 +24,7 @@ export class ChangeTypeUserUseCase {
     private userRepository: userRepository,
     private employeeRepository: employeeRepository,
     private storeRepository: storeRepository,
-    private notifyUseCase: CreateNotificationUseCase
+    private notifyRepository: NotificationRepository
   ) {}
   async execute({
     id,
@@ -60,7 +59,7 @@ export class ChangeTypeUserUseCase {
       if (!employ) {
         const employee = Employee.create({
           employeeId: user.id.toString(),
-          storeId: store?.id.toString(),
+          storeId: store.id.toString(),
           typeUser: "employeeStore",
           status: "pending",
           createdAt: new Date(),
@@ -68,12 +67,14 @@ export class ChangeTypeUserUseCase {
 
         await this.employeeRepository.create(employee);
 
-        await this.notifyUseCase.execute({
+        const notify = Notification.create({
           userId: store.creatorId,
           title: "New notification",
           content: "An person would like work with you",
           status: "unviewed",
+          createdAt: new Date(),
         });
+        await this.notifyRepository.create(notify);
       } else {
         return left(new ResponseStoreError());
       }

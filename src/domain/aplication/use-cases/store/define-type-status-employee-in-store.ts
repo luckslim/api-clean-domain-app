@@ -3,9 +3,11 @@ import type { Employee } from "@/domain/enterprise/employee-store-entity";
 import type { employeeRepository } from "../../repositories/employee-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 import type { StatusTypeProps } from "@/core/types/type-status";
-import type { CreateEmployUseCase } from "./create-employ-aproved";
-import type { CreateNotificationUseCase } from "../notification/create-notification-use-case";
 import type { storeRepository } from "../../repositories/store-repository";
+import type { NotificationRepository } from "../../repositories/notification-repository";
+import { Notification } from "@/domain/enterprise/notification-entity";
+import type { employAprovedRepository } from "../../repositories/employ-aproved-repository";
+import { Employ } from "@/domain/enterprise/employ-entity";
 
 interface DefineTypeStatusEmployRequest {
   id: string; // id from employee
@@ -21,8 +23,8 @@ export class DefineTypeStatusEmployUseCase {
   constructor(
     private employRepository: employeeRepository,
     private storeRepository: storeRepository,
-    private createEmployUseCase: CreateEmployUseCase,
-    private notificationUseCase: CreateNotificationUseCase
+    private employAprovedRepository: employAprovedRepository,
+    private notifyRepository: NotificationRepository
   ) {}
   async execute({
     id,
@@ -35,7 +37,7 @@ export class DefineTypeStatusEmployUseCase {
     }
 
     const store = await this.storeRepository.findById(employ.storeId);
-    
+
     if (!store) {
       return left(new ResourceNotFoundError());
     }
@@ -43,28 +45,34 @@ export class DefineTypeStatusEmployUseCase {
     employ.status = status;
 
     if (employ.status === "Aproved") {
-      await this.createEmployUseCase.execute({
-        storeId: employ.storeId,
+      const employAproved = Employ.create({
+        storeId: store.id.toString(),
         userId: employ.employeeId,
         disponibility: "indisponible",
         score: 0,
+        createdAt: new Date(),
       });
+      await this.employAprovedRepository.create(employAproved);
 
-      await this.notificationUseCase.execute({
-        userId: id,
-        title: `New notification from ${store.storeName}`,
+      const notify = Notification.create({
+        userId: employ.employeeId,
+        title: `new notification from ${store.storeName}`,
         content: "You were aproved for work.",
         status: "unviewed",
+        createdAt: new Date(),
       });
+      await this.notifyRepository.create(notify);
     }
 
     if (employ.status === "Reject") {
-      await this.notificationUseCase.execute({
-        userId: id,
-        title: `New notification from ${store.storeName}`,
+      const notify = Notification.create({
+        userId: employ.employeeId,
+        title: `new notification from ${store.storeName}`,
         content: "You were rejected for work.",
         status: "unviewed",
+        createdAt: new Date(),
       });
+      await this.notifyRepository.create(notify);
     }
 
     return right({ employ });
