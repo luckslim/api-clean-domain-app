@@ -1,10 +1,10 @@
 import { left, right, type Either } from "@/core/either";
 import type { WrongCredentialError } from "@/core/errors/wrong-credentials-error";
 import { User } from "@/domain/enterprise/user-entity";
-import type { userRepository } from "../repositories/user-repository";
 import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { UserNameAlreadyExistError } from "@/core/errors/username-already-exist-error";
-import type { HashGenerator } from "../cryptography/hash-generator";
+import type { userRepository } from "../../repositories/user-repository";
+import type { HashGenerator } from "../../cryptography/hash-generator";
 
 interface CreateUserRequest {
   name: string;

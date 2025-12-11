@@ -1,10 +1,8 @@
-import { left, right, type Either } from "@/core/either";
+import { right, type Either } from "@/core/either";
 import type { NotAllowedError } from "@/core/errors/not-allowed-error";
 import type { NotificationTypeProps } from "@/core/types/type-notification";
 import { Notification } from "@/domain/enterprise/notification-entity";
 import type { NotificationRepository } from "../../repositories/notification-repository";
-import type { userRepository } from "../../repositories/user-repository";
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 
 interface CreateNotificationRequest {
   userId: string;
@@ -21,7 +19,6 @@ type CreateNotificationResponse = Either<
 export class CreateNotificationUseCase {
   constructor(
     private notificationRepository: NotificationRepository,
-    private userRepository: userRepository
   ) {}
   async execute({
     userId,
@@ -29,11 +26,6 @@ export class CreateNotificationUseCase {
     content,
     status,
   }: CreateNotificationRequest): Promise<CreateNotificationResponse> {
-    const user = await this.userRepository.findById(userId);
-
-    if (!user) {
-      return left(new ResourceNotFoundError());
-    }
     
     const notify = Notification.create({
       userId,

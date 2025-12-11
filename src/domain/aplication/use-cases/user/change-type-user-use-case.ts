@@ -7,9 +7,10 @@ import type { employeeRepository } from "../../repositories/employee-repository"
 import { Employee } from "@/domain/enterprise/employee-store-entity";
 import type { storeRepository } from "../../repositories/store-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import type { CreateNotificationUseCase } from "../notification/create-notification-use-case";
+import { CreateNotificationUseCase } from "../notification/create-notification-use-case";
 import type { NotificationRepository } from "../../repositories/notification-repository";
 import { Notification } from "@/domain/enterprise/notification-entity";
+import { ResponseStoreError } from "@/core/errors/response-store-error";
 
 interface ChangeTypeUserRequest {
   id: string; //id from user
@@ -24,7 +25,7 @@ export class ChangeTypeUserUseCase {
     private userRepository: userRepository,
     private employeeRepository: employeeRepository,
     private storeRepository: storeRepository,
-    private notifyRepository: NotificationRepository
+    private notifyUseCase: CreateNotificationUseCase
   ) {}
   async execute({
     id,
@@ -67,17 +68,14 @@ export class ChangeTypeUserUseCase {
 
         await this.employeeRepository.create(employee);
 
-        const notification = Notification.create({
+        await this.notifyUseCase.execute({
           userId: store.creatorId,
           title: "New notification",
           content: "An person would like work with you",
           status: "unviewed",
-          createdAt: new Date(),
         });
-
-        await this.notifyRepository.create(notification);
       } else {
-        return left(new Error("please, wait a response from store."));
+        return left(new ResponseStoreError());
       }
     }
 

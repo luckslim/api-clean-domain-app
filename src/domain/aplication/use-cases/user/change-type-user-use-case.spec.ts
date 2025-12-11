@@ -9,11 +9,13 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
 import { MakeEmploy } from "../../../../../test/factories/make-employ";
 import { InMemoryNotificationRepository } from "../../../../../test/in-memory-repository/in-memory-notification-repository";
+import { CreateNotificationUseCase } from "../notification/create-notification-use-case";
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let inMemoryStoreRepository: InMemoryStoreRepository;
 let inMemoryEmployeeRepository: InMemoryEmployeeRepository;
-let notificationRepository: InMemoryNotificationRepository;
+let inMemoryNotificationRepository: InMemoryNotificationRepository;
+let notifyUseCase: CreateNotificationUseCase;
 let sut: ChangeTypeUserUseCase;
 
 describe("Edit user", () => {
@@ -21,13 +23,16 @@ describe("Edit user", () => {
     inMemoryUserRepository = new InMemoryUserRepository();
     inMemoryStoreRepository = new InMemoryStoreRepository();
     inMemoryEmployeeRepository = new InMemoryEmployeeRepository();
-    notificationRepository = new InMemoryNotificationRepository();
+    inMemoryNotificationRepository = new InMemoryNotificationRepository();
+    notifyUseCase = new CreateNotificationUseCase(
+      inMemoryNotificationRepository
+    );
 
     sut = new ChangeTypeUserUseCase(
       inMemoryUserRepository,
       inMemoryEmployeeRepository,
       inMemoryStoreRepository,
-      notificationRepository
+      notifyUseCase
     );
   });
 
@@ -51,7 +56,7 @@ describe("Edit user", () => {
 
     expect(inMemoryStoreRepository.items).toHaveLength(1);
     expect(inMemoryEmployeeRepository.items).toHaveLength(1);
-    expect(notificationRepository.items).toHaveLength(1);
+    expect(inMemoryNotificationRepository.items).toHaveLength(1)
     expect(result.isRight()).toBe(true);
   });
 

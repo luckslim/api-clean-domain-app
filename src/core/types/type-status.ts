@@ -1,1 +1,1 @@
-export type StatusTypeProps = "Aproved" | "Recused" | "pending";
+export type StatusTypeProps = "Aproved" | "Reject" | "pending";

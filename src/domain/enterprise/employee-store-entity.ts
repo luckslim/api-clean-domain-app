@@ -4,7 +4,7 @@ import type { StatusTypeProps } from "@/core/types/type-status";
 import type { UserTypeProps } from "@/core/types/type-user";
 
 export interface EmployProps {
-  storeId: string | undefined;
+  storeId: string;
   employeeId: string | undefined;
   typeUser: UserTypeProps;
   status: StatusTypeProps;
