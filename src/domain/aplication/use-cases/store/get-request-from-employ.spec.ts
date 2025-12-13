@@ -1,6 +1,6 @@
 import { InMemoryEmployeeRepository } from "../../../../../test/in-memory-repository/in-memory-employ-repository";
 import { MakeEmploy } from "../../../../../test/factories/make-employ";
-import { RequestFromEmployUseCase } from "./request-from-employ";
+import { RequestFromEmployUseCase } from "./get-request-from-employ";
 import { MakeStore } from "../../../../../test/factories/make-store";
 
 let inMemoryEmployeeRepository: InMemoryEmployeeRepository;

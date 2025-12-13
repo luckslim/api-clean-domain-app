@@ -9,11 +9,14 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
 import { MakeEmploy } from "../../../../../test/factories/make-employ";
 import { InMemoryNotificationRepository } from "../../../../../test/in-memory-repository/in-memory-notification-repository";
+import { InMemoryEmployRepository } from "../../../../../test/in-memory-repository/in-memory-employ-aproved-repository";
+import { MakeEmployAproved } from "../../../../../test/factories/make-employ-aproved";
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let inMemoryStoreRepository: InMemoryStoreRepository;
 let inMemoryEmployeeRepository: InMemoryEmployeeRepository;
 let inMemoryNotificationRepository: InMemoryNotificationRepository;
+let inMemoryEmployRepository: InMemoryEmployRepository;
 let sut: ChangeTypeUserUseCase;
 
 describe("Edit user", () => {
@@ -22,12 +25,14 @@ describe("Edit user", () => {
     inMemoryStoreRepository = new InMemoryStoreRepository();
     inMemoryEmployeeRepository = new InMemoryEmployeeRepository();
     inMemoryNotificationRepository = new InMemoryNotificationRepository();
+    inMemoryEmployRepository = new InMemoryEmployRepository();
 
     sut = new ChangeTypeUserUseCase(
       inMemoryUserRepository,
       inMemoryEmployeeRepository,
       inMemoryStoreRepository,
-      inMemoryNotificationRepository
+      inMemoryNotificationRepository,
+      inMemoryEmployRepository
     );
   });
 
@@ -69,6 +74,11 @@ describe("Edit user", () => {
     });
     inMemoryEmployeeRepository.create(employee);
 
+    const employ = MakeEmployAproved({
+      userId: user.id.toString()
+    });
+    inMemoryEmployRepository.create(employ);
+
     const result = await sut.execute({
       id: user.id.toString(),
       typeUser: "user",
@@ -77,6 +87,7 @@ describe("Edit user", () => {
     expect(result.isRight()).toBe(true);
     expect(inMemoryStoreRepository.items).toHaveLength(0);
     expect(inMemoryEmployeeRepository.items).toHaveLength(0);
+    expect(inMemoryEmployRepository.items).toHaveLength(0);
   });
 
   it("should not be able edit type from user with another Id", async () => {

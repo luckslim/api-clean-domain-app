@@ -23,10 +23,12 @@
 - uma novo registro é criado em outra tabela (employ) em definitivo. -(ok)
 - se for reprovado, esse pedido deve ser deixado em definitivo com o status: rejected, assim esse usuario nao conseque mais enviar repetidamente o pedido para a loja. uma notificação deve ser enviada ao usuario relatando que a loja recusou o pedido.- (ok)
 
-### gerenciar funcionarios
-
+### gerenciar loja 
+- deve existir uma pagina para definir status de loja(aberto/fechado).
+- deve existir configurações de pagamento pelo app.
+- deve existir a opção do criador de editar dados da loja.
 - deve existir uma pagina de gestao de funcionarios
-- devem ser exibidos somente funcionarios aprovados para trabalhar na loja da tabela (employeeAprovedStore).
+- devem ser exibidos somente funcionarios aprovados para trabalhar na loja da tabela (employeeAprovedStore).-(ok)
 - a loja deverá definir a disponibilidade de cada funcionário
 
 ## user

@@ -32,6 +32,7 @@ describe("get store", () => {
     });
 
     expect(result.isRight()).toBe(true);
+    expect(inMemoryStoreRepository.items).toHaveLength(1);
   });
 
   it("should not be able get a store whith another creatorId", async () => {

@@ -10,6 +10,7 @@ import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 import { ResponseStoreError } from "@/core/errors/response-store-error";
 import type { NotificationRepository } from "../../repositories/notification-repository";
 import { Notification } from "@/domain/enterprise/notification-entity";
+import type { employAprovedRepository } from "../../repositories/employ-aproved-repository";
 
 interface ChangeTypeUserRequest {
   id: string; //id from user
@@ -24,7 +25,8 @@ export class ChangeTypeUserUseCase {
     private userRepository: userRepository,
     private employeeRepository: employeeRepository,
     private storeRepository: storeRepository,
-    private notifyRepository: NotificationRepository
+    private notifyRepository: NotificationRepository,
+    private employRepository: employAprovedRepository
   ) {}
   async execute({
     id,
@@ -69,8 +71,8 @@ export class ChangeTypeUserUseCase {
 
         const notify = Notification.create({
           userId: store.creatorId,
-          title: "New notification",
-          content: "An person would like work with you",
+          title: `New notification from user ${user.name}`,
+          content: "i would like work with you",
           status: "unviewed",
           createdAt: new Date(),
         });
@@ -91,6 +93,12 @@ export class ChangeTypeUserUseCase {
 
       if (employee) {
         await this.employeeRepository.delete(employee.id.toString());
+      }
+
+      const employ = await this.employRepository.findByUserId(id);
+
+      if (employ) {
+        await this.employRepository.delete(employ.id.toString());
       }
     }
     return right({ user });
