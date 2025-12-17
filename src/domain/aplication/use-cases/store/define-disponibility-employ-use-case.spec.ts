@@ -5,7 +5,7 @@ import { DefineDisponibilityEmployUseCase } from "./define-disponibility-employ-
 let inMemoryEmployRepository : InMemoryEmployRepository;
 let sut : DefineDisponibilityEmployUseCase;
 
-describe("definedisponibility employ", () => {
+describe("define disponibility employ", () => {
   beforeEach(() => {
     inMemoryEmployRepository = new InMemoryEmployRepository();
 

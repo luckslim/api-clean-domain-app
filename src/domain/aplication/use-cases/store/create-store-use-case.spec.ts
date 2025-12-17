@@ -1,4 +1,3 @@
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { CreateStoreUseCase } from "./create-store-use-case";
 import { FakeHash } from "../../../../../test/cryptography/fake-hash";
 import { MakeStore } from "../../../../../test/factories/make-store";

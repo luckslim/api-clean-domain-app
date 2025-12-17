@@ -3,11 +3,11 @@ import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import type { Optional } from "@/core/types/optional";
 import type { PaymentTypeProps } from "@/core/types/type-payment";
 
-interface ScheduleProps {
-  creatorId: UniqueEntityId;
-  employeeId: UniqueEntityId;
+export interface ScheduleProps {
+  storeId: string;
+  employId: string;
   service: string;
-  typePayment: PaymentTypeProps;
+  typePayment: string;
   price: number;
   time: string;
   date: string;
@@ -16,11 +16,11 @@ interface ScheduleProps {
 }
 
 export class Schedule extends Entity<ScheduleProps> {
-  get creatorId() {
-    return this.props.creatorId;
+  get storeId() {
+    return this.props.storeId;
   }
-  get employeeId() {
-    return this.props.employeeId;
+  get employId() {
+    return this.props.employId;
   }
   get service() {
     return this.props.service;
@@ -34,6 +34,9 @@ export class Schedule extends Entity<ScheduleProps> {
   get time() {
     return this.props.time;
   }
+  get day() {
+    return this.props.date;
+  }
   get date() {
     return this.props.date;
   }
@@ -44,24 +47,25 @@ export class Schedule extends Entity<ScheduleProps> {
     return this.props.modifiedAt;
   }
 
-  set time(time : string) {
-    this.props.time = time
+  set time(time: string) {
+    this.props.time = time;
   }
   set date(date: string) {
     this.props.date;
   }
-  set modifiedAt( modifiedAt : Date | boolean) {
-    this.props.modifiedAt = modifiedAt
+  set modifiedAt(modifiedAt: Date | boolean) {
+    this.props.modifiedAt = modifiedAt;
   }
 
   static create(
-    props: Optional<ScheduleProps, "modifiedAt">,
+    props: Optional<ScheduleProps, "modifiedAt" | "createdAt">,
     id?: UniqueEntityId
   ) {
     const schedule = new Schedule(
       {
         ...props,
         modifiedAt: props.modifiedAt ?? false,
+        createdAt: props.createdAt ?? new Date(),
       },
       id
     );
