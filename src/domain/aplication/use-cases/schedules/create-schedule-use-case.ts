@@ -14,6 +14,7 @@ import type { timeTypeProps } from "@/core/types/type-time";
 interface CreateScheduleRequest {
   storeId: string;
   employId: string;
+  userId: string;
   service: string;
   payment: string;
   price: number;
@@ -36,6 +37,7 @@ export class CreateScheduleUseCase {
   async execute({
     storeId,
     employId,
+    userId,
     service,
     payment,
     price,
@@ -83,13 +85,14 @@ export class CreateScheduleUseCase {
     const schedule = Schedule.create({
       storeId,
       employId,
+      userId,
       service,
       typePayment: payment,
       price,
       time,
       date,
     });
-    
+
     await this.scheduleRepository.create(schedule);
     return right({});
   }

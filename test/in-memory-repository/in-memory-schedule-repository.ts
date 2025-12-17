@@ -3,22 +3,30 @@ import type { Schedule } from "@/domain/enterprise/schedules-entity";
 
 export class InMemoryScheduleRepository implements scheduleRepository {
   public items: Schedule[] = [];
-  
+
   async create(schedule: Schedule): Promise<Schedule> {
     this.items.push(schedule);
     return schedule;
   }
-  
-  findByTime(time: string): Promise<Schedule | null> {
-    throw new Error("Method not implemented.");
-  }
 
   async findById(id: string): Promise<Schedule | null> {
-    throw new Error("Method not implemented.");
+    const schedule = this.items.find((item) => item.id.toString() === id);
+    if (!schedule) {
+      return null;
+    }
+    return schedule;
   }
 
   async findManyByUserId(id: string): Promise<Schedule[] | null> {
-    throw new Error("Method not implemented.");
+    const schedule = this.items.filter(
+      (items) => items.employId.toString() === id
+    );
+
+    if (!schedule) {
+      return null;
+    }
+
+    return schedule;
   }
 
   async findManyTimeExistingByStoreId(id: string): Promise<Schedule[] | null> {
@@ -41,11 +49,8 @@ export class InMemoryScheduleRepository implements scheduleRepository {
     return schedule;
   }
 
-  async save(schedule: Schedule): Promise<Schedule> {
-    throw new Error("Method not implemented.");
-  }
-
   async delete(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    const itemIndex = this.items.findIndex((item) => item.id.toString() === id);
+    this.items.splice(itemIndex, 1);
   }
 }

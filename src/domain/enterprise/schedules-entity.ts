@@ -6,6 +6,7 @@ import type { PaymentTypeProps } from "@/core/types/type-payment";
 export interface ScheduleProps {
   storeId: string;
   employId: string;
+  userId: string;
   service: string;
   typePayment: string;
   price: number;
@@ -21,6 +22,9 @@ export class Schedule extends Entity<ScheduleProps> {
   }
   get employId() {
     return this.props.employId;
+  }
+  get userId() {
+    return this.props.userId;
   }
   get service() {
     return this.props.service;

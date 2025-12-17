@@ -4,7 +4,7 @@ import type { timeTypeProps } from "@/core/types/type-time";
 
 export interface TimeProps {
   storeId: string;
-  time: timeTypeProps;
+  time: string;
   createdAt: Date;
 }
 

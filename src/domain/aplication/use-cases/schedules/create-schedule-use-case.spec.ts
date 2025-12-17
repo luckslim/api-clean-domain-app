@@ -9,6 +9,7 @@ import { MakeStore } from "../../../../../test/factories/make-store";
 import { MakeTime } from "../../../../../test/factories/make-time";
 import { MakeEmployAproved } from "../../../../../test/factories/make-employ-aproved";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 let inMemoryStoreRepository: InMemoryStoreRepository;
 let inMemoryEmployRepository: InMemoryEmployRepository;
@@ -57,14 +58,15 @@ describe("Register schedule", () => {
     const result = await sut.execute({
       storeId: store.id.toString(),
       employId: employ.id.toString(),
+      userId: new UniqueEntityId().toString(),
       service: "tesoura",
       payment: "credit",
       price: 40,
       time: "10:00",
       date: "22/08/2025",
     });
-    expect(result.isRight()).toBe(true)
-    expect(inMemoryScheduleRepository.items).toHaveLength(2)
+    expect(result.isRight()).toBe(true);
+    expect(inMemoryScheduleRepository.items).toHaveLength(2);
   });
 
   it("should not be able create a schedule already existing", async () => {
@@ -90,13 +92,14 @@ describe("Register schedule", () => {
     const result = await sut.execute({
       storeId: store.id.toString(),
       employId: employ.id.toString(),
+      userId: new UniqueEntityId().toString(),
       service: "tesoura",
       payment: "credit",
       price: 40,
       time: "10:00",
       date: "22/08/2025",
     });
-    expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(NotAllowedError)
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(NotAllowedError);
   });
 });
