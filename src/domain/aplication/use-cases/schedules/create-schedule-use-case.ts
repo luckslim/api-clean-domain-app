@@ -9,7 +9,9 @@ import { TimeListedError } from "@/core/errors/time-listed-error";
 import type { dayRepository } from "../../repositories/day-repository";
 import { DayListedError } from "@/core/errors/day-listed-error";
 import type { scheduleRepository } from "../../repositories/schedule-repository";
-import type { timeTypeProps } from "@/core/types/type-time";
+import type { NotificationRepository } from "../../repositories/notification-repository";
+import { Notification } from "@/domain/enterprise/notification-entity";
+import type { userRepository } from "../../repositories/user-repository";
 
 interface CreateScheduleRequest {
   storeId: string;
@@ -32,7 +34,9 @@ export class CreateScheduleUseCase {
     private employRepository: employAprovedRepository,
     private timeRepository: timeRepository,
     private dayRepository: dayRepository,
-    private scheduleRepository: scheduleRepository
+    private scheduleRepository: scheduleRepository,
+    private notification: NotificationRepository,
+    private userRepositoty: userRepository
   ) {}
   async execute({
     storeId,
@@ -94,6 +98,32 @@ export class CreateScheduleUseCase {
     });
 
     await this.scheduleRepository.create(schedule);
+
+    const user = await this.userRepositoty.findById(userId);
+
+    if (!user) {
+      return left(new ResourceNotFoundError("you is not authenticated"));
+    }
+
+    const notifyStore = Notification.create({
+      userId: store.creatorId,
+      title: `you have a notification from ${user.name}`,
+      content: `${user.name} made a schedule at your store.`,
+      status: "unviewed",
+      createdAt: new Date(),
+    });
+    await this.notification.create(notifyStore);
+
+
+    const notifyEmploy = Notification.create({
+      userId: employId,
+      title: `you have a notification from ${user.name}`,
+      content: `${user.name} made a schedule with you`,
+      status: "unviewed",
+      createdAt: new Date(),
+    });
+    await this.notification.create(notifyEmploy);
+
     return right({});
   }
 }

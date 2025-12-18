@@ -10,12 +10,17 @@ import { MakeTime } from "../../../../../test/factories/make-time";
 import { MakeEmployAproved } from "../../../../../test/factories/make-employ-aproved";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
+import { InMemoryNotificationRepository } from "../../../../../test/in-memory-repository/in-memory-notification-repository";
+import { MakeUser } from "../../../../../test/factories/make-user";
 
 let inMemoryStoreRepository: InMemoryStoreRepository;
 let inMemoryEmployRepository: InMemoryEmployRepository;
 let inMemoryTimeRepository: InMemoryTimeStoreRepository;
 let inMemoryDayRepository: InMemoryDayStoreRepository;
 let inMemoryScheduleRepository: InMemoryScheduleRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
+let notificationRepository: InMemoryNotificationRepository;
 
 let sut: CreateScheduleUseCase;
 
@@ -26,16 +31,23 @@ describe("Register schedule", () => {
     inMemoryEmployRepository = new InMemoryEmployRepository();
     inMemoryTimeRepository = new InMemoryTimeStoreRepository();
     inMemoryDayRepository = new InMemoryDayStoreRepository();
+    inMemoryUserRepository = new InMemoryUserRepository();
+    notificationRepository = new InMemoryNotificationRepository();
     sut = new CreateScheduleUseCase(
       inMemoryStoreRepository,
       inMemoryEmployRepository,
       inMemoryTimeRepository,
       inMemoryDayRepository,
-      inMemoryScheduleRepository
+      inMemoryScheduleRepository,
+      notificationRepository,
+      inMemoryUserRepository
     );
   });
 
   it("should be able create a schedule", async () => {
+    const user = MakeUser({ name: "john Snow" });
+    inMemoryUserRepository.create(user);
+
     const store = MakeStore({});
 
     inMemoryStoreRepository.create(store);
@@ -58,18 +70,23 @@ describe("Register schedule", () => {
     const result = await sut.execute({
       storeId: store.id.toString(),
       employId: employ.id.toString(),
-      userId: new UniqueEntityId().toString(),
+      userId: user.id.toString(),
       service: "tesoura",
       payment: "credit",
       price: 40,
       time: "10:00",
       date: "22/08/2025",
     });
+
     expect(result.isRight()).toBe(true);
     expect(inMemoryScheduleRepository.items).toHaveLength(2);
+    expect(notificationRepository.items).toHaveLength(2);
   });
 
   it("should not be able create a schedule already existing", async () => {
+    const user = MakeUser({ name: "john Snow" });
+    inMemoryUserRepository.create(user);
+
     const store = MakeStore({});
 
     inMemoryStoreRepository.create(store);
@@ -92,7 +109,7 @@ describe("Register schedule", () => {
     const result = await sut.execute({
       storeId: store.id.toString(),
       employId: employ.id.toString(),
-      userId: new UniqueEntityId().toString(),
+      userId: user.id.toString(),
       service: "tesoura",
       payment: "credit",
       price: 40,

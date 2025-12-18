@@ -4,10 +4,13 @@ import { MakeStore } from "../../../../../test/factories/make-store";
 import { InMemoryStoreRepository } from "../../../../../test/in-memory-repository/in-memory-store-repository";
 import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
 import { MakeUser } from "../../../../../test/factories/make-user";
+import { InMemoryEmployRepository } from "../../../../../test/in-memory-repository/in-memory-employ-aproved-repository";
 
 let inMemoryStoreRepository: InMemoryStoreRepository;
 
 let inMemoryUserRepository: InMemoryUserRepository;
+
+let inMemoryEmployRepository : InMemoryEmployRepository
 
 let hashGenerator: FakeHash;
 
@@ -19,10 +22,13 @@ describe("Register store", () => {
 
     inMemoryUserRepository = new InMemoryUserRepository();
 
+    inMemoryEmployRepository = new  InMemoryEmployRepository()
+
     hashGenerator = new FakeHash();
     sut = new CreateStoreUseCase(
       inMemoryUserRepository,
-      inMemoryStoreRepository
+      inMemoryStoreRepository,
+      inMemoryEmployRepository
     );
   });
 
@@ -44,6 +50,7 @@ describe("Register store", () => {
     });
 
     expect(result.isRight()).toBe(true);
+    expect(inMemoryEmployRepository.items).toHaveLength(1)
   });
 
   it("should not be able create a store with typeUser incorrect", async () => {
