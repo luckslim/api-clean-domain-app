@@ -21,8 +21,20 @@ export class InMemoryDayStoreRepository implements dayRepository {
     }
     return day;
   }
+  async findManyByStoreId(id: string): Promise<Day[] | null> {
+    const day = this.items.filter((item) => item.storeId === id);
+    if (!day) {
+      return null;
+    }
+    return day;
+  }
   async delete(id: string): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === id);
     this.items.splice(itemIndex, 1);
+  }
+
+  async deleteManyByStoreId(id: string[]): Promise<void> {
+    const newItems = this.items.filter((item) => !id.includes(item.storeId));
+    this.items = newItems;
   }
 }

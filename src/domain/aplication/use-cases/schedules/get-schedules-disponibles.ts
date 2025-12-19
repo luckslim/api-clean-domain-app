@@ -41,7 +41,7 @@ export class GetScheduleDisponibleUseCase {
     }
 
     const employExisting =
-      (await this.scheduleRepository.findManyByUserId(employ.id.toString())) ??
+      (await this.scheduleRepository.findManyByEmployId(employ.id.toString())) ??
       [];
 
     const dataExisting = employExisting.filter((item) => item.date === date);

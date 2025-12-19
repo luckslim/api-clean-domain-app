@@ -11,6 +11,9 @@ import { ResponseStoreError } from "@/core/errors/response-store-error";
 import type { NotificationRepository } from "../../repositories/notification-repository";
 import { Notification } from "@/domain/enterprise/notification-entity";
 import type { employAprovedRepository } from "../../repositories/employ-aproved-repository";
+import type { scheduleRepository } from "../../repositories/schedule-repository";
+import type { timeRepository } from "../../repositories/time-repository";
+import type { dayRepository } from "../../repositories/day-repository";
 
 interface ChangeTypeUserRequest {
   id: string; //id from user
@@ -26,7 +29,10 @@ export class ChangeTypeUserUseCase {
     private employeeRepository: employeeRepository,
     private storeRepository: storeRepository,
     private notifyRepository: NotificationRepository,
-    private employRepository: employAprovedRepository
+    private employRepository: employAprovedRepository,
+    private schedulesRepository: scheduleRepository,
+    private timeRepository: timeRepository,
+    private dayRepository: dayRepository
   ) {}
   async execute({
     id,
@@ -40,20 +46,80 @@ export class ChangeTypeUserUseCase {
     }
 
     user.typeUser = typeUser;
-
-    if (user.typeUser === "employeeStore") {
-      const store = await this.storeRepository.findByStoreName(storeName);
-
-      if (!store) {
-        return left(new ResourceNotFoundError());
-      }
-
-      const storeExisting = await this.storeRepository.findByUserId(
+    
+    if (user.typeUser === "creatorStore") {
+      //search schedules from user
+      const schedules = await this.schedulesRepository.findManyByUserId(
         user.id.toString()
       );
 
-      if (storeExisting) {
-        await this.storeRepository.delete(storeExisting.id.toString());
+      if (schedules != null) {
+        await this.schedulesRepository.deleteManyById(
+          schedules.map((item) => item.id.toString())
+        );
+      }
+
+      const employee = await this.employeeRepository.findByUserId(
+        user.id.toString()
+      );
+
+      if (employee != null) {
+        await this.employeeRepository.delete(employee.id.toString());
+      }
+
+      const employ = await this.employRepository.findByUserId(id);
+
+      if (employ != null) {
+        await this.employRepository.delete(employ.id.toString());
+      }
+    }
+
+    if (user.typeUser === "employeeStore") {
+      //search storeName existing
+      const storeNameExisting = await this.storeRepository.findByStoreName(
+        storeName
+      );
+
+      if (!storeNameExisting) {
+        return left(new ResourceNotFoundError());
+      }
+
+      //search if user is creator from store
+      const store = await this.storeRepository.findByUserId(user.id.toString());
+
+      if (store != null) {
+        const time = await this.timeRepository.findManyByStoreId(
+          store.id.toString()
+        );
+
+        if (time != null) {
+          await this.timeRepository.deleteManyByStoreId(
+            time.map((item) => item.storeId)
+          );
+        }
+
+        const day = await this.dayRepository.findManyByStoreId(
+          store.id.toString()
+        );
+
+        if (day != null) {
+          await this.dayRepository.deleteManyByStoreId(
+            day.map((item) => item.storeId)
+          );
+        }
+
+        await this.storeRepository.delete(store.id.toString());
+      }
+
+      //search schedules from user
+      const schedules = await this.schedulesRepository.findManyByUserId(
+        user.id.toString()
+      );
+
+      if (schedules) {
+        await this.schedulesRepository.deleteManyById(
+          schedules.map((item) => item.id.toString())
+        );
       }
 
       const employ = await this.employeeRepository.findById(user.id.toString());
@@ -61,7 +127,7 @@ export class ChangeTypeUserUseCase {
       if (!employ) {
         const employee = Employee.create({
           employeeId: user.id.toString(),
-          storeId: store.id.toString(),
+          storeId: storeNameExisting.id.toString(),
           typeUser: "employeeStore",
           status: "pending",
           createdAt: new Date(),
@@ -70,7 +136,7 @@ export class ChangeTypeUserUseCase {
         await this.employeeRepository.create(employee);
 
         const notify = Notification.create({
-          userId: store.creatorId,
+          userId: storeNameExisting.creatorId,
           title: `New notification from user ${user.name}`,
           content: "i would like work with you",
           status: "unviewed",
@@ -83,13 +149,46 @@ export class ChangeTypeUserUseCase {
     }
 
     if (user.typeUser === "user") {
-      const store = await this.storeRepository.findByUserId(id);
+      const store = await this.storeRepository.findByUserId(user.id.toString());
 
-      if (store) {
+      if (store !== null) {
+        const time = await this.timeRepository.findManyByStoreId(
+          store.id.toString()
+        );
+
+        if (time != null) {
+          await this.timeRepository.deleteManyByStoreId(
+            time.map((item) => item.storeId)
+          );
+        }
+
+        const day = await this.dayRepository.findManyByStoreId(
+          store.id.toString()
+        );
+
+        if (day != null) {
+          await this.dayRepository.deleteManyByStoreId(
+            day.map((item) => item.storeId)
+          );
+        }
+
         await this.storeRepository.delete(store.id.toString());
       }
 
-      const employee = await this.employeeRepository.findByUserId(id);
+      //search schedules from user
+      const schedules = await this.schedulesRepository.findManyByUserId(
+        user.id.toString()
+      );
+
+      if (schedules) {
+        await this.schedulesRepository.deleteManyById(
+          schedules.map((item) => item.id.toString())
+        );
+      }
+
+      const employee = await this.employeeRepository.findByUserId(
+        user.id.toString()
+      );
 
       if (employee) {
         await this.employeeRepository.delete(employee.id.toString());
