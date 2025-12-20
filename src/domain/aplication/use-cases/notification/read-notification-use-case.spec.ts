@@ -1,6 +1,4 @@
 import { InMemoryNotificationRepository } from "../../../../../test/in-memory-repository/in-memory-notification-repository";
-import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
-import { MakeUser } from "../../../../../test/factories/make-user";
 import { ReadNotificationUseCase } from "./read-notification-use-case";
 import { MakeNotification } from "../../../../../test/factories/make-notification";
 

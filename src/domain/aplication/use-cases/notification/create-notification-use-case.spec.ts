@@ -1,6 +1,5 @@
 import { CreateNotificationUseCase } from "./create-notification-use-case";
 import { InMemoryNotificationRepository } from "../../../../../test/in-memory-repository/in-memory-notification-repository";
-import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
 import { MakeUser } from "../../../../../test/factories/make-user";
 
 let inMemoryNotificationRepository: InMemoryNotificationRepository;

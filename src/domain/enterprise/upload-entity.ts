@@ -1,13 +1,14 @@
 import { Entity } from "@/core/entities/entity";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-export interface FileProps {
+export interface UploadProps {
   userId: string;
   fileName: string;
   url: string;
+  body: Buffer;
 }
 
-export class File extends Entity<FileProps> {
+export class Upload extends Entity<UploadProps> {
   get userId() {
     return this.props.userId;
   }
@@ -16,19 +17,20 @@ export class File extends Entity<FileProps> {
     return this.props.fileName;
   }
 
+  get body() {
+    return this.props.body;
+  }
+
   get url() {
     return this.props.url;
   }
+
   set fileName(fileName: string) {
     this.props.fileName = fileName;
   }
 
-  set url(url: string) {
-    this.props.url = url;
-  }
-
-  static create(props: FileProps, id?: UniqueEntityId) {
-    const file = new File(props, id);
-    return file;
+  static create(props: UploadProps, id?: UniqueEntityId) {
+    const upload = new Upload(props, id);
+    return upload;
   }
 }

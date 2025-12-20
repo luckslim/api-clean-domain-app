@@ -37,8 +37,8 @@ export class CreateUserUseCase {
     if (userNameExisting) {
       return left(new UserNameAlreadyExistError());
     }
-    const passwordHashed = await this.hashGenerator.hash(password)
-    
+    const passwordHashed = await this.hashGenerator.hash(password);
+
     const user = User.create({
       name,
       userName,
