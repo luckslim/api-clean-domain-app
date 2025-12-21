@@ -26,6 +26,15 @@ export class InMemoryFileRepository implements fileRepository {
 
     return file;
   }
+  async findUrlByUserId(id: string): Promise<string | null> {
+    const file = this.items.find((item) => item.userId === id);
+
+    if (!file) {
+      return null;
+    }
+
+    return file.url;
+  }
 
   async delete(id: string): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === id);

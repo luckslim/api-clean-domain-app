@@ -4,5 +4,6 @@ export interface fileRepository {
   create(file: File): Promise<File>;
   findById(id: string): Promise<File | null>;
   findByUserId(id: string): Promise<File | null>;
+  findUrlByUserId(id: string): Promise<string | null>;
   delete(id: string): Promise<void>;
 }
