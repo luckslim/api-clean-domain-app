@@ -1,10 +1,10 @@
-import { left, right, type Either } from "@/core/either";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import type { storeRepository } from "../../repositories/store-repository";
-import type { dayTypeProps } from "@/core/types/type-day";
-import type { dayRepository } from "../../repositories/day-repository";
-import { Day } from "@/domain/enterprise/day-entity";
+import { left, right, type Either } from '@/core/either';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import type { storeRepository } from '../../repositories/store-repository';
+import type { dayTypeProps } from '@/core/types/type-day';
+import type { dayRepository } from '../../repositories/day-repository';
+import { Day } from '@/domain/enterprise/day-entity';
 
 interface DefineDayStoreRequest {
   id: string; // id from user
@@ -19,7 +19,7 @@ type DefineDayStoreResponse = Either<
 export class DefineDayStoreUseCase {
   constructor(
     private storeRepository: storeRepository,
-    private dayRepository: dayRepository
+    private dayRepository: dayRepository,
   ) {}
   async execute({
     id,

@@ -1,4 +1,4 @@
-import type { Employee } from "@/domain/enterprise/employee-store-entity";
+import type { Employee } from '@/domain/enterprise/employee-store-entity';
 
 export interface employeeRepository {
   create(employee: Employee): Promise<Employee>;

@@ -1,5 +1,5 @@
-import type { timeRepository } from "@/domain/aplication/repositories/time-repository";
-import type { Time } from "@/domain/enterprise/time-entity";
+import type { timeRepository } from '@/domain/aplication/repositories/time-repository';
+import type { Time } from '@/domain/enterprise/time-entity';
 
 export class InMemoryTimeStoreRepository implements timeRepository {
   public items: Time[] = [];
@@ -15,7 +15,7 @@ export class InMemoryTimeStoreRepository implements timeRepository {
     }
     return time;
   }
-  
+
   async findManyByStoreId(id: string): Promise<Time[] | null> {
     const time = this.items.filter((item) => item.storeId.toString() === id);
 

@@ -1,4 +1,4 @@
-import type { Employ } from "@/domain/enterprise/employ-entity";
+import { Employ } from '@/domain/enterprise/employ-entity';
 
 export interface employAprovedRepository {
   create(employ: Employ): Promise<Employ>;

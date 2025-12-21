@@ -1,1 +1,1 @@
-export type UserTypeProps = "creatorStore" | "user" | "employeeStore"
+export type UserTypeProps = 'creatorStore' | 'user' | 'employeeStore';

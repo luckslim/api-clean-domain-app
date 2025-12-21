@@ -1,1 +1,1 @@
-export type DisponibilityTypeProps = 'disponible' | 'indisponible'
+export type DisponibilityTypeProps = 'disponible' | 'indisponible';

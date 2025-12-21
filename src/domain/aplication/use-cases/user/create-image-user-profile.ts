@@ -1,13 +1,13 @@
-import { left, right, type Either } from "@/core/either";
-import type { WrongCredentialError } from "@/core/errors/wrong-credentials-error";
-import type { fileRepository } from "../../repositories/file-repository";
-import type { Uploader } from "../../storage/uploader";
-import type { userRepository } from "../../repositories/user-repository";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import { Upload } from "@/domain/enterprise/upload-entity";
-import { randomUUID } from "node:crypto";
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import { File } from "@/domain/enterprise/file-entity";
+import { left, right, type Either } from '@/core/either';
+import type { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
+import type { fileRepository } from '../../repositories/file-repository';
+import type { Uploader } from '../../storage/uploader';
+import type { userRepository } from '../../repositories/user-repository';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { Upload } from '@/domain/enterprise/upload-entity';
+import { randomUUID } from 'node:crypto';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { File } from '@/domain/enterprise/file-entity';
 
 interface UploadImageUserProfileRequest {
   userId: string;
@@ -24,7 +24,7 @@ export class UploadImageUserProfileUseCase {
   constructor(
     private fileRepository: fileRepository,
     private userRepository: userRepository,
-    private uploadStorage: Uploader
+    private uploadStorage: Uploader,
   ) {}
   async execute({
     userId,
@@ -34,13 +34,13 @@ export class UploadImageUserProfileUseCase {
     const user = await this.userRepository.findById(userId);
 
     if (!user) {
-      return left(new NotAllowedError("you is not authenticated"));
+      return left(new NotAllowedError('you is not authenticated'));
     }
 
-    const fileExisting = await this.fileRepository.findByUserId(userId)
-    
+    const fileExisting = await this.fileRepository.findByUserId(userId);
+
     if (fileExisting) {
-      return left(new NotAllowedError("file already exist"));
+      return left(new NotAllowedError('file already exist'));
     }
 
     const randomName = randomUUID();
@@ -55,7 +55,7 @@ export class UploadImageUserProfileUseCase {
     const currentUpload = await this.uploadStorage.upload(upload);
 
     if (!currentUpload) {
-      return left(new ResourceNotFoundError("upload failed"));
+      return left(new ResourceNotFoundError('upload failed'));
     } else {
       const file = File.create({
         fileName: upload.fileName,
@@ -66,6 +66,6 @@ export class UploadImageUserProfileUseCase {
       await this.fileRepository.create(file);
     }
 
-    return right({ response: "upload success" });
+    return right({ response: 'upload success' });
   }
 }

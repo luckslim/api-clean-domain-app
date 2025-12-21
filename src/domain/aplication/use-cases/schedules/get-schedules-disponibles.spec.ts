@@ -1,14 +1,15 @@
-import { MakeSchedule } from "../../../../../test/factories/make-schedule";
-import { MakeStore } from "../../../../../test/factories/make-store";
-import { MakeTime } from "../../../../../test/factories/make-time";
-import { MakeUser } from "../../../../../test/factories/make-user";
-import { InMemoryScheduleRepository } from "../../../../../test/in-memory-repository/in-memory-schedule-repository";
-import { InMemoryTimeStoreRepository } from "../../../../../test/in-memory-repository/in-memory-time-repository";
-import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
-import { GetScheduleDisponibleUseCase } from "./get-schedules-disponibles";import { InMemoryEmployRepository } from "../../../../../test/in-memory-repository/in-memory-employ-aproved-repository";
-import { MakeEmployAproved } from "../../../../../test/factories/make-employ-aproved";
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
+import { MakeSchedule } from '../../../../../test/factories/make-schedule';
+import { MakeStore } from '../../../../../test/factories/make-store';
+import { MakeTime } from '../../../../../test/factories/make-time';
+import { MakeUser } from '../../../../../test/factories/make-user';
+import { InMemoryScheduleRepository } from '../../../../../test/in-memory-repository/in-memory-schedule-repository';
+import { InMemoryTimeStoreRepository } from '../../../../../test/in-memory-repository/in-memory-time-repository';
+import { InMemoryUserRepository } from '../../../../../test/in-memory-repository/in-memory-user-repository';
+import { GetScheduleDisponibleUseCase } from './get-schedules-disponibles';
+import { InMemoryEmployRepository } from '../../../../../test/in-memory-repository/in-memory-employ-aproved-repository';
+import { MakeEmployAproved } from '../../../../../test/factories/make-employ-aproved';
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
 let inMemoryScheduleRepository: InMemoryScheduleRepository;
 let inMemoryUserRepositoy: InMemoryUserRepository;
@@ -16,7 +17,7 @@ let inMemoryTimeStoreRepository: InMemoryTimeStoreRepository;
 let inMemoryEmployRepository: InMemoryEmployRepository;
 let sut: GetScheduleDisponibleUseCase;
 
-describe("Get schedule", () => {
+describe('Get schedule', () => {
   beforeEach(() => {
     inMemoryScheduleRepository = new InMemoryScheduleRepository();
     inMemoryUserRepositoy = new InMemoryUserRepository();
@@ -26,11 +27,11 @@ describe("Get schedule", () => {
       inMemoryUserRepositoy,
       inMemoryEmployRepository,
       inMemoryScheduleRepository,
-      inMemoryTimeStoreRepository
+      inMemoryTimeStoreRepository,
     );
   });
 
-  it("should be able get schedules", async () => {
+  it('should be able get schedules', async () => {
     const employ = MakeEmployAproved({});
     inMemoryEmployRepository.create(employ);
 
@@ -52,7 +53,7 @@ describe("Get schedule", () => {
       const schedule = MakeSchedule({
         storeId: store.id.toString(),
         employId: employ.id.toString(),
-        date: "22/09/2025",
+        date: '22/09/2025',
         time: `${i}:00`,
       });
       inMemoryScheduleRepository.create(schedule);
@@ -62,12 +63,12 @@ describe("Get schedule", () => {
       storeId: store.id.toString(),
       userId: user.id.toString(),
       employId: employ.id.toString(),
-      date: "22/09/2025",
+      date: '22/09/2025',
     });
 
     expect(result.isRight()).toBe(true);
   });
-  it("should not be able get schedules with userId incorrect", async () => {
+  it('should not be able get schedules with userId incorrect', async () => {
     const employ = MakeEmployAproved({});
     inMemoryEmployRepository.create(employ);
 
@@ -89,7 +90,7 @@ describe("Get schedule", () => {
       const schedule = MakeSchedule({
         storeId: store.id.toString(),
         employId: employ.id.toString(),
-        date: "22/09/2025",
+        date: '22/09/2025',
         time: `${i}:00`,
       });
       inMemoryScheduleRepository.create(schedule);
@@ -99,10 +100,10 @@ describe("Get schedule", () => {
       storeId: store.id.toString(),
       userId: new UniqueEntityId().toString(),
       employId: employ.id.toString(),
-      date: "24/09/2025",
+      date: '24/09/2025',
     });
 
     expect(result.isLeft()).toBe(true);
-    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError);
   });
 });

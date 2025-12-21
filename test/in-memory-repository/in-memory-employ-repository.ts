@@ -1,5 +1,5 @@
-import type { employeeRepository } from "@/domain/aplication/repositories/employee-repository";
-import type { Employee } from "@/domain/enterprise/employee-store-entity";
+import type { employeeRepository } from '@/domain/aplication/repositories/employee-repository';
+import type { Employee } from '@/domain/enterprise/employee-store-entity';
 
 export class InMemoryEmployeeRepository implements employeeRepository {
   public items: Employee[] = [];

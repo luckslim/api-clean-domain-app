@@ -1,20 +1,20 @@
-import { InMemoryEmployeeRepository } from "../../../../../test/in-memory-repository/in-memory-employ-repository";
-import { MakeEmploy } from "../../../../../test/factories/make-employ";
-import { RequestFromEmployUseCase } from "./get-request-from-employ";
-import { MakeStore } from "../../../../../test/factories/make-store";
+import { InMemoryEmployeeRepository } from '../../../../../test/in-memory-repository/in-memory-employ-repository';
+import { MakeEmploy } from '../../../../../test/factories/make-employ';
+import { RequestFromEmployUseCase } from './get-request-from-employ';
+import { MakeStore } from '../../../../../test/factories/make-store';
 
 let inMemoryEmployeeRepository: InMemoryEmployeeRepository;
 
 let sut: RequestFromEmployUseCase;
 
-describe("Define type status employee", () => {
+describe('Define type status employee', () => {
   beforeEach(() => {
     inMemoryEmployeeRepository = new InMemoryEmployeeRepository();
 
     sut = new RequestFromEmployUseCase(inMemoryEmployeeRepository);
   });
 
-  it("should be able Define type status employee", async () => {
+  it('should be able Define type status employee', async () => {
     const store = MakeStore({});
 
     for (let i = 0; i < 10; i++) {

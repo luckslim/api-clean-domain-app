@@ -1,5 +1,5 @@
-import type { dayRepository } from "@/domain/aplication/repositories/day-repository";
-import type { Day } from "@/domain/enterprise/day-entity";
+import type { dayRepository } from '@/domain/aplication/repositories/day-repository';
+import type { Day } from '@/domain/enterprise/day-entity';
 
 export class InMemoryDayStoreRepository implements dayRepository {
   public items: Day[] = [];

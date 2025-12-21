@@ -1,8 +1,8 @@
-import { left, right, type Either } from "@/core/either";
-import { WrongCredentialError } from "@/core/errors/wrong-credentials-error";
-import type { userRepository } from "../../repositories/user-repository";
-import type { HashComparer } from "../../cryptography/hash-comparer";
-import type { Encrypter } from "../../cryptography/encryter";
+import { left, right, type Either } from '@/core/either';
+import { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
+import type { userRepository } from '../../repositories/user-repository';
+import type { HashComparer } from '../../cryptography/hash-comparer';
+import type { Encrypter } from '../../cryptography/encryter';
 
 interface AuthenticateUserRequest {
   email: string;
@@ -18,7 +18,7 @@ export class AuthenticateUserUseCase {
   constructor(
     private userRepository: userRepository,
     private hashComparer: HashComparer,
-    private encrypter: Encrypter
+    private encrypter: Encrypter,
   ) {}
   async execute({
     email,
@@ -32,7 +32,7 @@ export class AuthenticateUserUseCase {
 
     const passwordValid = await this.hashComparer.comparer(
       password,
-      user.password
+      user.password,
     );
 
     if (!passwordValid) {

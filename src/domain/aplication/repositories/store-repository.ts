@@ -1,4 +1,4 @@
-import type { Store } from "@/domain/enterprise/store-entity";
+import type { Store } from '@/domain/enterprise/store-entity';
 
 export interface storeRepository {
   create(store: Store): Promise<Store>;

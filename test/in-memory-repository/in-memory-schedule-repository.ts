@@ -1,5 +1,5 @@
-import type { scheduleRepository } from "@/domain/aplication/repositories/schedule-repository";
-import type { Schedule } from "@/domain/enterprise/schedules-entity";
+import type { scheduleRepository } from '@/domain/aplication/repositories/schedule-repository';
+import type { Schedule } from '@/domain/enterprise/schedules-entity';
 
 export class InMemoryScheduleRepository implements scheduleRepository {
   public items: Schedule[] = [];
@@ -27,9 +27,7 @@ export class InMemoryScheduleRepository implements scheduleRepository {
   }
 
   async findManyByEmployId(id: string): Promise<Schedule[] | null> {
-    const schedule = this.items.filter(
-      (items) => items.employId === id
-    );
+    const schedule = this.items.filter((items) => items.employId === id);
 
     if (!schedule) {
       return null;
@@ -50,7 +48,7 @@ export class InMemoryScheduleRepository implements scheduleRepository {
 
   async findManyTimeExistingByStoreId(id: string): Promise<Schedule[] | null> {
     const schedule = this.items.filter(
-      (items) => items.storeId.toString() === id
+      (items) => items.storeId.toString() === id,
     );
 
     if (!schedule) {
@@ -75,7 +73,7 @@ export class InMemoryScheduleRepository implements scheduleRepository {
 
   async deleteManyById(id: string[]): Promise<void> {
     const newItems = this.items.filter(
-      (item) => !id.includes(item.id.toString())
+      (item) => !id.includes(item.id.toString()),
     );
     this.items = newItems;
   }

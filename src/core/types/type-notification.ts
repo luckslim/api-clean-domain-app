@@ -1,1 +1,1 @@
-export type NotificationTypeProps = "viewed" | "unviewed";
+export type NotificationTypeProps = 'viewed' | 'unviewed';

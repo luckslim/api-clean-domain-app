@@ -1,7 +1,7 @@
-import { Entity } from "@/core/entities/entity";
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { StatusTypeProps } from "@/core/types/type-status";
-import type { UserTypeProps } from "@/core/types/type-user";
+import { Entity } from '@/core/entities/entity';
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { StatusTypeProps } from '@/core/types/type-status';
+import type { UserTypeProps } from '@/core/types/type-user';
 
 export interface EmployProps {
   storeId: string;

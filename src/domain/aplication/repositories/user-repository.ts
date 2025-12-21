@@ -1,5 +1,5 @@
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { User } from "@/domain/enterprise/user-entity";
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { User } from '@/domain/enterprise/user-entity';
 
 export interface userRepository {
   create(user: User): Promise<User>;

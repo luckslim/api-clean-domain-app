@@ -1,9 +1,8 @@
-import type { Coordinates } from "@/core/entities/coordinates";
-
+import type { Coordinates } from '@/core/entities/coordinates';
 
 export class DistanceCalculator {
   private static toRadians(value: number): number {
-    return value * Math.PI / 180;
+    return (value * Math.PI) / 180;
   }
 
   static calculateInKm(from: Coordinates, to: Coordinates): number {
@@ -17,8 +16,7 @@ export class DistanceCalculator {
 
     const a =
       Math.sin(dLat / 2) ** 2 +
-      Math.cos(lat1) * Math.cos(lat2) *
-      Math.sin(dLon / 2) ** 2;
+      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
