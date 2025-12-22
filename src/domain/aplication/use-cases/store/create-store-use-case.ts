@@ -1,10 +1,10 @@
-import { left, right, type Either } from "@/core/either";
-import type { userRepository } from "../../repositories/user-repository";
-import { Store } from "@/domain/enterprise/store-entity";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import type { storeRepository } from "../../repositories/store-repository";
-import type { employAprovedRepository } from "../../repositories/employ-aproved-repository";
-import { Employ } from "@/domain/enterprise/employ-entity";
+import { left, right, type Either } from '@/core/either';
+import type { userRepository } from '../../repositories/user-repository';
+import { Store } from '@/domain/enterprise/store-entity';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import type { storeRepository } from '../../repositories/store-repository';
+import type { employAprovedRepository } from '../../repositories/employ-aproved-repository';
+import { Employ } from '@/domain/enterprise/employ-entity';
 
 interface CreateStoreRequest {
   creatorId: string;
@@ -20,7 +20,7 @@ export class CreateStoreUseCase {
   constructor(
     private userRepository: userRepository,
     private storeRepository: storeRepository,
-    private employRepository: employAprovedRepository
+    private employRepository: employAprovedRepository,
   ) {}
   async execute({
     creatorId,
@@ -35,13 +35,12 @@ export class CreateStoreUseCase {
       return left(new NotAllowedError());
     }
 
-    if (user.typeUser !== "creatorStore") {
+    if (user.typeUser !== 'creatorStore') {
       return left(new NotAllowedError());
     }
 
-    const storeNameExisting = await this.storeRepository.findByStoreName(
-      storeName
-    );
+    const storeNameExisting =
+      await this.storeRepository.findByStoreName(storeName);
 
     if (storeNameExisting) {
       return left(new NotAllowedError());
@@ -62,10 +61,10 @@ export class CreateStoreUseCase {
       userId: user.id.toString(),
       storeId: store.id.toString(),
       score: 0,
-      disponibility: "indisponible",
+      disponibility: 'indisponible',
       createdAt: new Date(),
     });
-    
+
     await this.employRepository.create(employ);
 
     return right({ store });

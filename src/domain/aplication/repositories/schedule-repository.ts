@@ -1,4 +1,4 @@
-import type { Schedule } from "@/domain/enterprise/schedules-entity";
+import type { Schedule } from '@/domain/enterprise/schedules-entity';
 
 export interface scheduleRepository {
   create(schedule: Schedule): Promise<Schedule>;

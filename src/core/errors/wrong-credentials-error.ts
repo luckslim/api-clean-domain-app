@@ -1,5 +1,5 @@
-export class WrongCredentialError extends Error{
-    constructor(){
-        super('wrong credentals error')
-    }
+export class WrongCredentialError extends Error {
+  constructor() {
+    super('wrong credentals error');
+  }
 }

@@ -1,5 +1,5 @@
-import type { fileRepository } from "@/domain/aplication/repositories/file-repository";
-import type { File } from "@/domain/enterprise/file-entity";
+import type { fileRepository } from '@/domain/aplication/repositories/file-repository';
+import type { File } from '@/domain/enterprise/file-entity';
 
 export class InMemoryFileRepository implements fileRepository {
   public items: File[] = [];

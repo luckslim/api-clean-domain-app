@@ -1,7 +1,6 @@
-import { Entity } from "@/core/entities/entity";
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { Optional } from "@/core/types/optional";
-import type { PaymentTypeProps } from "@/core/types/type-payment";
+import { Entity } from '@/core/entities/entity';
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { Optional } from '@/core/types/optional';
 
 export interface ScheduleProps {
   storeId: string;
@@ -55,15 +54,15 @@ export class Schedule extends Entity<ScheduleProps> {
     this.props.time = time;
   }
   set date(date: string) {
-    this.props.date;
+    this.props.date = date;
   }
   set modifiedAt(modifiedAt: Date | boolean) {
     this.props.modifiedAt = modifiedAt;
   }
 
   static create(
-    props: Optional<ScheduleProps, "modifiedAt" | "createdAt">,
-    id?: UniqueEntityId
+    props: Optional<ScheduleProps, 'modifiedAt' | 'createdAt'>,
+    id?: UniqueEntityId,
   ) {
     const schedule = new Schedule(
       {
@@ -71,7 +70,7 @@ export class Schedule extends Entity<ScheduleProps> {
         modifiedAt: props.modifiedAt ?? false,
         createdAt: props.createdAt ?? new Date(),
       },
-      id
+      id,
     );
     return schedule;
   }

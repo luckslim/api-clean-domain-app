@@ -1,10 +1,10 @@
-import { left, right, type Either } from "@/core/either";
-import { User } from "@/domain/enterprise/user-entity";
-import type { userRepository } from "../repositories/user-repository";
-import type { HashGenerator } from "../cryptography/hash-generator";
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import type { UserTypeProps } from "@/core/types/type-user";
+import { left, right, type Either } from '@/core/either';
+import { User } from '@/domain/enterprise/user-entity';
+
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import type { UserTypeProps } from '@/core/types/type-user';
+import { userRepository } from '../../repositories/user-repository';
+import { HashGenerator } from '../../cryptography/hash-generator';
 
 interface EditUserRequest {
   id: string;
@@ -20,7 +20,7 @@ type EditUserResponse = Either<NotAllowedError, { user: User }>;
 export class EditUserUseCase {
   constructor(
     private userRepository: userRepository,
-    private hashGenerator: HashGenerator
+    private hashGenerator: HashGenerator,
   ) {}
   async execute({
     id,

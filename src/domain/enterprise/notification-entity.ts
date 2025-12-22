@@ -1,6 +1,6 @@
-import { Entity } from "@/core/entities/entity";
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { NotificationTypeProps } from "@/core/types/type-notification";
+import { Entity } from '@/core/entities/entity';
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { NotificationTypeProps } from '@/core/types/type-notification';
 
 export interface NotificationProps {
   userId: string;
@@ -31,7 +31,7 @@ export class Notification extends Entity<NotificationProps> {
   }
 
   set status(status: NotificationTypeProps) {
-    if (!status.trim()) throw new Error("field empty not allowed");
+    if (!status.trim()) throw new Error('field empty not allowed');
     this.props.status = status;
   }
 

@@ -1,1 +1,1 @@
-export type PaymentTypeProps = "credit" | "debit" | "money"
+export type PaymentTypeProps = 'credit' | 'debit' | 'money';

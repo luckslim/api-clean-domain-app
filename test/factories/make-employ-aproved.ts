@@ -1,9 +1,9 @@
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { Employ, type EmployProps } from "@/domain/enterprise/employ-entity";
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { Employ, type EmployProps } from '@/domain/enterprise/employ-entity';
 
 export function MakeEmployAproved(
   override: Partial<EmployProps>,
-  id?: UniqueEntityId
+  id?: UniqueEntityId,
 ) {
   const employ = Employ.create(
     {
@@ -14,7 +14,7 @@ export function MakeEmployAproved(
       createdAt: new Date(),
       ...override,
     },
-    id
+    id,
   );
   return employ;
 }

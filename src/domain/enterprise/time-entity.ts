@@ -1,6 +1,6 @@
-import { Entity } from "@/core/entities/entity";
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { timeTypeProps } from "@/core/types/type-time";
+import { Entity } from '@/core/entities/entity';
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { timeTypeProps } from '@/core/types/type-time';
 
 export interface TimeProps {
   storeId: string;

@@ -1,7 +1,7 @@
-import { Entity } from "@/core/entities/entity";
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { Optional } from "@/core/types/optional";
-import type { DisponibilityTypeProps } from "@/core/types/type-disponibility";
+import { Entity } from '@/core/entities/entity';
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { Optional } from '@/core/types/optional';
+import type { DisponibilityTypeProps } from '@/core/types/type-disponibility';
 
 export interface StoreProps {
   creatorId: string;
@@ -63,12 +63,12 @@ export class Store extends Entity<StoreProps> {
   }
 
   static create(
-    props: Optional<StoreProps, "disponibility">,
-    id?: UniqueEntityId
+    props: Optional<StoreProps, 'disponibility'>,
+    id?: UniqueEntityId,
   ) {
     const store = new Store(
-      { ...props, disponibility: props.disponibility ?? "indisponible" },
-      id
+      { ...props, disponibility: props.disponibility ?? 'indisponible' },
+      id,
     );
     return store;
   }

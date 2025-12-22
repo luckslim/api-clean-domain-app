@@ -1,5 +1,5 @@
-import type { storeRepository } from "@/domain/aplication/repositories/store-repository";
-import type { Store } from "@/domain/enterprise/store-entity";
+import type { storeRepository } from '@/domain/aplication/repositories/store-repository';
+import type { Store } from '@/domain/enterprise/store-entity';
 
 export class InMemoryStoreRepository implements storeRepository {
   public items: Store[] = [];

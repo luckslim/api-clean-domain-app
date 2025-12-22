@@ -1,5 +1,5 @@
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { Day, type DayProps } from "@/domain/enterprise/day-entity";
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { Day, type DayProps } from '@/domain/enterprise/day-entity';
 
 export function MakeDay(override: Partial<DayProps>, id?: UniqueEntityId) {
   const day = Day.create(
@@ -9,7 +9,7 @@ export function MakeDay(override: Partial<DayProps>, id?: UniqueEntityId) {
       createdAt: new Date(),
       ...override,
     },
-    id
+    id,
   );
   return day;
 }

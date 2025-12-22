@@ -1,8 +1,8 @@
-import { left, right, type Either } from "@/core/either";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import { Notification } from "@/domain/enterprise/notification-entity";
-import type { NotificationRepository } from "../../repositories/notification-repository";
-import type { NotificationTypeProps } from "@/core/types/type-notification";
+import { left, right, type Either } from '@/core/either';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { Notification } from '@/domain/enterprise/notification-entity';
+import type { NotificationRepository } from '../../repositories/notification-repository';
+import type { NotificationTypeProps } from '@/core/types/type-notification';
 
 interface ReadNotificationRequest {
   id: string; //id from notification
@@ -29,8 +29,7 @@ export class ReadNotificationUseCase {
     notify.status = status;
 
     const notification = await this.notificationRepository.read(notify);
-    
-    return right({ notification });
 
+    return right({ notification });
   }
 }

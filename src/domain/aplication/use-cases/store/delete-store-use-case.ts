@@ -1,7 +1,7 @@
-import { left, right, type Either } from "@/core/either";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import type { storeRepository } from "../../repositories/store-repository";
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
+import { left, right, type Either } from '@/core/either';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import type { storeRepository } from '../../repositories/store-repository';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
 interface DeleteStoreRequest {
   id: string; // id from store

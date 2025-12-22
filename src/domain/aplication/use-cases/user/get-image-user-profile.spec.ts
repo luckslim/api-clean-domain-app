@@ -1,17 +1,17 @@
-import { InMemoryFileRepository } from "../../../../../test/in-memory-repository/in-memory-file-repository";
-import { GetImageUserProfileUseCase } from "./get-image-user-profile";
-import { MakeFile } from "../../../../../test/factories/make-file";
+import { InMemoryFileRepository } from '../../../../../test/in-memory-repository/in-memory-file-repository';
+import { GetImageUserProfileUseCase } from './get-image-user-profile';
+import { MakeFile } from '../../../../../test/factories/make-file';
 
 let inMemoryFileRepository: InMemoryFileRepository;
 let sut: GetImageUserProfileUseCase;
 
-describe("create file", () => {
+describe('create file', () => {
   beforeEach(() => {
     inMemoryFileRepository = new InMemoryFileRepository();
     sut = new GetImageUserProfileUseCase(inMemoryFileRepository);
   });
 
-  it("should not be able a file", async () => {
+  it('should not be able a file', async () => {
     const file = MakeFile({});
     inMemoryFileRepository.create(file);
 

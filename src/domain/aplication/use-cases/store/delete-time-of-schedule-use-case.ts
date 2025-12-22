@@ -1,8 +1,8 @@
-import { left, right, type Either } from "@/core/either";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import { Time } from "@/domain/enterprise/time-entity";
-import type { timeRepository } from "../../repositories/time-repository";
+import { left, right, type Either } from '@/core/either';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Time } from '@/domain/enterprise/time-entity';
+import type { timeRepository } from '../../repositories/time-repository';
 
 interface DeleteTimeStoreRequest {
   id: string; // id from time

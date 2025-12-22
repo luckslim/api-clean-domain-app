@@ -1,10 +1,10 @@
-import { InMemoryEmployeeRepository } from "../../../../../test/in-memory-repository/in-memory-employ-repository";
-import { MakeEmploy } from "../../../../../test/factories/make-employ";
-import { DefineTypeStatusEmployUseCase } from "./define-type-status-employee-in-store";
-import { InMemoryEmployRepository } from "../../../../../test/in-memory-repository/in-memory-employ-aproved-repository";
-import { InMemoryNotificationRepository } from "../../../../../test/in-memory-repository/in-memory-notification-repository";
-import { InMemoryStoreRepository } from "../../../../../test/in-memory-repository/in-memory-store-repository";
-import { MakeStore } from "../../../../../test/factories/make-store";
+import { InMemoryEmployeeRepository } from '../../../../../test/in-memory-repository/in-memory-employ-repository';
+import { MakeEmploy } from '../../../../../test/factories/make-employ';
+import { DefineTypeStatusEmployUseCase } from './define-type-status-employee-in-store';
+import { InMemoryEmployRepository } from '../../../../../test/in-memory-repository/in-memory-employ-aproved-repository';
+import { InMemoryNotificationRepository } from '../../../../../test/in-memory-repository/in-memory-notification-repository';
+import { InMemoryStoreRepository } from '../../../../../test/in-memory-repository/in-memory-store-repository';
+import { MakeStore } from '../../../../../test/factories/make-store';
 
 let inMemoryEmployeeRepository: InMemoryEmployeeRepository;
 let inMemoryEmployRepository: InMemoryEmployRepository;
@@ -12,7 +12,7 @@ let inMemoryNotificationRepository: InMemoryNotificationRepository;
 let inMemoryStoreRepository: InMemoryStoreRepository;
 let sut: DefineTypeStatusEmployUseCase;
 
-describe("Define type status employee", () => {
+describe('Define type status employee', () => {
   beforeEach(() => {
     inMemoryEmployeeRepository = new InMemoryEmployeeRepository();
 
@@ -26,11 +26,11 @@ describe("Define type status employee", () => {
       inMemoryEmployeeRepository,
       inMemoryStoreRepository,
       inMemoryEmployRepository,
-      inMemoryNotificationRepository
+      inMemoryNotificationRepository,
     );
   });
 
-  it("should be able Define type status employee and create new Employ Aproved", async () => {
+  it('should be able Define type status employee and create new Employ Aproved', async () => {
     const store = MakeStore({});
     inMemoryStoreRepository.create(store);
 
@@ -42,7 +42,7 @@ describe("Define type status employee", () => {
 
     const result = await sut.execute({
       id: employ.id.toString(),
-      status: "Aproved",
+      status: 'Aproved',
     });
 
     expect(inMemoryNotificationRepository.items).toHaveLength(1);
@@ -50,7 +50,7 @@ describe("Define type status employee", () => {
     expect(result.isRight()).toBe(true);
   });
 
-  it("should be able Define type status as Reject and send notification to user", async () => {
+  it('should be able Define type status as Reject and send notification to user', async () => {
     const store = MakeStore({});
     inMemoryStoreRepository.create(store);
 
@@ -62,7 +62,7 @@ describe("Define type status employee", () => {
 
     const result = await sut.execute({
       id: employ.id.toString(),
-      status: "Reject",
+      status: 'Reject',
     });
 
     expect(inMemoryNotificationRepository.items).toHaveLength(1);

@@ -1,8 +1,8 @@
-import { left, right, type Either } from "@/core/either";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import type { userRepository } from "../../repositories/user-repository";
-import type { Coordinates } from "@/core/entities/coordinates";
-import { DistanceCalculator } from "../../utils/distance-calculator";
+import { left, right, type Either } from '@/core/either';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import type { userRepository } from '../../repositories/user-repository';
+import type { Coordinates } from '@/core/entities/coordinates';
+import { DistanceCalculator } from '../../utils/distance-calculator';
 
 interface SearchStoreLocationRequest {
   id: string; //id from user
@@ -25,12 +25,12 @@ export class SearchStoreLocationUseCase {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
-      return left(new NotAllowedError("you is not authenticated"));
+      return left(new NotAllowedError('you is not authenticated'));
     }
 
     const distanceCalculated = DistanceCalculator.calculateInKm(
       storeCoordinates,
-      userCoordinates
+      userCoordinates,
     );
 
     const formatedDistance = distanceCalculated.toFixed(2);

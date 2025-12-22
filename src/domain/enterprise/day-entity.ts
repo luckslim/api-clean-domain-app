@@ -1,6 +1,6 @@
-import { Entity } from "@/core/entities/entity";
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { dayTypeProps } from "@/core/types/type-day";
+import { Entity } from '@/core/entities/entity';
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { dayTypeProps } from '@/core/types/type-day';
 
 export interface DayProps {
   storeId: string;

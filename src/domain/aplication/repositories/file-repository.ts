@@ -1,4 +1,4 @@
-import type { File } from "@/domain/enterprise/file-entity";
+import type { File } from '@/domain/enterprise/file-entity';
 
 export interface fileRepository {
   create(file: File): Promise<File>;

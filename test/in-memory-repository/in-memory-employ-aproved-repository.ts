@@ -1,6 +1,5 @@
-import type { employAprovedRepository } from "@/domain/aplication/repositories/employ-aproved-repository";
-import type { Employ } from "@/domain/enterprise/employ-entity";
-
+import type { employAprovedRepository } from '@/domain/aplication/repositories/employ-aproved-repository';
+import type { Employ } from '@/domain/enterprise/employ-entity';
 
 export class InMemoryEmployRepository implements employAprovedRepository {
   public items: Employ[] = [];

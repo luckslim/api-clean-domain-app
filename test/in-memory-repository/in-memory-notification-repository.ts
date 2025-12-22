@@ -1,5 +1,5 @@
-import type { NotificationRepository } from "@/domain/aplication/repositories/notification-repository";
-import type { Notification } from "@/domain/enterprise/notification-entity";
+import type { NotificationRepository } from '@/domain/aplication/repositories/notification-repository';
+import type { Notification } from '@/domain/enterprise/notification-entity';
 
 export class InMemoryNotificationRepository implements NotificationRepository {
   public items: Notification[] = [];
@@ -20,7 +20,9 @@ export class InMemoryNotificationRepository implements NotificationRepository {
   }
 
   async getByUserId(id: string): Promise<Notification[] | null> {
-    const notification = this.items.filter((item) => item.userId.toString() === id);
+    const notification = this.items.filter(
+      (item) => item.userId.toString() === id,
+    );
 
     if (!notification) {
       return null;
@@ -30,7 +32,7 @@ export class InMemoryNotificationRepository implements NotificationRepository {
   }
   async read(notification: Notification): Promise<Notification> {
     const itemIndex = this.items.findIndex(
-      (item) => item.id === notification.id
+      (item) => item.id === notification.id,
     );
     this.items[itemIndex] = notification;
     return notification;

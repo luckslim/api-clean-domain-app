@@ -1,4 +1,4 @@
-import type { Day } from "@/domain/enterprise/day-entity";
+import type { Day } from '@/domain/enterprise/day-entity';
 
 export interface dayRepository {
   create(day: Day): Promise<Day>;

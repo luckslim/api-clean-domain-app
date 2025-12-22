@@ -1,6 +1,6 @@
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { File, type FileProps } from "@/domain/enterprise/file-entity";
-import { faker } from "@faker-js/faker";
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { File, type FileProps } from '@/domain/enterprise/file-entity';
+import { faker } from '@faker-js/faker';
 
 export function MakeFile(override: Partial<FileProps>, id?: UniqueEntityId) {
   const file = File.create(
@@ -10,7 +10,7 @@ export function MakeFile(override: Partial<FileProps>, id?: UniqueEntityId) {
       userId: new UniqueEntityId().toString(),
       ...override,
     },
-    id
+    id,
   );
   return file;
 }

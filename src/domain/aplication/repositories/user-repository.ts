@@ -1,11 +1,10 @@
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { User } from "@/domain/enterprise/user-entity";
+import type { User } from '@/domain/enterprise/user-entity';
 
-export interface userRepository {
-  create(user: User): Promise<User>;
-  findByEmail(email: string): Promise<User | null>;
-  findByUserName(userName: string): Promise<User | null>;
-  findById(id: string): Promise<User | null>;
-  save(user: User): Promise<User>;
-  delete(id: string): Promise<void>;
+export abstract class userRepository {
+  abstract create(user: User): Promise<User>;
+  abstract findByEmail(email: string): Promise<User | null>;
+  abstract findByUserName(userName: string): Promise<User | null>;
+  abstract findById(id: string): Promise<User | null>;
+  abstract save(user: User): Promise<User>;
+  abstract delete(id: string): Promise<void>;
 }

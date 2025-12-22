@@ -1,7 +1,7 @@
-import { left, right, type Either } from "@/core/either";
-import type { WrongCredentialError } from "@/core/errors/wrong-credentials-error";
-import type { fileRepository } from "../../repositories/file-repository";
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
+import { left, right, type Either } from '@/core/either';
+import type { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
+import type { fileRepository } from '../../repositories/file-repository';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
 interface GetImageUserProfileRequest {
   userId: string;
@@ -18,9 +18,9 @@ export class GetImageUserProfileUseCase {
     userId,
   }: GetImageUserProfileRequest): Promise<GetImageUserProfileResponse> {
     const url = await this.fileRepository.findUrlByUserId(userId);
-    if(!url){
-        return left(new ResourceNotFoundError()) 
+    if (!url) {
+      return left(new ResourceNotFoundError());
     }
-    return right({url})
+    return right({ url });
   }
 }

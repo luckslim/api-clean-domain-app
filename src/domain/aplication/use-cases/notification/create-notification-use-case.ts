@@ -1,8 +1,8 @@
-import { right, type Either } from "@/core/either";
-import type { NotAllowedError } from "@/core/errors/not-allowed-error";
-import type { NotificationTypeProps } from "@/core/types/type-notification";
-import { Notification } from "@/domain/enterprise/notification-entity";
-import type { NotificationRepository } from "../../repositories/notification-repository";
+import { right, type Either } from '@/core/either';
+import type { NotAllowedError } from '@/core/errors/not-allowed-error';
+import type { NotificationTypeProps } from '@/core/types/type-notification';
+import { Notification } from '@/domain/enterprise/notification-entity';
+import type { NotificationRepository } from '../../repositories/notification-repository';
 
 interface CreateNotificationRequest {
   userId: string;
@@ -17,16 +17,13 @@ type CreateNotificationResponse = Either<
 >;
 
 export class CreateNotificationUseCase {
-  constructor(
-    private notificationRepository: NotificationRepository,
-  ) {}
+  constructor(private notificationRepository: NotificationRepository) {}
   async execute({
     userId,
     title,
     content,
     status,
   }: CreateNotificationRequest): Promise<CreateNotificationResponse> {
-    
     const notify = Notification.create({
       userId,
       title,

@@ -1,10 +1,10 @@
-import { left, right, type Either } from "@/core/either";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import type { storeRepository } from "../../repositories/store-repository";
-import type { timeTypeProps } from "@/core/types/type-time";
-import { Time } from "@/domain/enterprise/time-entity";
-import type { timeRepository } from "../../repositories/time-repository";
+import { left, right, type Either } from '@/core/either';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import type { storeRepository } from '../../repositories/store-repository';
+import type { timeTypeProps } from '@/core/types/type-time';
+import { Time } from '@/domain/enterprise/time-entity';
+import type { timeRepository } from '../../repositories/time-repository';
 
 interface DefineTimeStoreRequest {
   id: string; // id from user
@@ -19,7 +19,7 @@ type DefineTimeStoreResponse = Either<
 export class DefineTimeStoreUseCase {
   constructor(
     private storeRepository: storeRepository,
-    private timeRepository: timeRepository
+    private timeRepository: timeRepository,
   ) {}
   async execute({
     id,

@@ -1,6 +1,6 @@
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { userRepository } from "@/domain/aplication/repositories/user-repository";
-import type { User } from "@/domain/enterprise/user-entity";
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { userRepository } from '@/domain/aplication/repositories/user-repository';
+import type { User } from '@/domain/enterprise/user-entity';
 
 export class InMemoryUserRepository implements userRepository {
   public items: User[] = [];

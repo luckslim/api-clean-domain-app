@@ -1,22 +1,22 @@
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
-import { MakeStore } from "../../../../../test/factories/make-store";
-import { MakeUser } from "../../../../../test/factories/make-user";
-import { InMemoryEmployeeRepository } from "../../../../../test/in-memory-repository/in-memory-employ-repository";
-import { InMemoryStoreRepository } from "../../../../../test/in-memory-repository/in-memory-store-repository";
-import { InMemoryUserRepository } from "../../../../../test/in-memory-repository/in-memory-user-repository";
-import { ChangeTypeUserUseCase } from "./change-type-user-use-case";
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { NotAllowedError } from "@/core/errors/not-allowed-error";
-import { MakeEmploy } from "../../../../../test/factories/make-employ";
-import { InMemoryNotificationRepository } from "../../../../../test/in-memory-repository/in-memory-notification-repository";
-import { InMemoryEmployRepository } from "../../../../../test/in-memory-repository/in-memory-employ-aproved-repository";
-import { MakeEmployAproved } from "../../../../../test/factories/make-employ-aproved";
-import { InMemoryScheduleRepository } from "../../../../../test/in-memory-repository/in-memory-schedule-repository";
-import { InMemoryTimeStoreRepository } from "../../../../../test/in-memory-repository/in-memory-time-repository";
-import { InMemoryDayStoreRepository } from "../../../../../test/in-memory-repository/in-memory-day-store-repository";
-import { MakeTime } from "../../../../../test/factories/make-time";
-import { MakeDay } from "../../../../../test/factories/make-day";
-import { MakeSchedule } from "../../../../../test/factories/make-schedule";
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { MakeStore } from '../../../../../test/factories/make-store';
+import { MakeUser } from '../../../../../test/factories/make-user';
+import { InMemoryEmployeeRepository } from '../../../../../test/in-memory-repository/in-memory-employ-repository';
+import { InMemoryStoreRepository } from '../../../../../test/in-memory-repository/in-memory-store-repository';
+import { InMemoryUserRepository } from '../../../../../test/in-memory-repository/in-memory-user-repository';
+import { ChangeTypeUserUseCase } from './change-type-user-use-case';
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { MakeEmploy } from '../../../../../test/factories/make-employ';
+import { InMemoryNotificationRepository } from '../../../../../test/in-memory-repository/in-memory-notification-repository';
+import { InMemoryEmployRepository } from '../../../../../test/in-memory-repository/in-memory-employ-aproved-repository';
+import { MakeEmployAproved } from '../../../../../test/factories/make-employ-aproved';
+import { InMemoryScheduleRepository } from '../../../../../test/in-memory-repository/in-memory-schedule-repository';
+import { InMemoryTimeStoreRepository } from '../../../../../test/in-memory-repository/in-memory-time-repository';
+import { InMemoryDayStoreRepository } from '../../../../../test/in-memory-repository/in-memory-day-store-repository';
+import { MakeTime } from '../../../../../test/factories/make-time';
+import { MakeDay } from '../../../../../test/factories/make-day';
+import { MakeSchedule } from '../../../../../test/factories/make-schedule';
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let inMemoryStoreRepository: InMemoryStoreRepository;
@@ -28,7 +28,7 @@ let inMemoryTimeRepository: InMemoryTimeStoreRepository;
 let inMemoryDayRepository: InMemoryDayStoreRepository;
 let sut: ChangeTypeUserUseCase;
 
-describe("Edit user", () => {
+describe('Edit user', () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
     inMemoryStoreRepository = new InMemoryStoreRepository();
@@ -47,11 +47,11 @@ describe("Edit user", () => {
       inMemoryEmployRepository,
       inMemoryschedulesRepository,
       inMemoryTimeRepository,
-      inMemoryDayRepository
+      inMemoryDayRepository,
     );
   });
 
-  it("should be able edit type a user to employeeStore and create automaticly requestEmployee", async () => {
+  it('should be able edit type a user to employeeStore and create automaticly requestEmployee', async () => {
     const user = MakeUser({});
     inMemoryUserRepository.create(user);
 
@@ -84,7 +84,7 @@ describe("Edit user", () => {
 
     const result = await sut.execute({
       id: user.id.toString(),
-      typeUser: "employeeStore",
+      typeUser: 'employeeStore',
       storeName: store.storeName,
     });
     expect(inMemoryTimeRepository.items).toHaveLength(0);
@@ -96,7 +96,7 @@ describe("Edit user", () => {
     expect(result.isRight()).toBe(true);
   });
 
-  it("should be able edit type of a user to (user) and delete automaticly (store,employ,time,day)", async () => {
+  it('should be able edit type of a user to (user) and delete automaticly (store,employ,time,day)', async () => {
     const user = MakeUser({});
     inMemoryUserRepository.create(user);
 
@@ -138,7 +138,7 @@ describe("Edit user", () => {
 
     const result = await sut.execute({
       id: user.id.toString(),
-      typeUser: "user",
+      typeUser: 'user',
       storeName: storeFromUser.storeName,
     });
 
@@ -151,7 +151,7 @@ describe("Edit user", () => {
     expect(inMemoryNotificationRepository.items).toHaveLength(0);
     expect(result.isRight()).toBe(true);
   });
-  it("should be able edit type of a user to (creatorStore) and delete automaticly (employ,schedules)", async () => {
+  it('should be able edit type of a user to (creatorStore) and delete automaticly (employ,schedules)', async () => {
     const user = MakeUser({});
     inMemoryUserRepository.create(user);
 
@@ -177,8 +177,8 @@ describe("Edit user", () => {
 
     const result = await sut.execute({
       id: user.id.toString(),
-      typeUser: "user",
-      storeName: "store from joe",
+      typeUser: 'user',
+      storeName: 'store from joe',
     });
 
     expect(inMemoryEmployRepository.items).toHaveLength(0);

@@ -1,6 +1,6 @@
-import { Entity } from "@/core/entities/entity";
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import type { Optional } from "@/core/types/optional";
+import { Entity } from '@/core/entities/entity';
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import type { Optional } from '@/core/types/optional';
 
 interface PostProps {
   userId: UniqueEntityId;
@@ -31,15 +31,14 @@ export class Post extends Entity<PostProps> {
   get commentCount() {
     return this.props.commentCount;
   }
-  
-    get createdAt() {
+
+  get createdAt() {
     return this.props.createdAt;
   }
-  
 
   static create(
-    props: Optional<PostProps, "likeCount" | "commentCount">,
-    id?: UniqueEntityId
+    props: Optional<PostProps, 'likeCount' | 'commentCount'>,
+    id?: UniqueEntityId,
   ) {
     const post = new Post(
       {
@@ -47,7 +46,7 @@ export class Post extends Entity<PostProps> {
         commentCount: props.commentCount ?? 0,
         likeCount: props.likeCount ?? 0,
       },
-      id
+      id,
     );
     return post;
   }
