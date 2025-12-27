@@ -17,7 +17,7 @@ describe('Edit user', () => {
     inMemoryUserRepository.create(user);
 
     const result = await sut.execute({
-      id: user.id,
+      id: user.id.toString(),
     });
 
     expect(result.isRight).toBeTruthy();
