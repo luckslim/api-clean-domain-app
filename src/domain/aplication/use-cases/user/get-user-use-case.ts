@@ -2,7 +2,7 @@ import { left, right, type Either } from '@/core/either';
 import type { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
 import { User } from '@/domain/enterprise/user-entity';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { userRepository } from '../../repositories/user-repository';
 
 interface GetUserRequest {
@@ -10,7 +10,7 @@ interface GetUserRequest {
 }
 
 type GetUserResponse = Either<WrongCredentialError, { user: User }>;
-
+@Injectable()
 export class GetUserUseCase {
   constructor(@Inject(userRepository) private userRepository: userRepository) {}
   async execute({ id }: GetUserRequest): Promise<GetUserResponse> {

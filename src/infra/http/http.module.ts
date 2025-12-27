@@ -9,6 +9,8 @@ import { UpdateUserController } from './controllers/update-user-controller';
 import { EditUserUseCase } from '@/domain/aplication/use-cases/user/edit-user-use-case';
 import { FetchUserController } from './controllers/fetch-user-controller';
 import { GetUserUseCase } from '@/domain/aplication/use-cases/user/get-user-use-case';
+import { AuthenticateController } from './controllers/authenticate-user-controller';
+import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/authenticate-use-case';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule],
@@ -17,12 +19,14 @@ import { GetUserUseCase } from '@/domain/aplication/use-cases/user/get-user-use-
     DeleteUserController,
     UpdateUserController,
     FetchUserController,
+    AuthenticateController,
   ],
   providers: [
     CreateUserUseCase,
     DeleteUserUseCase,
     EditUserUseCase,
     GetUserUseCase,
+    AuthenticateUserUseCase,
   ],
 })
 export class HttpModule {}
