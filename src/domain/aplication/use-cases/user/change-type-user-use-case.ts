@@ -1,19 +1,20 @@
 import { left, right, type Either } from '@/core/either';
 import { User } from '@/domain/enterprise/user-entity';
-import type { userRepository } from '../../repositories/user-repository';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import type { UserTypeProps } from '@/core/types/type-user';
-import type { employeeRepository } from '../../repositories/employee-repository';
 import { Employee } from '@/domain/enterprise/employee-store-entity';
-import type { storeRepository } from '../../repositories/store-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { ResponseStoreError } from '@/core/errors/response-store-error';
-import type { NotificationRepository } from '../../repositories/notification-repository';
 import { Notification } from '@/domain/enterprise/notification-entity';
-import type { employAprovedRepository } from '../../repositories/employ-aproved-repository';
-import type { scheduleRepository } from '../../repositories/schedule-repository';
-import type { timeRepository } from '../../repositories/time-repository';
-import type { dayRepository } from '../../repositories/day-repository';
+import { Inject, Injectable } from '@nestjs/common';
+import { userRepository } from '../../repositories/user-repository';
+import { employeeRepository } from '../../repositories/employee-repository';
+import { storeRepository } from '../../repositories/store-repository';
+import { NotificationRepository } from '../../repositories/notification-repository';
+import { employAprovedRepository } from '../../repositories/employ-aproved-repository';
+import { scheduleRepository } from '../../repositories/schedule-repository';
+import { timeRepository } from '../../repositories/time-repository';
+import { dayRepository } from '../../repositories/day-repository';
 
 interface ChangeTypeUserRequest {
   id: string; //id from user
@@ -22,16 +23,24 @@ interface ChangeTypeUserRequest {
 }
 
 type ChangeTypeUserResponse = Either<NotAllowedError, { user: User }>;
-
+@Injectable()
 export class ChangeTypeUserUseCase {
   constructor(
+    @Inject(userRepository)
     private userRepository: userRepository,
+    @Inject(employeeRepository)
     private employeeRepository: employeeRepository,
+    @Inject(storeRepository)
     private storeRepository: storeRepository,
+    @Inject(NotificationRepository)
     private notifyRepository: NotificationRepository,
+    @Inject(employAprovedRepository)
     private employRepository: employAprovedRepository,
+    @Inject(scheduleRepository)
     private schedulesRepository: scheduleRepository,
+    @Inject(timeRepository)
     private timeRepository: timeRepository,
+    @Inject(dayRepository)
     private dayRepository: dayRepository,
   ) {}
   async execute({
