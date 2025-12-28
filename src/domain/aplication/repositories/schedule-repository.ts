@@ -1,13 +1,13 @@
 import type { Schedule } from '@/domain/enterprise/schedules-entity';
 
-export interface scheduleRepository {
-  create(schedule: Schedule): Promise<Schedule>;
-  findById(id: string): Promise<Schedule | null>;
-  findManyByUserId(id: string): Promise<Schedule[] | null>;
-  findManyByEmployId(id: string): Promise<Schedule[] | null>;
-  findByUserId(id: string): Promise<Schedule | null>;
-  findManyTimeExistingByStoreId(id: string): Promise<Schedule[] | null>;
-  findByDate(date: string): Promise<Schedule[] | null>;
-  delete(id: string): Promise<void>;
-  deleteManyById(id: string[]): Promise<void>;
+export abstract class scheduleRepository {
+  abstract create(schedule: Schedule): Promise<Schedule>;
+  abstract findById(id: string): Promise<Schedule | null>;
+  abstract findManyByUserId(id: string): Promise<Schedule[] | null>;
+  abstract findManyByEmployId(id: string): Promise<Schedule[] | null>;
+  abstract findByUserId(id: string): Promise<Schedule | null>;
+  abstract findManyTimeExistingByStoreId(id: string): Promise<Schedule[] | null>;
+  abstract findByDate(date: string): Promise<Schedule[] | null>;
+  abstract delete(id: string): Promise<void>;
+  abstract deleteManyById(id: string[]): Promise<void>;
 }

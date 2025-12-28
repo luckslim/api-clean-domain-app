@@ -11,6 +11,8 @@ import { FetchUserController } from './controllers/fetch-user-controller';
 import { GetUserUseCase } from '@/domain/aplication/use-cases/user/get-user-use-case';
 import { AuthenticateController } from './controllers/authenticate-user-controller';
 import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/authenticate-use-case';
+import { DefineTypeUserController } from './controllers/define-type-user-controller';
+import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change-type-user-use-case';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule],
@@ -20,6 +22,7 @@ import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/auth
     UpdateUserController,
     FetchUserController,
     AuthenticateController,
+    DefineTypeUserController,
   ],
   providers: [
     CreateUserUseCase,
@@ -27,6 +30,7 @@ import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/auth
     EditUserUseCase,
     GetUserUseCase,
     AuthenticateUserUseCase,
+    ChangeTypeUserUseCase,
   ],
 })
 export class HttpModule {}

@@ -1,9 +1,9 @@
 import { Employ } from '@/domain/enterprise/employ-entity';
 
-export interface employAprovedRepository {
-  create(employ: Employ): Promise<Employ>;
-  findById(id: string): Promise<Employ | null>;
-  findByUserId(id: string): Promise<Employ | null>;
-  findByStoreId(id: string | undefined): Promise<Employ[] | null>;
-  delete(id: string): Promise<void>;
+export abstract class employAprovedRepository {
+  abstract create(employ: Employ): Promise<Employ>;
+  abstract findById(id: string): Promise<Employ | null>;
+  abstract findByUserId(id: string): Promise<Employ | null>;
+  abstract findByStoreId(id: string | undefined): Promise<Employ[] | null>;
+  abstract delete(id: string): Promise<void>;
 }

@@ -1,9 +1,9 @@
 import type { Notification } from '@/domain/enterprise/notification-entity';
 
-export interface NotificationRepository {
-  create(notification: Notification): Promise<Notification>;
-  findById(id: string): Promise<Notification | null>;
-  getByUserId(id: string): Promise<Notification[] | null>;
-  read(notification: Notification): Promise<Notification>;
-  delete(id: string): Promise<void>;
+export abstract class NotificationRepository {
+  abstract create(notification: Notification): Promise<Notification>;
+  abstract findById(id: string): Promise<Notification | null>;
+  abstract getByUserId(id: string): Promise<Notification[] | null>;
+  abstract read(notification: Notification): Promise<Notification>;
+  abstract delete(id: string): Promise<void>;
 }

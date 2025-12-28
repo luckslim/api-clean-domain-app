@@ -9,10 +9,31 @@ datasource db {
 
 enum TypeUser {
   creatorStore
-  employStore
-  User
+  employeeStore
+  user
 }
 
+enum StatusUser {
+  pending
+  aproved
+  reject
+}
+
+enum DisponibilityUser {
+  disponible
+  indisponible
+}
+
+enum typePayment {
+  credit
+  debit
+  money
+}
+
+enum TypeStatusNotification {
+  viewed
+  unviewed
+}
 
 model User {
   id String @id @default(uuid())
@@ -22,5 +43,132 @@ model User {
   email    String
   password String
 
-  @@map("user") 
+  @@map("user")
+
+  employees Employee[]
+  employs Employ[]
+  stores Store[]
+  schedules Schedules[]
+  files Files[]
+  notifications Notification[]
+}
+
+model Employee {
+  id String @id @default(uuid())
+  storeId String
+  userId String
+  typeUser TypeUser
+  status StatusUser
+  CreatedAt DateTime @default(now())
+  
+  store Store @relation(fields: [storeId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("employee")
+}
+
+model Employ {
+  id String @id @default(uuid())
+  storeId String
+  userId String
+  disponibility DisponibilityUser
+  score Int
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id])
+  store Store @relation(fields: [storeId], references: [id])
+
+  schedules Schedules[]
+
+  @@map("employ")
+}
+
+model Store {
+  id String @id @default(uuid())
+  creatorId String
+  storeName String
+  city String
+  disponibility DisponibilityUser
+  longitude Float
+  latitude Float
+  createdAt DateTime @default(now())
+  
+  creator User @relation(fields: [creatorId], references: [id])
+
+  employs Employ[]
+  schedules Schedules[]
+  times Time[]
+  days Day[]
+
+  @@map("store")
+  employees Employee[]
+}
+
+model Schedules {
+  id String @id @default(uuid())
+  storeId String
+  employId String
+  userId String
+  service String
+  typePayment typePayment
+  price Int
+  timeId String
+  date String
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @default(dbgenerated("null"))
+  
+  store Store @relation(fields: [storeId], references: [id])
+  employ Employ @relation(fields: [employId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  time Time @relation(fields: [timeId], references: [id])
+
+  @@map("schedules")
+}
+
+model Time {
+  id String @id @default(uuid())
+  storeId String
+  time String
+  createdAt DateTime @default(now())
+
+  store Store @relation(fields: [storeId], references: [id])
+
+  schedules Schedules[]
+
+  @@map("time")
+}
+
+model Day {
+  id String @id @default(uuid())
+  storeId String
+  day String
+  createdAt DateTime @default(now())
+  
+  store Store @relation(fields: [storeId], references: [id])
+
+  @@map("day")
+}
+model Files {
+  id String @id @default(uuid())
+  userId String
+  fileName String
+  url String
+  CreatedAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("files")
+}
+
+model Notification {
+  id String @id @default(uuid())
+  userId String
+  title String
+  content String
+  status TypeStatusNotification
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("notification")
 }
