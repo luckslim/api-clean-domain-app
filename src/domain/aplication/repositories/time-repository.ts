@@ -7,5 +7,5 @@ export abstract class timeRepository {
   abstract findByStoreId(id: string): Promise<Time | null>;
   abstract findManyByStoreId(id: string): Promise<Time[] | null>;
   abstract delete(id: string): Promise<void>;
-  abstract deleteManyByStoreId(id: string[]): Promise<void>;
+  abstract deleteManyByStoreId(id: string): Promise<void>;
 }
