@@ -8,115 +8,101 @@
 ## 📊 Progresso Geral
 
 **Status:** ⏳ Em desenvolvimento  
-**Progresso estimado:** **45% concluído**
 
-██████████░░░░░░░░░░ 45%
-
-
-> Atualize manualmente conforme concluir tarefas
+██████████████░░░░░░░░░░ 65%
 
 ---
-
-## 🧱 Estrutura do Projeto
-
-- [x] Estrutura inicial do projeto
-- [x] Configuração do TypeScript
-- [x] Configuração do ESLint / Prettier
-- [ ] Padronização de pastas (DDD / Clean Architecture)
-- [ ] Documentação da arquitetura
-
----
-
 ## 🛠️ Funcionalidades Core
 
 ### 🔐 Autenticação
+
 - [x] Entidade de Usuário
 - [x] Caso de uso de Login
 - [x] Geração de Token (JWT)
 - [ ] Refresh Token
 - [ ] Middleware de autenticação
 
-### 👤 Usuários
+---
+
+## 👤 User
 - [x] Criar usuário
-- [ ] Listar usuários
-- [ ] Atualizar usuário
-- [ ] Remover usuário
+- [x] Autenticar usuário
+- [x] Buscar usuário por ID
+- [x] Editar dados do usuário
+- [x] Alterar tipo de usuário
+- [x] Remover usuário
+- [x] Criar imagem de perfil do usuário
+- [x] Buscar imagem de perfil do usuário
+- [x] Remover imagem de perfil do usuário
 
 ---
 
-## 🗄️ Banco de Dados
+## 🏬 Store
+- [x] Criar loja
+- [x] Buscar loja por ID
+- [x] Buscar loja por nome
+- [x] Buscar lojas por localização
+- [x] Editar dados da loja
+- [x] Remover loja
+- [x] Definir disponibilidade da loja
+- [x] Definir dias de funcionamento da loja
+- [x] Remover dias de funcionamento da loja
+- [x] Definir horários de funcionamento
+- [x] Remover horários de funcionamento
+- [x] Buscar solicitações de funcionários
+- [x] Definir status/tipo do funcionário na loja
 
-- [x] Modelagem das entidades
-- [x] Integração com ORM
-- [x] Migrations iniciais
-- [ ] Seeds de dados
-- [ ] Otimização de queries
+---
+
+## 👷 Employ (Employee)
+- [x] Aprovar criação de funcionário
+- [x] Buscar funcionário por ID
+- [x] Remover funcionário da loja
+- [x] Definir disponibilidade do funcionário
+- [x] Definir status do funcionário na loja
+
+---
+
+## 📅 Schedule (Agendamentos)
+- [x] Criar agendamento
+- [x] Buscar horários disponíveis
+- [x] Buscar agendamentos disponíveis
+- [x] Remover agendamento
+
+---
+
+## ⏰ Time (Horários)
+- [x] Definir horários de agendamento
+- [x] Remover horários de agendamento
+
+---
+
+## 📆 Day (Dias)
+- [x] Definir dias disponíveis para agendamento
+- [x] Remover dias disponíveis para agendamento
+
+---
+
+## 🔔 Notification
+- [x] Criar notificação
+- [x] Buscar notificações do usuário
+- [x] Marcar notificação como lida
 
 ---
 
 ## 🧪 Testes
-
-- [x] Testes unitários de casos de uso
-- [ ] Testes de integração
-- [ ] Cobertura mínima de 80%
-- [ ] Testes de autenticação
+- Testes unitários implementados para todos os casos de uso listados acima
+- Arquitetura baseada em **DDD (Domain-Driven Design)** e **Clean Architecture**
+- Cobertura focada em regras de negócio
 
 ---
-
-## 🌐 API & Endpoints
-
-- [x] Estrutura base de rotas
-- [x] Padrão de resposta (DTO / Presenter)
-- [ ] Versionamento da API
-- [ ] Documentação com Swagger / OpenAPI
-
----
-
 ## 🐳 Infraestrutura & Deploy
 
 - [x] Dockerfile
 - [x] Docker Compose
-- [ ] Variáveis de ambiente (.env)
-- [ ] Pipeline CI/CD
-- [ ] Deploy em produção
+- [X] Variáveis de ambiente (.env)
 
 ---
 
-## 🧠 Regras de Negócio
-
-- [x] Validações de domínio
-- [ ] Tratamento centralizado de erros
-- [ ] Logs de domínio
-- [ ] Eventos de domínio
-
----
-
-## 📝 Documentação
-
-- [x] README inicial
-- [ ] Explicação da arquitetura
-- [ ] Fluxo de autenticação
-- [ ] Exemplos de uso da API
-
----
-
-## 🎯 Próximos Passos
-
-- [ ] Finalizar autenticação
-- [ ] Criar testes de integração
-- [ ] Documentar API
-- [ ] Preparar deploy
-
----
-
-## 📌 Observações
-
-- Projeto seguindo **DDD + Clean Architecture**
-- Foco em código limpo, testes e escalabilidade
-- Checklist usado como **controle visual de progresso**
-
----
-
-🔥 *Atualize este checklist conforme o projeto evolui*
 
 
