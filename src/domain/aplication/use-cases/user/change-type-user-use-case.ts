@@ -101,9 +101,7 @@ export class ChangeTypeUserUseCase {
         );
 
         if (time != null) {
-          await this.timeRepository.deleteManyByStoreId(
-            time.map((item) => item.storeId),
-          );
+          await this.timeRepository.deleteManyByStoreId(store.id.toString());
         }
 
         const day = await this.dayRepository.findManyByStoreId(
@@ -111,9 +109,7 @@ export class ChangeTypeUserUseCase {
         );
 
         if (day != null) {
-          await this.dayRepository.deleteManyByStoreId(
-            day.map((item) => item.storeId),
-          );
+          await this.dayRepository.deleteManyByStoreId(store.id.toString());
         }
 
         await this.storeRepository.delete(store.id.toString());
@@ -165,9 +161,7 @@ export class ChangeTypeUserUseCase {
         );
 
         if (time != null) {
-          await this.timeRepository.deleteManyByStoreId(
-            time.map((item) => item.storeId),
-          );
+          await this.timeRepository.deleteManyByStoreId(store.id.toString());
         }
 
         const day = await this.dayRepository.findManyByStoreId(
@@ -175,9 +169,7 @@ export class ChangeTypeUserUseCase {
         );
 
         if (day != null) {
-          await this.dayRepository.deleteManyByStoreId(
-            day.map((item) => item.storeId),
-          );
+          await this.dayRepository.deleteManyByStoreId(store.id.toString());
         }
 
         await this.storeRepository.delete(store.id.toString());

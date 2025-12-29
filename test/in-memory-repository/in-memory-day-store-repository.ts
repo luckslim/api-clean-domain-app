@@ -33,7 +33,7 @@ export class InMemoryDayStoreRepository implements dayRepository {
     this.items.splice(itemIndex, 1);
   }
 
-  async deleteManyByStoreId(id: string[]): Promise<void> {
+  async deleteManyByStoreId(id: string): Promise<void> {
     const newItems = this.items.filter((item) => !id.includes(item.storeId));
     this.items = newItems;
   }
