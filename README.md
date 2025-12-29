@@ -8,11 +8,8 @@
 ## 📊 Progresso Geral
 
 **Status:** ⏳ Em desenvolvimento  
-**Progresso estimado:** **45% concluído**
 
 ██████████████░░░░░░░░░░ 65%
-
-
 
 ---
 ## 🛠️ Funcionalidades Core
