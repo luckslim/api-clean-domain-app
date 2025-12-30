@@ -12,6 +12,7 @@ import type { scheduleRepository } from '../../repositories/schedule-repository'
 import type { NotificationRepository } from '../../repositories/notification-repository';
 import { Notification } from '@/domain/enterprise/notification-entity';
 import type { userRepository } from '../../repositories/user-repository';
+import { PaymentTypeProps } from '@/core/types/type-payment';
 
 interface CreateScheduleRequest {
   storeId: string;
@@ -91,7 +92,7 @@ export class CreateScheduleUseCase {
       employId,
       userId,
       service,
-      typePayment: payment,
+      typePayment: payment as PaymentTypeProps,
       price,
       time,
       date,

@@ -63,9 +63,7 @@ export class ChangeTypeUserUseCase {
       );
 
       if (schedules != null) {
-        await this.schedulesRepository.deleteManyById(
-          schedules.map((item) => item.id.toString()),
-        );
+        await this.schedulesRepository.deleteManyByUserId(user.id.toString());
       }
 
       const employee = await this.employeeRepository.findByUserId(
@@ -121,9 +119,7 @@ export class ChangeTypeUserUseCase {
       );
 
       if (schedules) {
-        await this.schedulesRepository.deleteManyById(
-          schedules.map((item) => item.id.toString()),
-        );
+        await this.schedulesRepository.deleteManyByUserId(user.id.toString());
       }
 
       const employ = await this.employeeRepository.findById(user.id.toString());
@@ -181,9 +177,7 @@ export class ChangeTypeUserUseCase {
       );
 
       if (schedules) {
-        await this.schedulesRepository.deleteManyById(
-          schedules.map((item) => item.id.toString()),
-        );
+        await this.schedulesRepository.deleteManyByUserId(user.id.toString());
       }
 
       const employee = await this.employeeRepository.findByUserId(
@@ -200,6 +194,9 @@ export class ChangeTypeUserUseCase {
         await this.employRepository.delete(employ.id.toString());
       }
     }
+
+    await this.userRepository.save(user);
+
     return right({ user });
   }
 }

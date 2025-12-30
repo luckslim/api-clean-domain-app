@@ -11,5 +11,5 @@ export abstract class scheduleRepository {
   ): Promise<Schedule[] | null>;
   abstract findByDate(date: string): Promise<Schedule[] | null>;
   abstract delete(id: string): Promise<void>;
-  abstract deleteManyById(id: string[]): Promise<void>;
+  abstract deleteManyByUserId(id: string): Promise<void>;
 }

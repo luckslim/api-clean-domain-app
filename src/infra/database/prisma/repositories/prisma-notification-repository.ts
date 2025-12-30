@@ -2,7 +2,9 @@ import { NotificationRepository } from '@/domain/aplication/repositories/notific
 import { Notification } from '@/domain/enterprise/notification-entity';
 import { PrismaService } from '../prisma.service';
 import { PrismaNotificationMapper } from '../mappers/prisma-notification-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaNotificationRepository implements NotificationRepository {
   constructor(private prisma: PrismaService) {}
 
@@ -20,6 +22,9 @@ export class PrismaNotificationRepository implements NotificationRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaNotificationMapper.toDomain(data);
   }
 
@@ -29,7 +34,9 @@ export class PrismaNotificationRepository implements NotificationRepository {
         id,
       },
     });
-
+    if (!data) {
+      return null;
+    }
     return data.map((item) => PrismaNotificationMapper.toDomain(item));
   }
 

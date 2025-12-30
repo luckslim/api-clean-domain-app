@@ -124,7 +124,7 @@ model Schedules {
   timeId String
   date String
   createdAt DateTime @default(now())
-  modifiedAt DateTime @default(dbgenerated("null"))
+  modifiedAt DateTime?
   
   store Store @relation(fields: [storeId], references: [id])
   employ Employ @relation(fields: [employId], references: [id])

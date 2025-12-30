@@ -71,10 +71,8 @@ export class InMemoryScheduleRepository implements scheduleRepository {
     this.items.splice(itemIndex, 1);
   }
 
-  async deleteManyById(id: string[]): Promise<void> {
-    const newItems = this.items.filter(
-      (item) => !id.includes(item.id.toString()),
-    );
+  async deleteManyByUserId(id: string): Promise<void> {
+    const newItems = this.items.filter((item) => item.userId != id);
     this.items = newItems;
   }
 }

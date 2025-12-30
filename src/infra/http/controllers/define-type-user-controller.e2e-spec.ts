@@ -28,17 +28,19 @@ describe('Define Type User (E2E)', () => {
 
     userFactory = moduleRef.get(UserFactory);
 
+    jwt = moduleRef.get(JwtService);
+
     await app.init();
   });
 
-  test('[POST] /define/type/account', async () => {
+  test('[POST] /define/type/accounts, should be able define type creatorStore', async () => {
     const user = await userFactory.makePrismaUser({});
 
     const token = jwt.sign({ sub: user.id.toString() });
 
     const response = await request(app.getHttpServer())
-      .set('Authorization', `Bearer ${token}`)
       .post('/define/type/accounts')
+      .set('Authorization', `Bearer ${token}`)
       .send({
         typeUser: 'creatorStore',
       });
@@ -49,7 +51,7 @@ describe('Define Type User (E2E)', () => {
       },
     });
 
-    expect(userDefineTyped.typeUser).toBe('creatorStore');
-    expect(response.statusCode).toBe(200);
+    expect(userDefineTyped.typeUser).toEqual('creatorStore');
+    expect(response.statusCode).toBe(201);
   });
 });

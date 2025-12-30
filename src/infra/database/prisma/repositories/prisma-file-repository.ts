@@ -2,7 +2,9 @@ import { fileRepository } from '@/domain/aplication/repositories/file-repository
 import { File } from '@/domain/enterprise/file-entity';
 import { PrismaService } from '../prisma.service';
 import { PrismaFileMapper } from '../mappers/prisma-file-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaFileRepository implements fileRepository {
   constructor(private prisma: PrismaService) {}
 
@@ -18,6 +20,9 @@ export class PrismaFileRepository implements fileRepository {
     const data = await this.prisma.files.findUnique({
       where: { id },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaFileMapper.toDomain(data);
   }
 
@@ -27,6 +32,9 @@ export class PrismaFileRepository implements fileRepository {
         userId: id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaFileMapper.toDomain(data);
   }
 
@@ -36,6 +44,9 @@ export class PrismaFileRepository implements fileRepository {
         userId: id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return data.url;
   }
 
