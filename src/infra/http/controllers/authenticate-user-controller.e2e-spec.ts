@@ -33,7 +33,7 @@ describe('authenticate Admin (E2E)', () => {
       data: {
         name: 'lucas',
         userName: 'lucas_ls',
-        typeUser: 'User',
+        typeUser: 'user',
         email: 'lucaslima78@gmail.com',
         password: await hash('123456', 8),
       },

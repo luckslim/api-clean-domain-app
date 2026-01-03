@@ -6,7 +6,6 @@ import { InMemoryStoreRepository } from '../../../../../test/in-memory-repositor
 import { InMemoryUserRepository } from '../../../../../test/in-memory-repository/in-memory-user-repository';
 import { ChangeTypeUserUseCase } from './change-type-user-use-case';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
-import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { MakeEmploy } from '../../../../../test/factories/make-employ';
 import { InMemoryNotificationRepository } from '../../../../../test/in-memory-repository/in-memory-notification-repository';
 import { InMemoryEmployRepository } from '../../../../../test/in-memory-repository/in-memory-employ-aproved-repository';
@@ -53,22 +52,68 @@ describe('Edit user', () => {
 
   it('should be able edit type a user to employeeStore and create automaticly requestEmployee', async () => {
     const user = MakeUser({});
-    inMemoryUserRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     const storeFromUser = MakeStore({
       creatorId: user.id.toString(),
     });
-    inMemoryStoreRepository.create(storeFromUser);
+    await inMemoryStoreRepository.create(storeFromUser);
 
     const store = MakeStore({});
-    inMemoryStoreRepository.create(store);
+    await inMemoryStoreRepository.create(store);
 
     for (let i = 7; i < 20; i++) {
       const time = MakeTime({
         storeId: storeFromUser.id.toString(),
         time: `${i}:00`,
       });
-      inMemoryTimeRepository.create(time);
+      await inMemoryTimeRepository.create(time);
+
+      const day = MakeDay({
+        storeId: storeFromUser.id.toString(),
+      });
+      inMemoryDayRepository.create(day);
+
+      const schedules = MakeSchedule({
+        storeId: storeFromUser.id.toString(),
+        userId: user.id.toString(),
+      });
+      inMemoryschedulesRepository.create(schedules);
+    }
+    const result = await sut.execute({
+      id: user.id.toString(),
+      typeUser: 'employeeStore',
+      storeName: store.storeName,
+    });
+
+    expect(inMemoryTimeRepository.items).toHaveLength(0);
+    expect(inMemoryDayRepository.items).toHaveLength(0);
+    expect(inMemoryschedulesRepository.items).toHaveLength(0);
+    expect(inMemoryStoreRepository.items).toHaveLength(1);
+    expect(inMemoryEmployeeRepository.items).toHaveLength(1);
+    expect(inMemoryNotificationRepository.items).toHaveLength(1);
+    expect(inMemoryUserRepository.items[0].typeUser).toEqual('employeeStore');
+    expect(result.isRight()).toBe(true);
+  });
+
+  it('should not be able edit type a user to employeeStore if no exist storeName', async () => {
+    const user = MakeUser({});
+    await inMemoryUserRepository.create(user);
+
+    const storeFromUser = MakeStore({
+      creatorId: user.id.toString(),
+    });
+    await inMemoryStoreRepository.create(storeFromUser);
+
+    const store = MakeStore({});
+    await inMemoryStoreRepository.create(store);
+
+    for (let i = 7; i < 20; i++) {
+      const time = MakeTime({
+        storeId: storeFromUser.id.toString(),
+        time: `${i}:00`,
+      });
+      await inMemoryTimeRepository.create(time);
 
       const day = MakeDay({
         storeId: storeFromUser.id.toString(),
@@ -85,15 +130,10 @@ describe('Edit user', () => {
     const result = await sut.execute({
       id: user.id.toString(),
       typeUser: 'employeeStore',
-      storeName: store.storeName,
     });
-    expect(inMemoryTimeRepository.items).toHaveLength(0);
-    expect(inMemoryDayRepository.items).toHaveLength(0);
-    expect(inMemoryschedulesRepository.items).toHaveLength(0);
-    expect(inMemoryStoreRepository.items).toHaveLength(1);
-    expect(inMemoryEmployeeRepository.items).toHaveLength(1);
-    expect(inMemoryNotificationRepository.items).toHaveLength(1);
-    expect(result.isRight()).toBe(true);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError);
   });
 
   it('should be able edit type of a user to (user) and delete automaticly (store,employ,time,day)', async () => {
@@ -149,6 +189,7 @@ describe('Edit user', () => {
     expect(inMemoryStoreRepository.items).toHaveLength(0);
     expect(inMemoryEmployeeRepository.items).toHaveLength(0);
     expect(inMemoryNotificationRepository.items).toHaveLength(0);
+    expect(inMemoryUserRepository.items[0].typeUser).toEqual('user');
     expect(result.isRight()).toBe(true);
   });
   it('should be able edit type of a user to (creatorStore) and delete automaticly (employ,schedules)', async () => {
@@ -177,13 +218,14 @@ describe('Edit user', () => {
 
     const result = await sut.execute({
       id: user.id.toString(),
-      typeUser: 'user',
+      typeUser: 'creatorStore',
       storeName: 'store from joe',
     });
 
     expect(inMemoryEmployRepository.items).toHaveLength(0);
     expect(inMemoryschedulesRepository.items).toHaveLength(0);
     expect(inMemoryEmployeeRepository.items).toHaveLength(0);
+    expect(inMemoryUserRepository.items[0].typeUser).toEqual('creatorStore');
     expect(result.isRight()).toBe(true);
   });
 });

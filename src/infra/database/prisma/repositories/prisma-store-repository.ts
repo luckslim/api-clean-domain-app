@@ -2,7 +2,8 @@ import { storeRepository } from '@/domain/aplication/repositories/store-reposito
 import { Store } from '@/domain/enterprise/store-entity';
 import { PrismaService } from '../prisma.service';
 import { PrismaStoreMapper } from '../mappers/prisma-store-mapper';
-
+import { Injectable } from '@nestjs/common';
+@Injectable()
 export class PrismaStoreRepository implements storeRepository {
   constructor(private prisma: PrismaService) {}
 
@@ -20,6 +21,9 @@ export class PrismaStoreRepository implements storeRepository {
         storeName,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaStoreMapper.toDomain(data);
   }
 
@@ -29,6 +33,9 @@ export class PrismaStoreRepository implements storeRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaStoreMapper.toDomain(data);
   }
 
@@ -38,6 +45,9 @@ export class PrismaStoreRepository implements storeRepository {
         creatorId: id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaStoreMapper.toDomain(data);
   }
 

@@ -9,13 +9,13 @@ import {
 } from '@nestjs/common';
 import z from 'zod';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
-import { UserNameAlreadyExistError } from '@/core/errors/username-already-exist-error';
-import { EmailAlreadyExistError } from '@/core/errors/email-already-exist-error';
 import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change-type-user-use-case';
 import { User_Types } from '@/core/types/type-user';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { TokenPayloadSchema } from '@/infra/auth/jwt-strategy';
 import { AuthGuard } from '@nestjs/passport';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
 const defineTypeUserBodyValidation = z.object({
   typeUser: z.enum(User_Types),
@@ -33,7 +33,7 @@ export class DefineTypeUserController {
   constructor(public defineTypeUserUseCase: ChangeTypeUserUseCase) {}
 
   @Post()
-  @HttpCode(200)
+  @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe) body: DefineTypeUserBodyValidation,
     @CurrentUser() userToken: TokenPayloadSchema,
@@ -49,9 +49,9 @@ export class DefineTypeUserController {
     if (result.isLeft()) {
       const error = result.value;
       switch (error.constructor) {
-        case UserNameAlreadyExistError:
+        case NotAllowedError:
           throw new ConflictException(error.message);
-        case EmailAlreadyExistError:
+        case ResourceNotFoundError:
           throw new ConflictException(error.message);
         default:
           throw new BadRequestException(error.message);

@@ -2,7 +2,9 @@ import { Employ } from '@/domain/enterprise/employ-entity';
 import { PrismaService } from '../prisma.service';
 import { employAprovedRepository } from '@/domain/aplication/repositories/employ-aproved-repository';
 import { PrismaEmployMapper } from '../mappers/prisma-employ-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaEmployRepository implements employAprovedRepository {
   constructor(public prisma: PrismaService) {}
   async create(employ: Employ): Promise<Employ> {
@@ -19,6 +21,9 @@ export class PrismaEmployRepository implements employAprovedRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaEmployMapper.toDomain(data);
   }
 
@@ -28,6 +33,9 @@ export class PrismaEmployRepository implements employAprovedRepository {
         userId: id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaEmployMapper.toDomain(data);
   }
 
@@ -37,6 +45,9 @@ export class PrismaEmployRepository implements employAprovedRepository {
         storeId: id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return data.map((item) => PrismaEmployMapper.toDomain(item));
   }
 

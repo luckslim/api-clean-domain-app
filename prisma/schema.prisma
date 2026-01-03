@@ -70,8 +70,8 @@ model Employee {
   status StatusUser
   CreatedAt DateTime @default(now())
   
-  store Store @relation(fields: [storeId], references: [id])
-  user User @relation(fields: [userId], references: [id])
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("employee")
 }
@@ -84,8 +84,8 @@ model Employ {
   score Int
   createdAt DateTime @default(now())
   
-  user User @relation(fields: [userId], references: [id])
-  store Store @relation(fields: [storeId], references: [id])
+  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
   schedules Schedules[]
 
@@ -102,7 +102,7 @@ model Store {
   latitude Float
   createdAt DateTime @default(now())
   
-  creator User @relation(fields: [creatorId], references: [id])
+  creator User @relation(fields: [creatorId], references: [id], onDelete: Cascade)
 
   employs Employ[]
   schedules Schedules[]
@@ -124,12 +124,12 @@ model Schedules {
   timeId String
   date String
   createdAt DateTime @default(now())
-  modifiedAt DateTime @default(dbgenerated("null"))
+  modifiedAt DateTime?
   
-  store Store @relation(fields: [storeId], references: [id])
-  employ Employ @relation(fields: [employId], references: [id])
-  user User @relation(fields: [userId], references: [id])
-  time Time @relation(fields: [timeId], references: [id])
+  store Store @relation(fields: [storeId], references: [id],onDelete: Cascade)
+  employ Employ @relation(fields: [employId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  time Time @relation(fields: [timeId], references: [id], onDelete: Cascade)
 
   @@map("schedules")
 }
@@ -140,7 +140,7 @@ model Time {
   time String
   createdAt DateTime @default(now())
 
-  store Store @relation(fields: [storeId], references: [id])
+  store Store @relation(fields: [storeId], references: [id],onDelete: Cascade)
 
   schedules Schedules[]
 
@@ -153,7 +153,7 @@ model Day {
   day TypeDay
   createdAt DateTime @default(now())
   
-  store Store @relation(fields: [storeId], references: [id])
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
   @@map("day")
 }
@@ -164,7 +164,7 @@ model Files {
   url String
   CreatedAt DateTime @default(now())
   
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("files")
 }
@@ -177,7 +177,7 @@ model Notification {
   status TypeStatusNotification
   createdAt DateTime @default(now())
   
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("notification")
 }

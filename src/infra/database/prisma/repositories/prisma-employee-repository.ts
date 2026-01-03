@@ -2,7 +2,9 @@ import { employeeRepository } from '@/domain/aplication/repositories/employee-re
 import { Employee } from '@/domain/enterprise/employee-store-entity';
 import { PrismaService } from '../prisma.service';
 import { PrismaEmployeeMapper } from '../mappers/prisma-employee-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaEmployeeRepository implements employeeRepository {
   constructor(public prisma: PrismaService) {}
 
@@ -20,6 +22,9 @@ export class PrismaEmployeeRepository implements employeeRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaEmployeeMapper.toDomain(data);
   }
 
@@ -29,6 +34,9 @@ export class PrismaEmployeeRepository implements employeeRepository {
         userId: id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaEmployeeMapper.toDomain(data);
   }
 
@@ -38,6 +46,9 @@ export class PrismaEmployeeRepository implements employeeRepository {
         storeId: id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return data.map((item) => PrismaEmployeeMapper.toDomain(item));
   }
 

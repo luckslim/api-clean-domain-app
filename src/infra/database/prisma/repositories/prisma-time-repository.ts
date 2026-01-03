@@ -2,7 +2,9 @@ import { timeRepository } from '@/domain/aplication/repositories/time-repository
 import { Time } from '@/domain/enterprise/time-entity';
 import { PrismaService } from '../prisma.service';
 import { PrismaTimeMapper } from '../mappers/prisma-time-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaTimeRepository implements timeRepository {
   constructor(private prisma: PrismaService) {}
 
@@ -29,6 +31,9 @@ export class PrismaTimeRepository implements timeRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return data.map((item) => PrismaTimeMapper.toDomain(item));
   }
 
@@ -38,6 +43,9 @@ export class PrismaTimeRepository implements timeRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaTimeMapper.toDomain(data);
   }
 
@@ -47,6 +55,9 @@ export class PrismaTimeRepository implements timeRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return data.map((item) => PrismaTimeMapper.toDomain(item));
   }
 

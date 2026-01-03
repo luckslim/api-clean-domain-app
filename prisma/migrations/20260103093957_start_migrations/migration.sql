@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "TypeUser" AS ENUM ('creatorStore', 'employeeStore', 'user');
+
+-- CreateEnum
 CREATE TYPE "StatusUser" AS ENUM ('pending', 'aproved', 'reject');
 
 -- CreateEnum
@@ -10,9 +13,25 @@ CREATE TYPE "typePayment" AS ENUM ('credit', 'debit', 'money');
 -- CreateEnum
 CREATE TYPE "TypeStatusNotification" AS ENUM ('viewed', 'unviewed');
 
+-- CreateEnum
+CREATE TYPE "TypeDay" AS ENUM ('segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo');
+
+-- CreateTable
+CREATE TABLE "user" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "userName" TEXT NOT NULL,
+    "typeUser" "TypeUser" NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+
+    CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateTable
 CREATE TABLE "employee" (
     "id" TEXT NOT NULL,
+    "storeId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "typeUser" "TypeUser" NOT NULL,
     "status" "StatusUser" NOT NULL,
@@ -40,8 +59,8 @@ CREATE TABLE "store" (
     "storeName" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "disponibility" "DisponibilityUser" NOT NULL,
-    "longitude" TEXT NOT NULL,
-    "latitude" TEXT NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "store_pkey" PRIMARY KEY ("id")
@@ -59,7 +78,7 @@ CREATE TABLE "schedules" (
     "timeId" TEXT NOT NULL,
     "date" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "modifiedAt" TIMESTAMP(3) NOT NULL DEFAULT null,
+    "modifiedAt" TIMESTAMP(3),
 
     CONSTRAINT "schedules_pkey" PRIMARY KEY ("id")
 );
@@ -78,7 +97,7 @@ CREATE TABLE "time" (
 CREATE TABLE "day" (
     "id" TEXT NOT NULL,
     "storeId" TEXT NOT NULL,
-    "day" TEXT NOT NULL,
+    "day" "TypeDay" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "day_pkey" PRIMARY KEY ("id")
@@ -108,37 +127,40 @@ CREATE TABLE "notification" (
 );
 
 -- AddForeignKey
-ALTER TABLE "employee" ADD CONSTRAINT "employee_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "employee" ADD CONSTRAINT "employee_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "employ" ADD CONSTRAINT "employ_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "employee" ADD CONSTRAINT "employee_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "employ" ADD CONSTRAINT "employ_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "employ" ADD CONSTRAINT "employ_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "store" ADD CONSTRAINT "store_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "employ" ADD CONSTRAINT "employ_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "schedules" ADD CONSTRAINT "schedules_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "store" ADD CONSTRAINT "store_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "schedules" ADD CONSTRAINT "schedules_employId_fkey" FOREIGN KEY ("employId") REFERENCES "employ"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "schedules" ADD CONSTRAINT "schedules_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "schedules" ADD CONSTRAINT "schedules_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "schedules" ADD CONSTRAINT "schedules_employId_fkey" FOREIGN KEY ("employId") REFERENCES "employ"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "schedules" ADD CONSTRAINT "schedules_timeId_fkey" FOREIGN KEY ("timeId") REFERENCES "time"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "schedules" ADD CONSTRAINT "schedules_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "time" ADD CONSTRAINT "time_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "schedules" ADD CONSTRAINT "schedules_timeId_fkey" FOREIGN KEY ("timeId") REFERENCES "time"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "day" ADD CONSTRAINT "day_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "time" ADD CONSTRAINT "time_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "files" ADD CONSTRAINT "files_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "day" ADD CONSTRAINT "day_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "store"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "notification" ADD CONSTRAINT "notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "files" ADD CONSTRAINT "files_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "notification" ADD CONSTRAINT "notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;

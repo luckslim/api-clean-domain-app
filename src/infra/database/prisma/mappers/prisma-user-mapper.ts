@@ -8,7 +8,7 @@ export class PrismaUserMapper {
       {
         name: raw.name,
         userName: raw.userName,
-        typeUser: 'user',
+        typeUser: raw.typeUser,
         email: raw.email,
         password: raw.password,
       },
@@ -21,7 +21,7 @@ export class PrismaUserMapper {
       id: user.id.toString(),
       name: user.name,
       userName: user.userName,
-      typeUser: 'User',
+      typeUser: user.typeUser,
       email: user.email,
       password: user.password,
     };

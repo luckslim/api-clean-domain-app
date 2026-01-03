@@ -2,7 +2,9 @@ import { dayRepository } from '@/domain/aplication/repositories/day-repository';
 import { Day } from '@/domain/enterprise/day-entity';
 import { PrismaService } from '../prisma.service';
 import { PrismaDayMapper } from '../mappers/prisma-day-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaDayRepository implements dayRepository {
   constructor(private prisma: PrismaService) {}
 
@@ -20,6 +22,9 @@ export class PrismaDayRepository implements dayRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaDayMapper.toDomain(data);
   }
 
@@ -29,6 +34,9 @@ export class PrismaDayRepository implements dayRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return data.map((item) => PrismaDayMapper.toDomain(item));
   }
 
@@ -38,6 +46,9 @@ export class PrismaDayRepository implements dayRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return PrismaDayMapper.toDomain(data);
   }
 
@@ -47,6 +58,9 @@ export class PrismaDayRepository implements dayRepository {
         id,
       },
     });
+    if (!data) {
+      return null;
+    }
     return data.map((item) => PrismaDayMapper.toDomain(item));
   }
 
