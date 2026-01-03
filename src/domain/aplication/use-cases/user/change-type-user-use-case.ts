@@ -54,9 +54,7 @@ export class ChangeTypeUserUseCase {
       return left(new NotAllowedError());
     }
 
-    user.typeUser = typeUser;
-
-    if (user.typeUser === 'creatorStore') {
+    if (typeUser === 'creatorStore') {
       //search schedules from user
       const schedules = await this.schedulesRepository.findManyByUserId(
         user.id.toString(),
@@ -81,8 +79,11 @@ export class ChangeTypeUserUseCase {
       }
     }
 
-    if (user.typeUser === 'employeeStore') {
+    if (typeUser === 'employeeStore') {
       //search storeName existing
+      if (!storeName) {
+        return left(new ResourceNotFoundError());
+      }
       const storeNameExisting =
         await this.storeRepository.findByStoreName(storeName);
 
@@ -148,7 +149,7 @@ export class ChangeTypeUserUseCase {
       }
     }
 
-    if (user.typeUser === 'user') {
+    if (typeUser === 'user') {
       const store = await this.storeRepository.findByUserId(user.id.toString());
 
       if (store !== null) {
@@ -194,6 +195,8 @@ export class ChangeTypeUserUseCase {
         await this.employRepository.delete(employ.id.toString());
       }
     }
+
+    user.typeUser = typeUser;
 
     await this.userRepository.save(user);
 

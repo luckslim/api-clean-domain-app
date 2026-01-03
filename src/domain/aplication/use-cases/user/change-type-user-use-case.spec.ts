@@ -80,12 +80,12 @@ describe('Edit user', () => {
       });
       inMemoryschedulesRepository.create(schedules);
     }
-
     const result = await sut.execute({
       id: user.id.toString(),
       typeUser: 'employeeStore',
       storeName: store.storeName,
     });
+
     expect(inMemoryTimeRepository.items).toHaveLength(0);
     expect(inMemoryDayRepository.items).toHaveLength(0);
     expect(inMemoryschedulesRepository.items).toHaveLength(0);
@@ -94,6 +94,46 @@ describe('Edit user', () => {
     expect(inMemoryNotificationRepository.items).toHaveLength(1);
     expect(inMemoryUserRepository.items[0].typeUser).toEqual('employeeStore');
     expect(result.isRight()).toBe(true);
+  });
+
+  it('should not be able edit type a user to employeeStore if no exist storeName', async () => {
+    const user = MakeUser({});
+    await inMemoryUserRepository.create(user);
+
+    const storeFromUser = MakeStore({
+      creatorId: user.id.toString(),
+    });
+    await inMemoryStoreRepository.create(storeFromUser);
+
+    const store = MakeStore({});
+    await inMemoryStoreRepository.create(store);
+
+    for (let i = 7; i < 20; i++) {
+      const time = MakeTime({
+        storeId: storeFromUser.id.toString(),
+        time: `${i}:00`,
+      });
+      await inMemoryTimeRepository.create(time);
+
+      const day = MakeDay({
+        storeId: storeFromUser.id.toString(),
+      });
+      inMemoryDayRepository.create(day);
+
+      const schedules = MakeSchedule({
+        storeId: storeFromUser.id.toString(),
+        userId: user.id.toString(),
+      });
+      inMemoryschedulesRepository.create(schedules);
+    }
+
+    const result = await sut.execute({
+      id: user.id.toString(),
+      typeUser: 'employeeStore',
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError);
   });
 
   it('should be able edit type of a user to (user) and delete automaticly (store,employ,time,day)', async () => {
