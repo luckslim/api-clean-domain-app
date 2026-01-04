@@ -33,7 +33,7 @@ export class InMemoryFileRepository implements fileRepository {
       return null;
     }
 
-    return file.url;
+    return file.fileName;
   }
 
   async delete(id: string): Promise<void> {

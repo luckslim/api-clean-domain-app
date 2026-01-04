@@ -4,7 +4,6 @@ import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
 export interface FileProps {
   userId: string;
   fileName: string;
-  url: string;
 }
 
 export class File extends Entity<FileProps> {
@@ -15,16 +14,8 @@ export class File extends Entity<FileProps> {
   get fileName() {
     return this.props.fileName;
   }
-
-  get url() {
-    return this.props.url;
-  }
   set fileName(fileName: string) {
     this.props.fileName = fileName;
-  }
-
-  set url(url: string) {
-    this.props.url = url;
   }
 
   static create(props: FileProps, id?: UniqueEntityId) {

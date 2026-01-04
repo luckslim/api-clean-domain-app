@@ -1,34 +1,32 @@
 import { left, right, type Either } from '@/core/either';
-import type { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
-import type { fileRepository } from '../../repositories/file-repository';
-import type { Uploader } from '../../storage/uploader';
-import type { userRepository } from '../../repositories/user-repository';
+import { fileRepository } from '../../repositories/file-repository';
+import { Uploader } from '../../storage/uploader';
+import { userRepository } from '../../repositories/user-repository';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { Upload } from '@/domain/enterprise/upload-entity';
 import { randomUUID } from 'node:crypto';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { File } from '@/domain/enterprise/file-entity';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface UploadImageUserProfileRequest {
   userId: string;
-  url: string;
   body: Buffer;
 }
 
 type UploadImageUserProfileResponse = Either<
-  WrongCredentialError,
+  NotAllowedError | ResourceNotFoundError,
   { response: string }
 >;
-
+@Injectable()
 export class UploadImageUserProfileUseCase {
   constructor(
-    private fileRepository: fileRepository,
-    private userRepository: userRepository,
-    private uploadStorage: Uploader,
+    @Inject(fileRepository) private fileRepository: fileRepository,
+    @Inject(userRepository) private userRepository: userRepository,
+    @Inject(Uploader) private uploadStorage: Uploader,
   ) {}
   async execute({
     userId,
-    url,
     body,
   }: UploadImageUserProfileRequest): Promise<UploadImageUserProfileResponse> {
     const user = await this.userRepository.findById(userId);
@@ -48,7 +46,6 @@ export class UploadImageUserProfileUseCase {
     const upload = Upload.create({
       userId: user.id.toString(),
       fileName: `${user.name}-${randomName}`,
-      url,
       body,
     });
 
@@ -60,7 +57,6 @@ export class UploadImageUserProfileUseCase {
       const file = File.create({
         fileName: upload.fileName,
         userId: user.id.toString(),
-        url: upload.url,
       });
 
       await this.fileRepository.create(file);

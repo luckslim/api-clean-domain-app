@@ -4,9 +4,9 @@ import type { Upload } from '@/domain/enterprise/upload-entity';
 export class InMemoryUploaderStorage implements Uploader {
   public uploads: Upload[] = [];
 
-  async upload(upload: Upload): Promise<{ url: string }> {
+  async upload(upload: Upload): Promise<{ result: string }> {
     this.uploads.push(upload);
-    return upload;
+    return { result: upload.fileName };
   }
   async deleteUpload(id: string): Promise<void> {
     const itemIndex = this.uploads.findIndex(

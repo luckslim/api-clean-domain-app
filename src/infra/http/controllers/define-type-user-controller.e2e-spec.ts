@@ -386,7 +386,7 @@ describe('Define Type User (E2E)', () => {
         id: user.id.toString(),
       },
     });
-    console.log(response.body.message);
+
     expect(userDefineTyped.typeUser).toEqual('user');
     expect(response.statusCode).toBe(409);
     expect(response.body.message).toBe('Resource not found. undefined');

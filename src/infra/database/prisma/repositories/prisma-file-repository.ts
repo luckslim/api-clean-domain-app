@@ -13,6 +13,7 @@ export class PrismaFileRepository implements fileRepository {
     await this.prisma.files.create({
       data,
     });
+
     return file;
   }
 

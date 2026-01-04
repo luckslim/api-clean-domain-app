@@ -24,14 +24,13 @@ describe('create file', () => {
     );
   });
 
-  it('should not be able a file', async () => {
+  it('should be able make upload from file', async () => {
     const user = MakeUser({});
     inMemoryUserRepository.create(user);
 
     const result = await sut.execute({
       userId: user.id.toString(),
       body: Buffer.from('test.png'),
-      url: `www.test.com/${randomUUID()}`,
     });
 
     expect(result.isRight()).toBe(true);
@@ -49,7 +48,6 @@ describe('create file', () => {
     const result = await sut.execute({
       userId: user.id.toString(),
       body: Buffer.from('test.png'),
-      url: `www.test.com/${randomUUID()}`,
     });
 
     expect(result.isLeft()).toBe(true);
