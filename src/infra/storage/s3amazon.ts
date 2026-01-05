@@ -1,6 +1,10 @@
 import { Uploader } from '@/domain/aplication/storage/uploader';
 import { Upload } from '@/domain/enterprise/upload-entity';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { EnvService } from '../env/env.service';
 import { Injectable } from '@nestjs/common';
 
@@ -19,20 +23,26 @@ export class S3Amazon implements Uploader {
   }
 
   async upload(upload: Upload): Promise<{ result: string }> {
-    const key = `users/${upload.userId}/${upload.fileName}`;
+    const key = `${upload.fileName}`;
 
     const command = new PutObjectCommand({
       Bucket: this.envService.get('BUCKET_NAME'),
       Key: key,
       Body: upload.body,
-      ContentType: 'image/jpeg', // ou image/png
+      ContentType: 'image/jpeg',
     });
 
     await this.client.send(command);
 
     return { result: upload.fileName };
   }
-  deleteUpload(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async deleteUpload(id: string): Promise<void> {
+    const input = {
+      Bucket: this.envService.get('BUCKET_NAME'),
+      Key: id,
+    };
+    const command = new DeleteObjectCommand(input);
+
+    await this.client.send(command);
   }
 }

@@ -13,10 +13,11 @@ import { AuthenticateController } from './controllers/authenticate-user-controll
 import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/authenticate-use-case';
 import { DefineTypeUserController } from './controllers/define-type-user-controller';
 import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change-type-user-use-case';
-import { S3Amazon } from '../storage/s3amazon';
 import { StorageModule } from '../storage/storage.module';
 import { CreateImageProfilerController } from './controllers/create-image-profiler-controller';
 import { UploadImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/create-image-user-profile';
+import { DeleteImageProfilerController } from './controllers/delete-image-profiler-controller';
+import { DeleteImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/delete-image-user-profile';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],
@@ -28,6 +29,7 @@ import { UploadImageUserProfileUseCase } from '@/domain/aplication/use-cases/use
     AuthenticateController,
     DefineTypeUserController,
     CreateImageProfilerController,
+    DeleteImageProfilerController,
   ],
   providers: [
     CreateUserUseCase,
@@ -37,6 +39,7 @@ import { UploadImageUserProfileUseCase } from '@/domain/aplication/use-cases/use
     AuthenticateUserUseCase,
     ChangeTypeUserUseCase,
     UploadImageUserProfileUseCase,
+    DeleteImageUserProfileUseCase,
   ],
 })
 export class HttpModule {}

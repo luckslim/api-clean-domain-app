@@ -1,22 +1,22 @@
 import { left, right, type Either } from '@/core/either';
-import type { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
-import type { fileRepository } from '../../repositories/file-repository';
-import type { Uploader } from '../../storage/uploader';
+import { fileRepository } from '../../repositories/file-repository';
+import { Uploader } from '../../storage/uploader';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface DeleteImageUserProfileRequest {
   userId: string;
 }
 
 type DeleteImageUserProfileResponse = Either<
-  WrongCredentialError,
+  NotAllowedError,
   { response: string }
 >;
-
+@Injectable()
 export class DeleteImageUserProfileUseCase {
   constructor(
-    private fileRepository: fileRepository,
-    private uploadStorage: Uploader,
+    @Inject(fileRepository) private fileRepository: fileRepository,
+    @Inject(Uploader) private uploadStorage: Uploader,
   ) {}
   async execute({
     userId,
@@ -27,9 +27,9 @@ export class DeleteImageUserProfileUseCase {
       return left(new NotAllowedError('you is not authenticated'));
     }
 
-    this.fileRepository.delete(file.id.toString());
+    await this.fileRepository.delete(file.id.toString());
 
-    this.uploadStorage.deleteUpload(file.id.toString());
+    await this.uploadStorage.deleteUpload(file.fileName);
 
     return right({ response: 'delete success' });
   }
