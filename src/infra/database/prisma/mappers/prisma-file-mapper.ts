@@ -8,6 +8,7 @@ export class PrismaFileMapper {
       {
         userId: raw.userId,
         fileName: raw.fileName,
+        userName: raw.userName,
       },
       new UniqueEntityId(raw.id),
     );
@@ -18,7 +19,7 @@ export class PrismaFileMapper {
       id: file.id.toString(),
       userId: file.userId,
       fileName: file.fileName,
-      url: 'none',
+      userName: file.userName,
       CreatedAt: new Date(),
     };
   }

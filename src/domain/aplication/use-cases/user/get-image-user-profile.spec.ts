@@ -27,7 +27,7 @@ describe('create file', () => {
     await inMemoryUploaderStorage.upload(upload);
 
     const result = await sut.execute({
-      userId: file.userId,
+      userName: file.userName,
     });
     expect(result.isRight()).toBe(true);
   });

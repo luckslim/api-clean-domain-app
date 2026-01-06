@@ -36,6 +36,11 @@ export class InMemoryFileRepository implements fileRepository {
     return file.fileName;
   }
 
+  async findByUserName(userName: string): Promise<File | null> {
+    const file = this.items.find((item) => item.userName == userName);
+    return file;
+  }
+
   async delete(id: string): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === id);
     this.items.splice(itemIndex, 1);

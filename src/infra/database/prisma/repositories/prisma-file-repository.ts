@@ -48,9 +48,17 @@ export class PrismaFileRepository implements fileRepository {
     if (!data) {
       return null;
     }
-    return data.url;
+    return data.userName;
   }
 
+  async findByUserName(userName: string): Promise<File | null> {
+    const data = await this.prisma.files.findFirst({
+      where: {
+        userName,
+      },
+    });
+    return PrismaFileMapper.toDomain(data);
+  }
   async delete(id: string): Promise<void> {
     await this.prisma.files.delete({
       where: {

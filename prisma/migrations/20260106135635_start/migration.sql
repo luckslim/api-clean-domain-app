@@ -107,8 +107,8 @@ CREATE TABLE "day" (
 CREATE TABLE "files" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
+    "userName" TEXT NOT NULL,
     "fileName" TEXT NOT NULL,
-    "url" TEXT NOT NULL,
     "CreatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "files_pkey" PRIMARY KEY ("id")
