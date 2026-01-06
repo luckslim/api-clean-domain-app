@@ -14,4 +14,8 @@ export class InMemoryUploaderStorage implements Uploader {
     );
     this.uploads.splice(itemIndex, 1);
   }
+  async getSignedImageURL(id: string): Promise<string> {
+    const { fileName } = this.uploads.find((item) => item.fileName == id);
+    return fileName;
+  }
 }

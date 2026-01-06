@@ -1,24 +1,34 @@
 import { InMemoryFileRepository } from '../../../../../test/in-memory-repository/in-memory-file-repository';
 import { GetImageUserProfileUseCase } from './get-image-user-profile';
 import { MakeFile } from '../../../../../test/factories/make-file';
+import { InMemoryUploaderStorage } from 'test/in-memory-storage/in-memory-uploader';
+import { MakeUpload } from 'test/factories/make-upload';
 
 let inMemoryFileRepository: InMemoryFileRepository;
+let inMemoryUploaderStorage: InMemoryUploaderStorage;
 let sut: GetImageUserProfileUseCase;
 
 describe('create file', () => {
   beforeEach(() => {
     inMemoryFileRepository = new InMemoryFileRepository();
-    sut = new GetImageUserProfileUseCase(inMemoryFileRepository);
+    inMemoryUploaderStorage = new InMemoryUploaderStorage();
+    sut = new GetImageUserProfileUseCase(
+      inMemoryUploaderStorage,
+      inMemoryFileRepository,
+    );
   });
 
-  it('should not be able a file', async () => {
+  it('should be able a get to file', async () => {
     const file = MakeFile({});
-    inMemoryFileRepository.create(file);
+    await inMemoryFileRepository.create(file);
+
+    const upload = MakeUpload({ fileName: file.fileName });
+
+    await inMemoryUploaderStorage.upload(upload);
 
     const result = await sut.execute({
       userId: file.userId,
     });
-
     expect(result.isRight()).toBe(true);
   });
 });

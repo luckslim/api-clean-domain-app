@@ -18,6 +18,8 @@ import { CreateImageProfilerController } from './controllers/create-image-profil
 import { UploadImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/create-image-user-profile';
 import { DeleteImageProfilerController } from './controllers/delete-image-profiler-controller';
 import { DeleteImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/delete-image-user-profile';
+import { GetImageProfilerController } from './controllers/get-image-profiler-controller';
+import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/get-image-user-profile';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],
@@ -30,6 +32,7 @@ import { DeleteImageUserProfileUseCase } from '@/domain/aplication/use-cases/use
     DefineTypeUserController,
     CreateImageProfilerController,
     DeleteImageProfilerController,
+    GetImageProfilerController,
   ],
   providers: [
     CreateUserUseCase,
@@ -40,6 +43,7 @@ import { DeleteImageUserProfileUseCase } from '@/domain/aplication/use-cases/use
     ChangeTypeUserUseCase,
     UploadImageUserProfileUseCase,
     DeleteImageUserProfileUseCase,
+    GetImageUserProfileUseCase,
   ],
 })
 export class HttpModule {}

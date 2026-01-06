@@ -11,7 +11,6 @@ export function MakeUpload(
     {
       body: Buffer.from(randomUUID()),
       fileName: faker.string.alphanumeric(),
-      url: faker.internet.domainWord(),
       userId: new UniqueEntityId().toString(),
       ...override,
     },

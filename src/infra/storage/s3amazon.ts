@@ -2,11 +2,13 @@ import { Uploader } from '@/domain/aplication/storage/uploader';
 import { Upload } from '@/domain/enterprise/upload-entity';
 import {
   DeleteObjectCommand,
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
 import { EnvService } from '../env/env.service';
 import { Injectable } from '@nestjs/common';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
 export class S3Amazon implements Uploader {
@@ -36,6 +38,7 @@ export class S3Amazon implements Uploader {
 
     return { result: upload.fileName };
   }
+
   async deleteUpload(id: string): Promise<void> {
     const input = {
       Bucket: this.envService.get('BUCKET_NAME'),
@@ -44,5 +47,17 @@ export class S3Amazon implements Uploader {
     const command = new DeleteObjectCommand(input);
 
     await this.client.send(command);
+  }
+
+  async getSignedImageURL(id: string): Promise<string> {
+    const command = new GetObjectCommand({
+      Bucket: this.envService.get('BUCKET_NAME'),
+      Key: id,
+    });
+    const url = await getSignedUrl(this.client, command, {
+      expiresIn: 60 * 60 * 24, //  24 horas
+    });
+
+    return url;
   }
 }
