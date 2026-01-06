@@ -53,6 +53,7 @@ describe('Fetch User (E2E)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
+
     expect(response.text).toBeTypeOf('string');
   });
 });
