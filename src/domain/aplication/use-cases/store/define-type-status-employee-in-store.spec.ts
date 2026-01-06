@@ -42,7 +42,7 @@ describe('Define type status employee', () => {
 
     const result = await sut.execute({
       id: employ.id.toString(),
-      status: 'Aproved',
+      status: 'aproved',
     });
 
     expect(inMemoryNotificationRepository.items).toHaveLength(1);
@@ -62,7 +62,7 @@ describe('Define type status employee', () => {
 
     const result = await sut.execute({
       id: employ.id.toString(),
-      status: 'Reject',
+      status: 'reject',
     });
 
     expect(inMemoryNotificationRepository.items).toHaveLength(1);

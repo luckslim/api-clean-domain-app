@@ -44,7 +44,7 @@ export class DefineTypeStatusEmployUseCase {
 
     employ.status = status;
 
-    if (employ.status === 'Aproved') {
+    if (employ.status === 'aproved') {
       const employAproved = Employ.create({
         storeId: store.id.toString(),
         userId: employ.employeeId,
@@ -64,7 +64,7 @@ export class DefineTypeStatusEmployUseCase {
       await this.notifyRepository.create(notify);
     }
 
-    if (employ.status === 'Reject') {
+    if (employ.status === 'reject') {
       const notify = Notification.create({
         userId: employ.employeeId,
         title: `new notification from ${store.storeName}`,

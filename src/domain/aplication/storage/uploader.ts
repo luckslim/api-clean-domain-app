@@ -1,6 +1,7 @@
 import type { Upload } from '@/domain/enterprise/upload-entity';
 
-export interface Uploader {
-  upload(upload: Upload): Promise<{ url: string }>;
-  deleteUpload(id: string): Promise<void>;
+export abstract class Uploader {
+  abstract upload(upload: Upload): Promise<{ result: string }>;
+  abstract deleteUpload(id: string): Promise<void>;
+  abstract getSignedImageURL(id: string): Promise<string>;
 }

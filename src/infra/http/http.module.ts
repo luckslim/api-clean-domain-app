@@ -13,9 +13,16 @@ import { AuthenticateController } from './controllers/authenticate-user-controll
 import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/authenticate-use-case';
 import { DefineTypeUserController } from './controllers/define-type-user-controller';
 import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change-type-user-use-case';
+import { StorageModule } from '../storage/storage.module';
+import { CreateImageProfilerController } from './controllers/create-image-profiler-controller';
+import { UploadImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/create-image-user-profile';
+import { DeleteImageProfilerController } from './controllers/delete-image-profiler-controller';
+import { DeleteImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/delete-image-user-profile';
+import { GetImageProfilerController } from './controllers/get-image-profiler-controller';
+import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/get-image-user-profile';
 
 @Module({
-  imports: [DatabaseModule, cryptographyModule],
+  imports: [DatabaseModule, cryptographyModule, StorageModule],
   controllers: [
     CreateUserController,
     DeleteUserController,
@@ -23,6 +30,9 @@ import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change
     FetchUserController,
     AuthenticateController,
     DefineTypeUserController,
+    CreateImageProfilerController,
+    DeleteImageProfilerController,
+    GetImageProfilerController,
   ],
   providers: [
     CreateUserUseCase,
@@ -31,6 +41,9 @@ import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change
     GetUserUseCase,
     AuthenticateUserUseCase,
     ChangeTypeUserUseCase,
+    UploadImageUserProfileUseCase,
+    DeleteImageUserProfileUseCase,
+    GetImageUserProfileUseCase,
   ],
 })
 export class HttpModule {}

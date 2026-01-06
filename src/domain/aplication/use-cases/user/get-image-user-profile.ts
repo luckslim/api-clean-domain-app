@@ -1,26 +1,40 @@
 import { left, right, type Either } from '@/core/either';
-import type { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
-import type { fileRepository } from '../../repositories/file-repository';
+import { fileRepository } from '../../repositories/file-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Uploader } from '../../storage/uploader';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface GetImageUserProfileRequest {
   userId: string;
 }
 
 type GetImageUserProfileResponse = Either<
-  WrongCredentialError,
+  ResourceNotFoundError,
   { url: string }
 >;
-
+@Injectable()
 export class GetImageUserProfileUseCase {
-  constructor(private fileRepository: fileRepository) {}
+  constructor(
+    @Inject(Uploader) private uploadRepository: Uploader,
+    @Inject(fileRepository) private fileRepository: fileRepository,
+  ) {}
   async execute({
     userId,
   }: GetImageUserProfileRequest): Promise<GetImageUserProfileResponse> {
-    const url = await this.fileRepository.findUrlByUserId(userId);
-    if (!url) {
+    const file = await this.fileRepository.findByUserId(userId);
+
+    if (!file) {
       return left(new ResourceNotFoundError());
     }
-    return right({ url });
+
+    const urlAmazonS3 = await this.uploadRepository.getSignedImageURL(
+      file.fileName,
+    );
+
+    if (!urlAmazonS3) {
+      return left(new ResourceNotFoundError());
+    }
+
+    return right({ url: urlAmazonS3 });
   }
 }
