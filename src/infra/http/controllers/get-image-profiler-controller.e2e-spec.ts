@@ -40,15 +40,16 @@ describe('Fetch User (E2E)', () => {
   test('[GET] /get/image/accounts', async () => {
     const user = await userFactory.makePrismaUser({});
 
-    await fileFactory.makePrismaFile({
+    const file = await fileFactory.makePrismaFile({
       userId: user.id.toString(),
       fileName: 'lucas Soares Lima-7dacce41-9c43-49db-b29e-7aa0f439705b',
+      userName: user.userName,
     });
 
     const token = Jwt.sign({ sub: user.id.toString() });
 
     const response = await request(app.getHttpServer())
-      .get('/get/image/accounts')
+      .get(`/get/image/${file.userName}`)
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);

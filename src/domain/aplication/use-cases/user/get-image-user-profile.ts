@@ -5,7 +5,7 @@ import { Uploader } from '../../storage/uploader';
 import { Inject, Injectable } from '@nestjs/common';
 
 interface GetImageUserProfileRequest {
-  userId: string;
+  userName: string;
 }
 
 type GetImageUserProfileResponse = Either<
@@ -19,9 +19,9 @@ export class GetImageUserProfileUseCase {
     @Inject(fileRepository) private fileRepository: fileRepository,
   ) {}
   async execute({
-    userId,
+    userName,
   }: GetImageUserProfileRequest): Promise<GetImageUserProfileResponse> {
-    const file = await this.fileRepository.findByUserId(userId);
+    const file = await this.fileRepository.findByUserName(userName);
 
     if (!file) {
       return left(new ResourceNotFoundError());

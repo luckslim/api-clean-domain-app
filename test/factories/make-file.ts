@@ -10,6 +10,7 @@ export function MakeFile(override: Partial<FileProps>, id?: UniqueEntityId) {
     {
       fileName: `${faker.word.adverb()}-${new UniqueEntityId().toString()}`,
       userId: new UniqueEntityId().toString(),
+      userName: faker.word.adverb(),
       ...override,
     },
     id,

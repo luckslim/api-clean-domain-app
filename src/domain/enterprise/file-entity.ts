@@ -3,6 +3,7 @@ import type { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export interface FileProps {
   userId: string;
+  userName: string;
   fileName: string;
 }
 
@@ -14,6 +15,11 @@ export class File extends Entity<FileProps> {
   get fileName() {
     return this.props.fileName;
   }
+
+  get userName() {
+    return this.props.userName;
+  }
+
   set fileName(fileName: string) {
     this.props.fileName = fileName;
   }

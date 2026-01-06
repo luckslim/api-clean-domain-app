@@ -57,6 +57,7 @@ export class UploadImageUserProfileUseCase {
       const file = File.create({
         fileName: upload.fileName,
         userId: user.id.toString(),
+        userName: user.userName,
       });
 
       await this.fileRepository.create(file);

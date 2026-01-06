@@ -1,27 +1,35 @@
 import {
   BadRequestException,
+  Body,
   ConflictException,
   Controller,
   Get,
   HttpCode,
+  Param,
   UseGuards,
 } from '@nestjs/common';
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { TokenPayloadSchema } from '@/infra/auth/jwt-strategy';
 import { AuthGuard } from '@nestjs/passport';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/get-image-user-profile';
+import z from 'zod';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+const getImageBodyValidation = z.object({
+  userName: z.string(),
+});
 
-@Controller('/get/image/accounts')
+type GetImageBodyValidation = z.infer<typeof getImageBodyValidation>;
+
+const bodyValidationPipe = new ZodValidationPipe(getImageBodyValidation);
+
+@Controller('/get/image/:user')
 @UseGuards(AuthGuard('jwt'))
 export class GetImageProfilerController {
   constructor(public getImageProfilerUseCase: GetImageUserProfileUseCase) {}
-
   @Get()
   @HttpCode(200)
-  async handle(@CurrentUser() userToken: TokenPayloadSchema) {
+  async handle(@Param(getImageBodyValidation) params: GetImageBodyValidation) {
     const result = await this.getImageProfilerUseCase.execute({
-      userId: userToken.sub,
+      userName: params.userName,
     });
 
     if (result.isLeft()) {
@@ -33,6 +41,7 @@ export class GetImageProfilerController {
           throw new BadRequestException(error.message);
       }
     }
+
     const { url } = result.value;
 
     return url;

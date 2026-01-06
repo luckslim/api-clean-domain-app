@@ -160,8 +160,8 @@ model Day {
 model Files {
   id String @id @default(uuid())
   userId String
+  userName String
   fileName String
-  url String
   CreatedAt DateTime @default(now())
   
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
