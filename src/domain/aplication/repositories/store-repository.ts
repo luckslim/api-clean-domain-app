@@ -6,6 +6,7 @@ export abstract class storeRepository {
     storeName: string | undefined,
   ): Promise<Store | null>;
   abstract findById(id: string): Promise<Store | null>;
+  abstract findManyById(storeId: string[]): Promise<Store[] | null>;
   abstract findByUserId(id: string): Promise<Store | null>;
   abstract save(store: Store): Promise<Store>;
   abstract delete(id: string): Promise<void>;

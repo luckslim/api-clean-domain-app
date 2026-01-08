@@ -18,10 +18,16 @@ import { scheduleRepository } from '@/domain/aplication/repositories/schedule-re
 import { PrismaScheduleRepository } from './prisma/repositories/prisma-schedule-repository';
 import { NotificationRepository } from '@/domain/aplication/repositories/notification-repository';
 import { PrismaNotificationRepository } from './prisma/repositories/prisma-notification-repository';
+import { MongoService } from './mongo/mongo.service';
+import { EnvModule } from '../env/env.module';
+import { MongoGeographyRepository } from './mongo/repositories/mongo-geography-repository';
+import { geographyRepository } from '@/domain/aplication/repositories/geography-repository';
 
 @Module({
+  imports: [EnvModule],
   providers: [
     PrismaService,
+    MongoService,
     { provide: userRepository, useClass: PrismaUserRepository },
     { provide: dayRepository, useClass: PrismaDayRepository },
     { provide: timeRepository, useClass: PrismaTimeRepository },
@@ -31,9 +37,11 @@ import { PrismaNotificationRepository } from './prisma/repositories/prisma-notif
     { provide: storeRepository, useClass: PrismaStoreRepository },
     { provide: scheduleRepository, useClass: PrismaScheduleRepository },
     { provide: NotificationRepository, useClass: PrismaNotificationRepository },
+    { provide: geographyRepository, useClass: MongoGeographyRepository },
   ],
   exports: [
     PrismaService,
+    MongoService,
     userRepository,
     dayRepository,
     timeRepository,
@@ -43,6 +51,7 @@ import { PrismaNotificationRepository } from './prisma/repositories/prisma-notif
     storeRepository,
     scheduleRepository,
     NotificationRepository,
+    geographyRepository,
   ],
 })
 export class DatabaseModule {}

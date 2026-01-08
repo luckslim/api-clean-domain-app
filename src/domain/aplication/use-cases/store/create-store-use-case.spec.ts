@@ -5,12 +5,15 @@ import { InMemoryStoreRepository } from '../../../../../test/in-memory-repositor
 import { InMemoryUserRepository } from '../../../../../test/in-memory-repository/in-memory-user-repository';
 import { MakeUser } from '../../../../../test/factories/make-user';
 import { InMemoryEmployRepository } from '../../../../../test/in-memory-repository/in-memory-employ-aproved-repository';
+import { InMemoryGeographyRepository } from 'test/in-memory-repository/in-memory-geography-repository';
 
 let inMemoryStoreRepository: InMemoryStoreRepository;
 
 let inMemoryUserRepository: InMemoryUserRepository;
 
 let inMemoryEmployRepository: InMemoryEmployRepository;
+
+let inMemoryGeographyRepository: InMemoryGeographyRepository;
 
 let hashGenerator: FakeHash;
 
@@ -24,10 +27,13 @@ describe('Register store', () => {
 
     inMemoryEmployRepository = new InMemoryEmployRepository();
 
+    inMemoryGeographyRepository = new InMemoryGeographyRepository();
+
     hashGenerator = new FakeHash();
     sut = new CreateStoreUseCase(
       inMemoryUserRepository,
       inMemoryStoreRepository,
+      inMemoryGeographyRepository,
       inMemoryEmployRepository,
     );
   });

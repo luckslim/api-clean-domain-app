@@ -39,6 +39,16 @@ export class PrismaStoreRepository implements storeRepository {
     return PrismaStoreMapper.toDomain(data);
   }
 
+  async findManyById(storeId: string[]): Promise<Store[] | null> {
+    const data = await this.prisma.store.findMany({
+      where: {
+        id: { in: storeId },
+      },
+    });
+
+    return data.map((item) => PrismaStoreMapper.toDomain(item));
+  }
+
   async findByUserId(id: string): Promise<Store | null> {
     const data = await this.prisma.store.findFirst({
       where: {

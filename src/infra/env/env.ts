@@ -7,6 +7,8 @@ export const envSchema = z.object({
   AWS_SECRET_KEY: z.string(),
   BUCKET_NAME: z.string(),
   AWS_REGION: z.string(),
+  MONGO_DB_NAME: z.string(),
+  MONGO_DB_ATLAS: z.string(),
   PORT: z.coerce.number().optional().default(3333),
 });
 export type Env = z.infer<typeof envSchema>;
