@@ -1,15 +1,28 @@
-import { DistanceFormatError } from '../errors/distance-format-error';
+export interface CoordinatesProps {
+  latitude: number;
+  longitude: number;
+}
 
 export class Coordinates {
-  constructor(
-    public readonly latitude: number,
-    public readonly longitude: number,
-  ) {
-    if (latitude < -90 || latitude > 90) {
-      throw new DistanceFormatError('Latitude invalid');
+  private constructor(private props: CoordinatesProps) {}
+
+  get latitude() {
+    return this.props.latitude;
+  }
+
+  get longitude() {
+    return this.props.longitude;
+  }
+
+  static create(props: CoordinatesProps) {
+    if (props.latitude < -90 || props.latitude > 90) {
+      throw new Error('Invalid latitude');
     }
-    if (longitude < -180 || longitude > 180) {
-      throw new Error('Longitud invalid');
+
+    if (props.longitude < -180 || props.longitude > 180) {
+      throw new Error('Invalid longitude');
     }
+
+    return new Coordinates(props);
   }
 }

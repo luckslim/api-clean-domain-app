@@ -1,40 +1,51 @@
 import { left, right, type Either } from '@/core/either';
-import { NotAllowedError } from '@/core/errors/not-allowed-error';
-import type { userRepository } from '../../repositories/user-repository';
-import type { Coordinates } from '@/core/entities/coordinates';
-import { DistanceCalculator } from '../../utils/distance-calculator';
+import { geographyRepository } from '../../repositories/geography-repository';
+import { storeRepository } from '../../repositories/store-repository';
+import { Store } from '@/domain/enterprise/store-entity';
+import { Coordinates } from '@/core/entities/coordinates';
+import { Inject, Injectable } from '@nestjs/common';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
 interface SearchStoreLocationRequest {
-  id: string; //id from user
-  userCoordinates: Coordinates;
-  storeCoordinates: Coordinates;
+  userLongitude: number;
+  userLatitude: number;
+  distance: number;
 }
 
 type SearchStoreLocationResponse = Either<
-  NotAllowedError,
-  { distance: string }
+  ResourceNotFoundError,
+  { stores: Store[] }
 >;
-
+@Injectable()
 export class SearchStoreLocationUseCase {
-  constructor(private userRepository: userRepository) {}
+  constructor(
+    @Inject(geographyRepository)
+    private geographyRepository: geographyRepository,
+    @Inject(storeRepository) private storeRepository: storeRepository,
+  ) {}
   async execute({
-    id,
-    storeCoordinates,
-    userCoordinates,
+    userLatitude,
+    userLongitude,
+    distance,
   }: SearchStoreLocationRequest): Promise<SearchStoreLocationResponse> {
-    const user = await this.userRepository.findById(id);
+    const coordinates = Coordinates.create({
+      latitude: userLatitude,
+      longitude: userLongitude,
+    });
 
-    if (!user) {
-      return left(new NotAllowedError('you is not authenticated'));
-    }
-
-    const distanceCalculated = DistanceCalculator.calculateInKm(
-      storeCoordinates,
-      userCoordinates,
+    const searchStores = await this.geographyRepository.findByDistance(
+      coordinates,
+      distance,
     );
 
-    const formatedDistance = distanceCalculated.toFixed(2);
+    if (searchStores.length === 0) {
+      return left(new ResourceNotFoundError());
+    }
 
-    return right({ distance: formatedDistance });
+    const storeIds = searchStores.map((item) => item.storeId);
+
+    const store = await this.storeRepository.findManyById(storeIds);
+
+    return right({ stores: store });
   }
 }

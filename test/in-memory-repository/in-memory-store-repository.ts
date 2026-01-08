@@ -17,6 +17,10 @@ export class InMemoryStoreRepository implements storeRepository {
     return store;
   }
 
+  async findManyById(id: string[]): Promise<Store[] | null> {
+    throw new Error('Method not implemented.');
+  }
+
   async findById(id: string): Promise<Store | null> {
     const store = this.items.find((item) => item.id.toString() === id);
     if (!store) {

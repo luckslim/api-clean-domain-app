@@ -20,6 +20,10 @@ import { DeleteImageProfilerController } from './controllers/delete-image-profil
 import { DeleteImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/delete-image-user-profile';
 import { GetImageProfilerController } from './controllers/get-image-profiler-controller';
 import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/get-image-user-profile';
+import { CreateStoreController } from './controllers/store/create-store-controller';
+import { CreateStoreUseCase } from '@/domain/aplication/use-cases/store/create-store-use-case';
+import { SearchStoreByDistanceProfilerController } from './controllers/search-store-by-distance-controller';
+import { SearchStoreLocationUseCase } from '@/domain/aplication/use-cases/store/search-store-location';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],
@@ -33,6 +37,8 @@ import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/g
     CreateImageProfilerController,
     DeleteImageProfilerController,
     GetImageProfilerController,
+    CreateStoreController,
+    SearchStoreByDistanceProfilerController,
   ],
   providers: [
     CreateUserUseCase,
@@ -44,6 +50,8 @@ import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/g
     UploadImageUserProfileUseCase,
     DeleteImageUserProfileUseCase,
     GetImageUserProfileUseCase,
+    CreateStoreUseCase,
+    SearchStoreLocationUseCase,
   ],
 })
 export class HttpModule {}
