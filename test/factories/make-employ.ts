@@ -16,7 +16,7 @@ export function MakeEmploy(
       storeId: new UniqueEntityId().toString(),
       employeeId: new UniqueEntityId().toString(),
       status: 'pending',
-      typeUser: 'user',
+      typeUser: 'employeeStore',
       createdAt: new Date(),
       ...override,
     },

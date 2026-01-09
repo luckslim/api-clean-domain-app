@@ -1,7 +1,9 @@
 import { left, right, type Either } from '@/core/either';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
-import type { storeRepository } from '../../repositories/store-repository';
+import { storeRepository } from '../../repositories/store-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Inject, Injectable } from '@nestjs/common';
+import { geographyRepository } from '../../repositories/geography-repository';
 
 interface DeleteStoreRequest {
   id: string; // id from store
@@ -9,9 +11,13 @@ interface DeleteStoreRequest {
 }
 
 type DeleteStoreResponse = Either<NotAllowedError | ResourceNotFoundError, {}>;
-
+@Injectable()
 export class DeleteStoreUseCase {
-  constructor(private storeRepository: storeRepository) {}
+  constructor(
+    @Inject(storeRepository) private storeRepository: storeRepository,
+    @Inject(geographyRepository)
+    private geographyRepository: geographyRepository,
+  ) {}
   async execute({
     id,
     creatorId,
@@ -23,7 +29,9 @@ export class DeleteStoreUseCase {
     if (store.creatorId !== creatorId) {
       return left(new NotAllowedError());
     }
-    this.storeRepository.delete(id);
+    await this.storeRepository.delete(id);
+
+    await this.geographyRepository.delete(store.id.toString());
 
     return right({});
   }

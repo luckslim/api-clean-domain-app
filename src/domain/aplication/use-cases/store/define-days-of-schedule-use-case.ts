@@ -1,10 +1,11 @@
 import { left, right, type Either } from '@/core/either';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
-import type { storeRepository } from '../../repositories/store-repository';
+import { storeRepository } from '../../repositories/store-repository';
 import type { dayTypeProps } from '@/core/types/type-day';
-import type { dayRepository } from '../../repositories/day-repository';
+import { dayRepository } from '../../repositories/day-repository';
 import { Day } from '@/domain/enterprise/day-entity';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface DefineDayStoreRequest {
   id: string; // id from user
@@ -15,11 +16,11 @@ type DefineDayStoreResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { day: Day }
 >;
-
+@Injectable()
 export class DefineDayStoreUseCase {
   constructor(
-    private storeRepository: storeRepository,
-    private dayRepository: dayRepository,
+    @Inject(storeRepository) private storeRepository: storeRepository,
+    @Inject(dayRepository) private dayRepository: dayRepository,
   ) {}
   async execute({
     id,

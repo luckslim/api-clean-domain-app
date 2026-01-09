@@ -1,10 +1,11 @@
 import { left, right, type Either } from '@/core/either';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
-import type { storeRepository } from '../../repositories/store-repository';
+import { storeRepository } from '../../repositories/store-repository';
 import type { timeTypeProps } from '@/core/types/type-time';
 import { Time } from '@/domain/enterprise/time-entity';
-import type { timeRepository } from '../../repositories/time-repository';
+import { timeRepository } from '../../repositories/time-repository';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface DefineTimeStoreRequest {
   id: string; // id from user
@@ -15,11 +16,11 @@ type DefineTimeStoreResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { time: Time }
 >;
-
+@Injectable()
 export class DefineTimeStoreUseCase {
   constructor(
-    private storeRepository: storeRepository,
-    private timeRepository: timeRepository,
+    @Inject(storeRepository) private storeRepository: storeRepository,
+    @Inject(timeRepository) private timeRepository: timeRepository,
   ) {}
   async execute({
     id,

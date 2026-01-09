@@ -36,4 +36,9 @@ export class InMemoryEmployRepository implements employAprovedRepository {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === id);
     this.items.splice(itemIndex, 1);
   }
+  async update(employ: Employ): Promise<Employ> {
+    const itemIndex = this.items.findIndex((item) => item.id === employ.id);
+    this.items[itemIndex] = employ;
+    return employ;
+  }
 }

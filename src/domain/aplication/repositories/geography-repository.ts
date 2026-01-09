@@ -8,4 +8,5 @@ export abstract class geographyRepository {
     center: Coordinates,
     maxDistanceInMeters: number,
   ): Promise<Geography[]>;
+  abstract delete(storeId: string): Promise<void>;
 }

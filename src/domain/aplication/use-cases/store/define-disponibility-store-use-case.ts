@@ -3,10 +3,11 @@ import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import type { Store } from '@/domain/enterprise/store-entity';
 import type { DisponibilityTypeProps } from '@/core/types/type-disponibility';
-import type { storeRepository } from '../../repositories/store-repository';
+import { storeRepository } from '../../repositories/store-repository';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface DefineDisponibilityStoreRequest {
-  id: string; // id from user
+  id: string; // id from store
   disponibility: DisponibilityTypeProps;
 }
 
@@ -14,9 +15,11 @@ type DefineDisponibilityStoreResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { store: Store }
 >;
-
+@Injectable()
 export class DefineDisponibilityStoreUseCase {
-  constructor(private storeRepository: storeRepository) {}
+  constructor(
+    @Inject(storeRepository) private storeRepository: storeRepository,
+  ) {}
   async execute({
     id,
     disponibility,
@@ -28,6 +31,8 @@ export class DefineDisponibilityStoreUseCase {
     }
 
     store.disponibility = disponibility;
+
+    await this.storeRepository.save(store);
 
     return right({ store: store });
   }

@@ -24,6 +24,20 @@ import { CreateStoreController } from './controllers/store/create-store-controll
 import { CreateStoreUseCase } from '@/domain/aplication/use-cases/store/create-store-use-case';
 import { SearchStoreByDistanceProfilerController } from './controllers/search-store-by-distance-controller';
 import { SearchStoreLocationUseCase } from '@/domain/aplication/use-cases/store/search-store-location';
+import { DeleteStoreController } from './controllers/store/delete-store-controller';
+import { DeleteStoreUseCase } from '@/domain/aplication/use-cases/store/delete-store-use-case';
+import { DefineDayOfScheduleController } from './controllers/store/define-day-of-schedule-controller';
+import { DefineDayStoreUseCase } from '@/domain/aplication/use-cases/store/define-days-of-schedule-use-case';
+import { CreateEmployController } from './controllers/store/create-employ-controller';
+import { CreateEmployUseCase } from '@/domain/aplication/use-cases/store/create-employ-aproved';
+import { DefineDisponibilityEmployController } from './controllers/store/define-disponibility-employ';
+import { DefineDisponibilityEmployUseCase } from '@/domain/aplication/use-cases/store/define-disponibility-employ-use-case';
+import { DefineDisponibilityStoreController } from './controllers/store/define-disponibility-store';
+import { DefineDisponibilityStoreUseCase } from '@/domain/aplication/use-cases/store/define-disponibility-store-use-case';
+import { DefineTimeOfScheduleController } from './controllers/store/define-time-of-schedule-controller';
+import { DefineTimeStoreUseCase } from '@/domain/aplication/use-cases/store/define-time-of-schedule-use-case';
+import { DefineTypeStatusEmployController } from './controllers/store/define-type-status-employee-in-store-controller';
+import { DefineTypeStatusEmployUseCase } from '@/domain/aplication/use-cases/store/define-type-status-employee-in-store';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],
@@ -39,6 +53,13 @@ import { SearchStoreLocationUseCase } from '@/domain/aplication/use-cases/store/
     GetImageProfilerController,
     CreateStoreController,
     SearchStoreByDistanceProfilerController,
+    DeleteStoreController,
+    DefineDayOfScheduleController,
+    CreateEmployController,
+    DefineDisponibilityEmployController,
+    DefineDisponibilityStoreController,
+    DefineTimeOfScheduleController,
+    DefineTypeStatusEmployController,
   ],
   providers: [
     CreateUserUseCase,
@@ -52,6 +73,13 @@ import { SearchStoreLocationUseCase } from '@/domain/aplication/use-cases/store/
     GetImageUserProfileUseCase,
     CreateStoreUseCase,
     SearchStoreLocationUseCase,
+    DeleteStoreUseCase,
+    DefineDayStoreUseCase,
+    CreateEmployUseCase,
+    DefineDisponibilityEmployUseCase,
+    DefineDisponibilityStoreUseCase,
+    DefineTimeStoreUseCase,
+    DefineTypeStatusEmployUseCase,
   ],
 })
 export class HttpModule {}

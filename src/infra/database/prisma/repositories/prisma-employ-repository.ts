@@ -51,6 +51,17 @@ export class PrismaEmployRepository implements employAprovedRepository {
     return data.map((item) => PrismaEmployMapper.toDomain(item));
   }
 
+  async update(employ: Employ): Promise<Employ> {
+    const data = PrismaEmployMapper.toPrisma(employ);
+    await this.prisma.employ.update({
+      where: {
+        id: employ.id.toString(),
+      },
+      data,
+    });
+    return employ;
+  }
+
   async delete(id: string): Promise<void> {
     await this.prisma.employ.delete({
       where: {
