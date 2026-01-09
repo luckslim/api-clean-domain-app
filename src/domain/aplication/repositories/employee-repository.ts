@@ -5,5 +5,6 @@ export abstract class employeeRepository {
   abstract findById(id: string): Promise<Employee | null>;
   abstract findByUserId(id: string): Promise<Employee | null>;
   abstract findByStoreId(id: string | undefined): Promise<Employee[] | null>;
+  abstract update(employee: Employee): Promise<Employee>;
   abstract delete(id: string): Promise<void>;
 }

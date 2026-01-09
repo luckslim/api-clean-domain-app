@@ -2,7 +2,8 @@ import { right, type Either } from '@/core/either';
 import type { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
 import { Employ } from '@/domain/enterprise/employ-entity';
 import type { DisponibilityTypeProps } from '@/core/types/type-disponibility';
-import type { employAprovedRepository } from '../../repositories/employ-aproved-repository';
+import { employAprovedRepository } from '../../repositories/employ-aproved-repository';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface CreateEmployRequest {
   storeId: string | undefined;
@@ -12,9 +13,12 @@ interface CreateEmployRequest {
 }
 
 type CreateEmployResponse = Either<WrongCredentialError, { employ: Employ }>;
-
+@Injectable()
 export class CreateEmployUseCase {
-  constructor(private employRepository: employAprovedRepository) {}
+  constructor(
+    @Inject(employAprovedRepository)
+    private employRepository: employAprovedRepository,
+  ) {}
   async execute({
     storeId,
     userId,

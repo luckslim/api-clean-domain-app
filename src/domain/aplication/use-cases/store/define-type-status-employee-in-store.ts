@@ -1,13 +1,14 @@
 import { left, right, type Either } from '@/core/either';
 import type { Employee } from '@/domain/enterprise/employee-store-entity';
-import type { employeeRepository } from '../../repositories/employee-repository';
+import { employeeRepository } from '../../repositories/employee-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import type { StatusTypeProps } from '@/core/types/type-status';
-import type { storeRepository } from '../../repositories/store-repository';
-import type { NotificationRepository } from '../../repositories/notification-repository';
+import { storeRepository } from '../../repositories/store-repository';
+import { NotificationRepository } from '../../repositories/notification-repository';
 import { Notification } from '@/domain/enterprise/notification-entity';
-import type { employAprovedRepository } from '../../repositories/employ-aproved-repository';
+import { employAprovedRepository } from '../../repositories/employ-aproved-repository';
 import { Employ } from '@/domain/enterprise/employ-entity';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface DefineTypeStatusEmployRequest {
   id: string; // id from employee
@@ -18,12 +19,14 @@ type DefineTypeStatusEmployResponse = Either<
   ResourceNotFoundError,
   { employ: Employee }
 >;
-
+@Injectable()
 export class DefineTypeStatusEmployUseCase {
   constructor(
-    private employRepository: employeeRepository,
-    private storeRepository: storeRepository,
+    @Inject(employeeRepository) private employRepository: employeeRepository,
+    @Inject(storeRepository) private storeRepository: storeRepository,
+    @Inject(employAprovedRepository)
     private employAprovedRepository: employAprovedRepository,
+    @Inject(NotificationRepository)
     private notifyRepository: NotificationRepository,
   ) {}
   async execute({
@@ -42,9 +45,7 @@ export class DefineTypeStatusEmployUseCase {
       return left(new ResourceNotFoundError());
     }
 
-    employ.status = status;
-
-    if (employ.status === 'aproved') {
+    if (status === 'aproved') {
       const employAproved = Employ.create({
         storeId: store.id.toString(),
         userId: employ.employeeId,
@@ -64,7 +65,7 @@ export class DefineTypeStatusEmployUseCase {
       await this.notifyRepository.create(notify);
     }
 
-    if (employ.status === 'reject') {
+    if (status === 'reject') {
       const notify = Notification.create({
         userId: employ.employeeId,
         title: `new notification from ${store.storeName}`,
@@ -74,6 +75,10 @@ export class DefineTypeStatusEmployUseCase {
       });
       await this.notifyRepository.create(notify);
     }
+
+    employ.status = status;
+
+    await this.employRepository.update(employ);
 
     return right({ employ });
   }

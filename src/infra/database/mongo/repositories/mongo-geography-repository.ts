@@ -52,4 +52,14 @@ export class MongoGeographyRepository implements geographyRepository {
 
     return docs.map(MongoGeographyMapper.toDomain);
   }
+
+  async delete(storeId: string): Promise<void> {
+    const collection = this.mongo
+      .getDatabase()
+      .collection<GeographyProps>('geography');
+
+    await collection.deleteOne({
+      storeId,
+    });
+  }
 }
