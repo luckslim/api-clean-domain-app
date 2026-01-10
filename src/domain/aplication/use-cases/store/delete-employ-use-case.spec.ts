@@ -23,7 +23,9 @@ describe('delete employ', () => {
     const employee = MakeEmploy({});
     inMemoryEmployeeRepository.create(employee);
 
-    const employ = MakeEmployAproved({});
+    const employ = MakeEmployAproved({
+      userId: employee.employeeId,
+    });
     inMemoryEmployRepository.create(employ);
 
     const result = await sut.execute({

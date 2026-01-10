@@ -1,8 +1,8 @@
 import { left, right, type Either } from '@/core/either';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
-import { Time } from '@/domain/enterprise/time-entity';
-import type { timeRepository } from '../../repositories/time-repository';
+import { timeRepository } from '../../repositories/time-repository';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface DeleteTimeStoreRequest {
   id: string; // id from time
@@ -12,9 +12,9 @@ type DeleteTimeStoreResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   {}
 >;
-
+@Injectable()
 export class DeleteTimeStoreUseCase {
-  constructor(private timeRepository: timeRepository) {}
+  constructor(@Inject(timeRepository) private timeRepository: timeRepository) {}
   async execute({
     id,
   }: DeleteTimeStoreRequest): Promise<DeleteTimeStoreResponse> {

@@ -38,6 +38,16 @@ import { DefineTimeOfScheduleController } from './controllers/store/define-time-
 import { DefineTimeStoreUseCase } from '@/domain/aplication/use-cases/store/define-time-of-schedule-use-case';
 import { DefineTypeStatusEmployController } from './controllers/store/define-type-status-employee-in-store-controller';
 import { DefineTypeStatusEmployUseCase } from '@/domain/aplication/use-cases/store/define-type-status-employee-in-store';
+import { DeleteDayController } from './controllers/store/delete-days-of-schedule-constroller';
+import { DeleteDayStoreUseCase } from '@/domain/aplication/use-cases/store/delete-days-of-schedule-use-case';
+import { DeleteEmployController } from './controllers/store/delete-employ-controller';
+import { DeleteEmployUseCase } from '@/domain/aplication/use-cases/store/delete-employ-use-case';
+import { DeleteTimeController } from './controllers/store/delete-time-of-schedule-controller';
+import { DeleteTimeStoreUseCase } from '@/domain/aplication/use-cases/store/delete-time-of-schedule-use-case';
+import { EditStoreController } from './controllers/store/edit-store-controller';
+import { EditStoreUseCase } from '@/domain/aplication/use-cases/store/edit-store-use-case';
+import { GetEmployeesController } from './controllers/store/get-employs-by-userId.controller';
+import { GetEmployUseCase } from '@/domain/aplication/use-cases/store/get-employ-by-id';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],
@@ -60,6 +70,11 @@ import { DefineTypeStatusEmployUseCase } from '@/domain/aplication/use-cases/sto
     DefineDisponibilityStoreController,
     DefineTimeOfScheduleController,
     DefineTypeStatusEmployController,
+    DeleteDayController,
+    DeleteEmployController,
+    DeleteTimeController,
+    EditStoreController,
+    GetEmployeesController,
   ],
   providers: [
     CreateUserUseCase,
@@ -80,6 +95,11 @@ import { DefineTypeStatusEmployUseCase } from '@/domain/aplication/use-cases/sto
     DefineDisponibilityStoreUseCase,
     DefineTimeStoreUseCase,
     DefineTypeStatusEmployUseCase,
+    DeleteDayStoreUseCase,
+    DeleteEmployUseCase,
+    DeleteTimeStoreUseCase,
+    EditStoreUseCase,
+    GetEmployUseCase,
   ],
 })
 export class HttpModule {}

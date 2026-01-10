@@ -51,6 +51,7 @@ export class PrismaEmployeeRepository implements employeeRepository {
     }
     return data.map((item) => PrismaEmployeeMapper.toDomain(item));
   }
+
   async update(employee: Employee): Promise<Employee> {
     const data = PrismaEmployeeMapper.toPrisma(employee);
     await this.prisma.employee.update({
@@ -61,6 +62,7 @@ export class PrismaEmployeeRepository implements employeeRepository {
     });
     return employee;
   }
+
   async delete(id: string): Promise<void> {
     await this.prisma.employee.delete({
       where: {

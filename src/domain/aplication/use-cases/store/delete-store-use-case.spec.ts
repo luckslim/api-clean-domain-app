@@ -3,16 +3,22 @@ import { InMemoryStoreRepository } from '../../../../../test/in-memory-repositor
 import { MakeUser } from '../../../../../test/factories/make-user';
 import { DeleteStoreUseCase } from './delete-store-use-case';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { InMemoryGeographyRepository } from 'test/in-memory-repository/in-memory-geography-repository';
 
 let inMemoryStoreRepository: InMemoryStoreRepository;
+let inMemoryGeographyRepository: InMemoryGeographyRepository;
 
 let sut: DeleteStoreUseCase;
 
 describe('delete store', () => {
   beforeEach(() => {
     inMemoryStoreRepository = new InMemoryStoreRepository();
+    inMemoryGeographyRepository = new InMemoryGeographyRepository();
 
-    sut = new DeleteStoreUseCase(inMemoryStoreRepository);
+    sut = new DeleteStoreUseCase(
+      inMemoryStoreRepository,
+      inMemoryGeographyRepository,
+    );
   });
 
   it('should be able delete a store', async () => {

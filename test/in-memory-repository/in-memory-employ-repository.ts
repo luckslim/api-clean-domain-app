@@ -32,6 +32,12 @@ export class InMemoryEmployeeRepository implements employeeRepository {
     return employee;
   }
 
+  async update(employee: Employee): Promise<Employee> {
+    const itemIndex = this.items.findIndex((item) => item.id === employee.id);
+    this.items[itemIndex] = employee;
+    return employee;
+  }
+
   async delete(id: string): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === id);
     this.items.splice(itemIndex, 1);

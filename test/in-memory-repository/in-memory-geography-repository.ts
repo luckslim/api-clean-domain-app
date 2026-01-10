@@ -15,4 +15,8 @@ export class InMemoryGeographyRepository implements geographyRepository {
   ): Promise<Geography[]> {
     throw new Error('Method not implemented.');
   }
+  async delete(storeId: string): Promise<void> {
+    const itemIndex = this.items.findIndex((item) => item.storeId === storeId);
+    this.items.splice(itemIndex, 1);
+  }
 }

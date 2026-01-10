@@ -1,11 +1,11 @@
 import { left, right, type Either } from '@/core/either';
 import { Store } from '@/domain/enterprise/store-entity';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
-import type { storeRepository } from '../../repositories/store-repository';
+import { storeRepository } from '../../repositories/store-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface EditStoreRequest {
-  id: string; // id from store
   creatorId: string;
   storeName: string;
   city: string;
@@ -17,18 +17,19 @@ type EditStoreResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { store: Store }
 >;
-
+@Injectable()
 export class EditStoreUseCase {
-  constructor(private storeRepository: storeRepository) {}
+  constructor(
+    @Inject(storeRepository) private storeRepository: storeRepository,
+  ) {}
   async execute({
-    id,
     creatorId,
     storeName,
     city,
     longitude,
     latitude,
   }: EditStoreRequest): Promise<EditStoreResponse> {
-    const store = await this.storeRepository.findById(id);
+    const store = await this.storeRepository.findByUserId(creatorId);
 
     if (!store) {
       return left(new ResourceNotFoundError());
@@ -42,6 +43,8 @@ export class EditStoreUseCase {
     store.city = city;
     store.longitude = longitude;
     store.latitude = latitude;
+
+    await this.storeRepository.save(store);
 
     return right({ store });
   }
