@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CreateUserController } from './controllers/create-user-controller';
+import { CreateUserController } from './controllers/user/create-user-controller';
 import { CreateUserUseCase } from '@/domain/aplication/use-cases/user/create-user-use-case';
 import { DatabaseModule } from '../database/database.module';
 import { cryptographyModule } from '../cryptography/cryptography.module';
