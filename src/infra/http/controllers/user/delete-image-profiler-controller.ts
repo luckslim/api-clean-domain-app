@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import z from 'zod';
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { UserNameAlreadyExistError } from '@/core/errors/username-already-exist-error';
 import { EmailAlreadyExistError } from '@/core/errors/email-already-exist-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';

@@ -16,7 +16,7 @@ import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change
 import { StorageModule } from '../storage/storage.module';
 import { CreateImageProfilerController } from './controllers/user/create-image-profiler-controller';
 import { UploadImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/create-image-user-profile';
-import { DeleteImageProfilerController } from './controllers/delete-image-profiler-controller';
+import { DeleteImageProfilerController } from './controllers/user/delete-image-profiler-controller';
 import { DeleteImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/delete-image-user-profile';
 import { GetImageProfilerController } from './controllers/get-image-profiler-controller';
 import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/get-image-user-profile';
