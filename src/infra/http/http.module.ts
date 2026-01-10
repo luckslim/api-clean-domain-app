@@ -9,7 +9,7 @@ import { UpdateUserController } from './controllers/update-user-controller';
 import { EditUserUseCase } from '@/domain/aplication/use-cases/user/edit-user-use-case';
 import { FetchUserController } from './controllers/fetch-user-controller';
 import { GetUserUseCase } from '@/domain/aplication/use-cases/user/get-user-use-case';
-import { AuthenticateController } from './controllers/authenticate-user-controller';
+import { AuthenticateController } from './controllers/user/authenticate-user-controller';
 import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/authenticate-use-case';
 import { DefineTypeUserController } from './controllers/define-type-user-controller';
 import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change-type-user-use-case';

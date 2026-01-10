@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { z } from 'zod';
 
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/authenticate-use-case';
 import { WrongCredentialError } from '@/core/errors/wrong-credentials-error';
 
