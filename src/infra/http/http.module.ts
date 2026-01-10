@@ -3,7 +3,7 @@ import { CreateUserController } from './controllers/user/create-user-controller'
 import { CreateUserUseCase } from '@/domain/aplication/use-cases/user/create-user-use-case';
 import { DatabaseModule } from '../database/database.module';
 import { cryptographyModule } from '../cryptography/cryptography.module';
-import { DeleteUserController } from './controllers/delete-user-controller';
+import { DeleteUserController } from './controllers/user/delete-user-controller';
 import { DeleteUserUseCase } from '@/domain/aplication/use-cases/user/delete-user-use-case';
 import { UpdateUserController } from './controllers/update-user-controller';
 import { EditUserUseCase } from '@/domain/aplication/use-cases/user/edit-user-use-case';
