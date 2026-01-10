@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import z from 'zod';
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { DeleteUserUseCase } from '@/domain/aplication/use-cases/user/delete-user-use-case';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 
