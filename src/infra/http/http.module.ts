@@ -11,7 +11,7 @@ import { FetchUserController } from './controllers/fetch-user-controller';
 import { GetUserUseCase } from '@/domain/aplication/use-cases/user/get-user-use-case';
 import { AuthenticateController } from './controllers/user/authenticate-user-controller';
 import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/authenticate-use-case';
-import { DefineTypeUserController } from './controllers/define-type-user-controller';
+import { DefineTypeUserController } from './controllers/user/define-type-user-controller';
 import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change-type-user-use-case';
 import { StorageModule } from '../storage/storage.module';
 import { CreateImageProfilerController } from './controllers/user/create-image-profiler-controller';

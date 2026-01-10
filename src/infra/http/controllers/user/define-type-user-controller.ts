@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import z from 'zod';
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { ChangeTypeUserUseCase } from '@/domain/aplication/use-cases/user/change-type-user-use-case';
 import { User_Types } from '@/core/types/type-user';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
