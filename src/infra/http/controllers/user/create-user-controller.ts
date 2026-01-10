@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import z from 'zod';
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { CreateUserUseCase } from '@/domain/aplication/use-cases/user/create-user-use-case';
 import { UserNameAlreadyExistError } from '@/core/errors/username-already-exist-error';
 import { EmailAlreadyExistError } from '@/core/errors/email-already-exist-error';
