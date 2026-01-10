@@ -7,7 +7,7 @@ import { DeleteUserController } from './controllers/user/delete-user-controller'
 import { DeleteUserUseCase } from '@/domain/aplication/use-cases/user/delete-user-use-case';
 import { UpdateUserController } from './controllers/update-user-controller';
 import { EditUserUseCase } from '@/domain/aplication/use-cases/user/edit-user-use-case';
-import { FetchUserController } from './controllers/fetch-user-controller';
+import { FetchUserController } from './controllers/user/fetch-user-controller';
 import { GetUserUseCase } from '@/domain/aplication/use-cases/user/get-user-use-case';
 import { AuthenticateController } from './controllers/user/authenticate-user-controller';
 import { AuthenticateUserUseCase } from '@/domain/aplication/use-cases/user/authenticate-use-case';
