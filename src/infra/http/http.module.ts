@@ -48,6 +48,8 @@ import { GetEmployUseCase } from '@/domain/aplication/use-cases/store/get-employ
 import { UpdateUserController } from './controllers/user/update-user-controller';
 import { GetImageProfilerController } from './controllers/user/get-image-profiler-controller';
 import { SearchStoreByDistanceProfilerController } from './controllers/user/search-store-by-distance-controller';
+import { GetRequestEmployeesController } from './controllers/store/get-request-from-employ-controller';
+import { RequestFromEmployUseCase } from '@/domain/aplication/use-cases/store/get-request-from-employ';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],
@@ -75,6 +77,7 @@ import { SearchStoreByDistanceProfilerController } from './controllers/user/sear
     DeleteTimeController,
     EditStoreController,
     GetEmployeesController,
+    GetRequestEmployeesController,
   ],
   providers: [
     CreateUserUseCase,
@@ -100,6 +103,7 @@ import { SearchStoreByDistanceProfilerController } from './controllers/user/sear
     DeleteTimeStoreUseCase,
     EditStoreUseCase,
     GetEmployUseCase,
+    RequestFromEmployUseCase,
   ],
 })
 export class HttpModule {}

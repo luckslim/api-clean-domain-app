@@ -2,30 +2,42 @@ import { InMemoryEmployeeRepository } from '../../../../../test/in-memory-reposi
 import { MakeEmploy } from '../../../../../test/factories/make-employ';
 import { RequestFromEmployUseCase } from './get-request-from-employ';
 import { MakeStore } from '../../../../../test/factories/make-store';
+import { InMemoryStoreRepository } from 'test/in-memory-repository/in-memory-store-repository';
+import { MakeUser } from 'test/factories/make-user';
 
 let inMemoryEmployeeRepository: InMemoryEmployeeRepository;
+let inMemoryStoreRepository: InMemoryStoreRepository;
 
 let sut: RequestFromEmployUseCase;
 
-describe('Define type status employee', () => {
+describe('get requests employee', () => {
   beforeEach(() => {
     inMemoryEmployeeRepository = new InMemoryEmployeeRepository();
+    inMemoryStoreRepository = new InMemoryStoreRepository();
 
-    sut = new RequestFromEmployUseCase(inMemoryEmployeeRepository);
+    sut = new RequestFromEmployUseCase(
+      inMemoryEmployeeRepository,
+      inMemoryStoreRepository,
+    );
   });
 
-  it('should be able Define type status employee', async () => {
-    const store = MakeStore({});
+  it('should be able get request employee', async () => {
+    const user = MakeUser({});
+    const store = MakeStore({
+      creatorId: user.id.toString(),
+    });
+
+    inMemoryStoreRepository.items.push(store);
 
     for (let i = 0; i < 10; i++) {
       const employ = MakeEmploy({
         storeId: store.id.toString(),
       });
-      inMemoryEmployeeRepository.create(employ);
+      await inMemoryEmployeeRepository.create(employ);
     }
 
     const result = await sut.execute({
-      id: store.id.toString(),
+      id: user.id.toString(),
     });
 
     expect(result.isRight()).toBe(true);
