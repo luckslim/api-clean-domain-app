@@ -50,6 +50,8 @@ import { GetImageProfilerController } from './controllers/user/get-image-profile
 import { SearchStoreByDistanceProfilerController } from './controllers/user/search-store-by-distance-controller';
 import { GetRequestEmployeesController } from './controllers/store/get-request-from-employ-controller';
 import { RequestFromEmployUseCase } from '@/domain/aplication/use-cases/store/get-request-from-employ';
+import { GetStoreByIdController } from './controllers/store/get-store-by-id-use-case-controller';
+import { GetStoreUseCase } from '@/domain/aplication/use-cases/store/get-store-by-id-use-case';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],
@@ -78,6 +80,7 @@ import { RequestFromEmployUseCase } from '@/domain/aplication/use-cases/store/ge
     EditStoreController,
     GetEmployeesController,
     GetRequestEmployeesController,
+    GetStoreByIdController,
   ],
   providers: [
     CreateUserUseCase,
@@ -104,6 +107,7 @@ import { RequestFromEmployUseCase } from '@/domain/aplication/use-cases/store/ge
     EditStoreUseCase,
     GetEmployUseCase,
     RequestFromEmployUseCase,
+    GetStoreUseCase,
   ],
 })
 export class HttpModule {}
