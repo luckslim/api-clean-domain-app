@@ -24,11 +24,10 @@ describe('get store', () => {
       creatorId: user.id.toString(),
     });
 
-    inMemoryStoreRepository.create(store);
+    await inMemoryStoreRepository.create(store);
 
     const result = await sut.execute({
-      id: store.id.toString(),
-      creatorId: user.id.toString(),
+      id: user.id.toString(),
     });
 
     expect(result.isRight()).toBe(true);
@@ -44,11 +43,10 @@ describe('get store', () => {
       creatorId: user.id.toString(),
     });
 
-    inMemoryStoreRepository.create(store);
+    await inMemoryStoreRepository.create(store);
 
     const result = await sut.execute({
-      id: store.id.toString(),
-      creatorId: new UniqueEntityId().toString(),
+      id: new UniqueEntityId().toString(),
     });
 
     expect(result.isLeft()).toBe(true);
