@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  Body,
   ConflictException,
   Controller,
   Get,
@@ -12,7 +11,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/get-image-user-profile';
 import z from 'zod';
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
+
 const getImageBodyValidation = z.object({
   userName: z.string(),
 });

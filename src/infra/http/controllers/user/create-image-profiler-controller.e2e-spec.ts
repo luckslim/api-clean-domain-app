@@ -1,5 +1,4 @@
 import { AppModule } from '@/app.module';
-import { User } from '@/domain/enterprise/user-entity';
 import { DatabaseModule } from '@/infra/database/database.module';
 
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
