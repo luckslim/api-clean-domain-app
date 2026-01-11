@@ -9,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import z from 'zod';
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { SearchStoreLocationUseCase } from '@/domain/aplication/use-cases/store/search-store-location';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 const searchStoreByDistanceBodyValidation = z.object({
   distance: z.coerce.number().min(1000).max(10000),
   userLatitude: z.coerce.number().min(-90).max(90),

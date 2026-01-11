@@ -5,7 +5,6 @@ import { DatabaseModule } from '../database/database.module';
 import { cryptographyModule } from '../cryptography/cryptography.module';
 import { DeleteUserController } from './controllers/user/delete-user-controller';
 import { DeleteUserUseCase } from '@/domain/aplication/use-cases/user/delete-user-use-case';
-import { UpdateUserController } from './controllers/update-user-controller';
 import { EditUserUseCase } from '@/domain/aplication/use-cases/user/edit-user-use-case';
 import { FetchUserController } from './controllers/user/fetch-user-controller';
 import { GetUserUseCase } from '@/domain/aplication/use-cases/user/get-user-use-case';
@@ -18,11 +17,9 @@ import { CreateImageProfilerController } from './controllers/user/create-image-p
 import { UploadImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/create-image-user-profile';
 import { DeleteImageProfilerController } from './controllers/user/delete-image-profiler-controller';
 import { DeleteImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/delete-image-user-profile';
-import { GetImageProfilerController } from './controllers/get-image-profiler-controller';
 import { GetImageUserProfileUseCase } from '@/domain/aplication/use-cases/user/get-image-user-profile';
 import { CreateStoreController } from './controllers/store/create-store-controller';
 import { CreateStoreUseCase } from '@/domain/aplication/use-cases/store/create-store-use-case';
-import { SearchStoreByDistanceProfilerController } from './controllers/search-store-by-distance-controller';
 import { SearchStoreLocationUseCase } from '@/domain/aplication/use-cases/store/search-store-location';
 import { DeleteStoreController } from './controllers/store/delete-store-controller';
 import { DeleteStoreUseCase } from '@/domain/aplication/use-cases/store/delete-store-use-case';
@@ -48,6 +45,9 @@ import { EditStoreController } from './controllers/store/edit-store-controller';
 import { EditStoreUseCase } from '@/domain/aplication/use-cases/store/edit-store-use-case';
 import { GetEmployeesController } from './controllers/store/get-employs-by-userId.controller';
 import { GetEmployUseCase } from '@/domain/aplication/use-cases/store/get-employ-by-id';
+import { UpdateUserController } from './controllers/user/update-user-controller';
+import { GetImageProfilerController } from './controllers/user/get-image-profiler-controller';
+import { SearchStoreByDistanceProfilerController } from './controllers/user/search-store-by-distance-controller';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],

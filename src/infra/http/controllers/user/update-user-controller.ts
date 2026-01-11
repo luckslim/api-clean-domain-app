@@ -7,9 +7,9 @@ import {
   Post,
 } from '@nestjs/common';
 import z from 'zod';
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { EditUserUseCase } from '@/domain/aplication/use-cases/user/edit-user-use-case';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
 const updateUserBodyValidation = z.object({
   id: z.string(),

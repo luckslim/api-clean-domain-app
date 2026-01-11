@@ -1,5 +1,4 @@
 import { AppModule } from '@/app.module';
-import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
