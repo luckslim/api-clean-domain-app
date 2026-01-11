@@ -52,6 +52,8 @@ import { GetRequestEmployeesController } from './controllers/store/get-request-f
 import { RequestFromEmployUseCase } from '@/domain/aplication/use-cases/store/get-request-from-employ';
 import { GetStoreByIdController } from './controllers/store/get-store-by-id-use-case-controller';
 import { GetStoreUseCase } from '@/domain/aplication/use-cases/store/get-store-by-id-use-case';
+import { GetStoreByNameController } from './controllers/store/get-store-by-name-use-case-controller';
+import { GetStoreByNameUseCase } from '@/domain/aplication/use-cases/store/get-store-by-name-use-case';
 
 @Module({
   imports: [DatabaseModule, cryptographyModule, StorageModule],
@@ -81,6 +83,7 @@ import { GetStoreUseCase } from '@/domain/aplication/use-cases/store/get-store-b
     GetEmployeesController,
     GetRequestEmployeesController,
     GetStoreByIdController,
+    GetStoreByNameController,
   ],
   providers: [
     CreateUserUseCase,
@@ -108,6 +111,7 @@ import { GetStoreUseCase } from '@/domain/aplication/use-cases/store/get-store-b
     GetEmployUseCase,
     RequestFromEmployUseCase,
     GetStoreUseCase,
+    GetStoreByNameUseCase,
   ],
 })
 export class HttpModule {}

@@ -1,8 +1,9 @@
 import { left, right, type Either } from '@/core/either';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
-import type { storeRepository } from '../../repositories/store-repository';
+import { storeRepository } from '../../repositories/store-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import type { Store } from '@/domain/enterprise/store-entity';
+import { Inject, Injectable } from '@nestjs/common';
 
 interface GetStoreByNameRequest {
   storeName: string;
@@ -12,9 +13,11 @@ type GetStoreByNameResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { store: Store }
 >;
-
+@Injectable()
 export class GetStoreByNameUseCase {
-  constructor(private storeRepository: storeRepository) {}
+  constructor(
+    @Inject(storeRepository) private storeRepository: storeRepository,
+  ) {}
   async execute({
     storeName,
   }: GetStoreByNameRequest): Promise<GetStoreByNameResponse> {
