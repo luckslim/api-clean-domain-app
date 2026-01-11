@@ -39,15 +39,15 @@ describe('Get Store employ (E2E)', () => {
       typeUser: 'creatorStore',
     });
 
-    await storeFactory.makePrismaStore({
+    const store = await storeFactory.makePrismaStore({
       creatorId: user.id.toString(),
     });
 
     const access_Token = jwt.sign({ sub: user.id.toString() });
 
-    const response = await request(app.getHttpServer())
-      .get('/get/store/by/id')
-      .set('Authorization', `Bearer ${access_Token}`);
+    const response = await request(app.getHttpServer()).get(
+      `/get/store/by/${store.storeName}`,
+    );
 
     const storePrisma = await prisma.store.findMany({
       where: {

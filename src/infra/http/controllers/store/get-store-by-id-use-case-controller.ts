@@ -12,7 +12,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetStoreUseCase } from '@/domain/aplication/use-cases/store/get-store-by-id-use-case';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
-@Controller('/get/store')
+@Controller('/get/store/by/id')
 @UseGuards(AuthGuard('jwt'))
 export class GetStoreByIdController {
   constructor(public getStoreByIdUseCase: GetStoreUseCase) {}
